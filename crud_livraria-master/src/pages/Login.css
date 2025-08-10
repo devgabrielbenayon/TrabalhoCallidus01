@@ -1,74 +1,315 @@
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #2a9d8f, #0077cc);
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.login-form {
-  background: white;
-  padding: 32px;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+html, body {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Garantir que o root também tenha altura total */
+#root {
+  height: 100%;
+  min-height: 100vh;
+}
+
+.cadastro-container {
+  min-height: 100vh;
+  height: 100vh; /* Adicionado para garantir altura total */
+  width: 100vw;  /* Adicionado para garantir largura total */
+  background: linear-gradient(135deg, 
+    #ff6b6b 0%, 
+    #ff8e53 25%, 
+    #ff6348 50%, 
+    #c44569 75%, 
+    #8b5a5a 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  display: flex !important;           /* Forçar flexbox */
+  justify-content: center !important; /* Forçar centralização horizontal */
+  align-items: center !important;     /* Forçar centralização vertical */
+  padding: 20px;
+  position: relative;
+  /* Adicionar estas propriedades para garantir posicionamento */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Elementos decorativos de fundo */
+.cadastro-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.cadastro-container::after {
+  content: '🍕';
+  position: absolute;
+  font-size: 8rem;
+  opacity: 0.05;
+  top: 10%;
+  right: 10%;
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+.cadastro-form {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
   width: 100%;
-  max-width: 400px;
-  font-family: 'Segoe UI', sans-serif;
+  max-width: 480px;
+  position: relative;
+  overflow: hidden;
+  z-index: 10; /* Garantir que fique por cima */
 }
 
-.login-form h2 {
-  margin-bottom: 1.5rem;
+.cadastro-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ff6b6b, #ff8e53, #ff6348);
+  border-radius: 20px 20px 0 0;
+}
+
+.titulo-principal {
   text-align: center;
-  color: #0077cc;
+  margin-bottom: 10px;
 }
 
-.login-form label {
+.titulo-principal h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.8rem;
+  background: linear-gradient(135deg, #ff6b6b, #c44569);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitulo {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 300;
+}
+
+.form-grupo {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.form-grupo label {
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   font-weight: 500;
+  color: #2c2c2c;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.form-grupo input,
+.form-grupo select {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid #e1e1e1;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #fafafa;
   color: #333;
 }
 
-.login-form input {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+.form-grupo input:focus,
+.form-grupo select:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  background: white;
+  box-shadow: 
+    0 0 0 3px rgba(255, 107, 107, 0.1),
+    0 4px 12px rgba(255, 107, 107, 0.15);
+  transform: translateY(-2px);
 }
 
-.login-form .botao {
+.form-grupo input::placeholder {
+  color: #aaa;
+  font-weight: 300;
+}
+
+/* Inputs em linha para nome e sobrenome */
+.form-linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+/* Wrapper para senha com toggle */
+.senha-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.senha-wrapper input {
+  padding-right: 50px;
+}
+
+.toggle-senha {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 5px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.toggle-senha:hover {
+  background: #f0f0f0;
+  color: #ff6b6b;
+}
+
+/* Botão principal */
+.btn-cadastrar {
   width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  background-color: #0077cc;
+  padding: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
 }
 
-.login-form .botao:hover {
-  background-color: #005fa3;
+.btn-cadastrar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
 
-.login-form .erro {
-  color: red;
+.btn-cadastrar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+  background: linear-gradient(135deg, #ff5252, #ff7043);
+}
+
+.btn-cadastrar:hover::before {
+  left: 100%;
+}
+
+.btn-cadastrar:active {
+  transform: translateY(0);
+}
+
+/* Mensagens de erro */
+.erro {
+  color: #e74c3c;
   font-size: 0.85rem;
-  margin-top: -8px;
-  margin-bottom: 8px;
-  display: block;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 400;
+  justify-content: center; /* Centralizar mensagem de erro */
+  margin-bottom: 15px;     /* Espaçamento melhor */
 }
 
+.erro::before {
+  content: '⚠️';
+  font-size: 0.9rem;
+}
+
+/* Link para login */
+.link-login {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #e1e1e1;
+}
+
+.link-login p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.link-login a {
+  color: #ff6b6b;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.link-login a:hover {
+  color: #ff5252;
+  text-decoration: underline;
+}
+
+/* Animações de entrada */
 .fade-in {
-  animation: fadeIn 0.8s ease-in-out;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes fadeIn {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(-15px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -76,23 +317,42 @@
   }
 }
 
-.senha-wrapper {
-  display: flex;
-  align-items: center;
-  position: relative;
+/* Responsividade */
+@media (max-width: 640px) {
+  .cadastro-container {
+    padding: 15px;
+  }
+  
+  .cadastro-form {
+    padding: 30px 25px;
+    margin: 10px;
+  }
+  
+  .titulo-principal h1 {
+    font-size: 2.2rem;
+  }
+  
+  .form-linha {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .form-grupo {
+    margin-bottom: 20px;
+  }
 }
 
-.senha-wrapper input {
-  flex: 1;
-  padding-right: 2.5rem;
-}
-
-.toggle-senha {
-  position: absolute;
-  right: 0.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: #666;
+@media (max-width: 480px) {
+  .cadastro-form {
+    padding: 25px 20px;
+  }
+  
+  .titulo-principal h1 {
+    font-size: 1.9rem;
+  }
+  
+  .cadastro-container::after {
+    font-size: 4rem;
+    opacity: 0.03;
+  }
 }
