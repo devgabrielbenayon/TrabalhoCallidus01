@@ -10,6 +10,9 @@ const TabelaLivros = ({livros, removerLivro}) => {
         removerLivro(livro)
   }
 
+
+  // teste
+  
   const tooltipStyle = {
     backgroundColor:"f9f9f9",
     color:"#333",
