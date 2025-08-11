@@ -29,7 +29,7 @@ const Login = () => {
         <form onSubmit={handleSubmit} className='login-form'>
             <div className='logo-section'>
                 <div className='pizza-icon'>🍕</div>
-                <h2>EPAA Pizzaria</h2>
+                <h2>EA Pizzaria</h2>
                 <p className='subtitle'>Faça login para continuar</p>
             </div>
             
