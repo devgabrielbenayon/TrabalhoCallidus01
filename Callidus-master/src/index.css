@@ -1,11 +1,55 @@
+/* =============================================
+   INDEX.CSS - IDENTIDADE VISUAL EPAA PIZZARIA
+   ============================================= */
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  /* Fontes da pizzaria */
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.6;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Esquema de cores da pizzaria */
+  color-scheme: light;
+  
+  /* Cores principais */
+  --cor-primaria: #c6461f;           /* Laranja queimado - cor principal */
+  --cor-secundaria: #8b4513;         /* Marrom saddle - cor secundária */
+  --cor-terciaria: #d2691e;          /* Peru - cor de apoio */
+  --cor-acento: #ff4500;             /* Laranja forte - acentos */
+  
+  /* Cores neutras */
+  --cor-texto-principal: #333;    /* Marrom escuro para textos */
+  --cor-texto-secundario: #555555;   /* Cinza médio para subtextos */
+  --cor-fundo: #333;              /* Branco para fundos */
+  --cor-fundo-alternativo: #faf8f5;  /* Bege claro para alternância */
+  
+  /* Cores de feedback */
+  --cor-sucesso: #28a745;            /* Verde para sucessos */
+  --cor-erro: #dc3545;               /* Vermelho para erros */
+  --cor-aviso: #ffc107;              /* Amarelo para avisos */
+  --cor-info: #17a2b8;               /* Azul para informações */
+  
+  /* Gradientes */
+  --gradiente-principal: linear-gradient(135deg, #d2691e 0%, #8b4513 50%, #a0522d 100%);
+  --gradiente-botao: linear-gradient(45deg, #c6461f, #ff4500);
+  --gradiente-fundo-claro: linear-gradient(145deg, #fff 0%, #faf8f5 100%);
+  
+  /* Sombras */
+  --sombra-suave: 0 2px 8px rgba(198, 70, 31, 0.1);
+  --sombra-media: 0 4px 12px rgba(198, 70, 31, 0.15);
+  --sombra-forte: 0 8px 24px rgba(198, 70, 31, 0.2);
+  
+  /* Bordas */
+  --borda-radius: 8px;
+  --borda-radius-grande: 12px;
+  --borda-cor: #e0d5c7;
+  
+  /* Transições */
+  --transicao-padrao: all 0.3s ease;
+  --transicao-rapida: all 0.2s ease;
+  
+  color: var(--cor-texto-principal);
+  background-color: var(--cor-fundo);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,56 +57,325 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+/* Estilos do body */
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  padding: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto-principal);
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.6;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+/* Links */
+a {
   font-weight: 500;
+  color: var(--cor-primaria);
+  text-decoration: none;
+  transition: var(--transicao-rapida);
+  border-bottom: 1px solid transparent;
+}
+
+a:hover {
+  color: var(--cor-acento);
+  border-bottom-color: var(--cor-acento);
+  text-shadow: 0 1px 2px rgba(198, 70, 31, 0.2);
+}
+
+a:focus {
+  outline: 2px solid var(--cor-acento);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Títulos */
+h1 {
+  font-size: 2.8em;
+  line-height: 1.2;
+  color: var(--cor-primaria);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 2.2em;
+  line-height: 1.3;
+  color: var(--cor-secundaria);
+  margin-bottom: 0.75em;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.6em;
+  line-height: 1.4;
+  color: var(--cor-primaria);
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+h4, h5, h6 {
+  color: var(--cor-texto-principal);
+  margin-bottom: 0.5em;
+}
+
+/* Parágrafos */
+p {
+  margin-bottom: 1em;
+  color: var(--cor-texto-secundario);
+}
+
+/* Botões */
+button {
+  border-radius: var(--borda-radius);
+  border: 2px solid transparent;
+  padding: 0.75em 1.5em;
+  font-size: 1em;
+  font-weight: 600;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background: var(--gradiente-botao);
+  color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: var(--transicao-padrao);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--sombra-suave);
 }
+
 button:hover {
-  border-color: #646cff;
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-media);
+  border-color: var(--cor-acento);
 }
+
+button:active {
+  transform: translateY(0);
+  box-shadow: var(--sombra-suave);
+}
+
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 3px solid rgba(255, 69, 0, 0.3);
+  outline-offset: 2px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Botões secundários */
+button.secundario {
+  background: transparent;
+  color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+
+button.secundario:hover {
+  background: var(--cor-primaria);
+  color: white;
+}
+
+/* Formulários */
+input, textarea, select {
+  width: 100%;
+  padding: 0.75em 1em;
+  font-size: 1em;
+  font-family: inherit;
+  border: 2px solid var(--borda-cor);
+  border-radius: var(--borda-radius);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto-principal);
+  transition: var(--transicao-rapida);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px rgba(198, 70, 31, 0.1);
+}
+
+input::placeholder, textarea::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  color: var(--cor-secundaria);
+}
+
+/* Tabelas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  background: var(--cor-fundo);
+  border-radius: var(--borda-radius);
+  overflow: hidden;
+  box-shadow: var(--sombra-suave);
+}
+
+th, td {
+  padding: 0.75em 1em;
+  text-align: left;
+  border-bottom: 1px solid var(--borda-cor);
+}
+
+th {
+  background: var(--gradiente-fundo-claro);
+  font-weight: 600;
+  color: var(--cor-texto-principal);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9em;
+}
+
+tr:hover {
+  background-color: var(--cor-fundo-alternativo);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Cards e containers */
+.card, .container {
+  background: var(--cor-fundo);
+  border-radius: var(--borda-radius-grande);
+  box-shadow: var(--sombra-media);
+  padding: 2em;
+  margin: 1em 0;
+}
+
+/* Utilitários de cor */
+.text-primary { color: var(--cor-primaria); }
+.text-secondary { color: var(--cor-secundaria); }
+.text-success { color: var(--cor-sucesso); }
+.text-danger { color: var(--cor-erro); }
+.text-warning { color: var(--cor-aviso); }
+.text-info { color: var(--cor-info); }
+
+.bg-primary { background-color: var(--cor-primaria); }
+.bg-secondary { background-color: var(--cor-secundaria); }
+.bg-light { background-color: var(--cor-fundo-alternativo); }
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cor-fundo-alternativo);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cor-primaria);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cor-acento);
+}
+
+/* Seleção de texto */
+::selection {
+  background-color: rgba(198, 70, 31, 0.2);
+  color: var(--cor-texto-principal);
+}
+
+/* Animações personalizadas */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  a:hover {
-    color: #747bff;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 60%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  80% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Classes utilitárias de animação */
+.slide-in {
+  animation: slideIn 0.6s ease-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.bounce {
+  animation: bounce 2s infinite;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.2em;
+  }
+  
+  h2 {
+    font-size: 1.8em;
+  }
+  
   button {
-    background-color: #f9f9f9;
+    padding: 0.65em 1.2em;
+    font-size: 0.9em;
+  }
+  
+  .card, .container {
+    padding: 1.5em;
+    margin: 0.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8em;
+  }
+  
+  h2 {
+    font-size: 1.5em;
+  }
+  
+  button {
+    padding: 0.6em 1em;
+    font-size: 0.85em;
   }
 }

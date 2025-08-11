@@ -7,7 +7,7 @@ import {
   useParams,
   useLocation
 } from "react-router-dom";
-import TabelaLivros from "./components/TabelaLivros";
+import Cardapio from "./components/Cardapio";
 import CadastrarLivros from "./components/CadastrarLivros";
 import SplashScreen from "./screen/SplashScreen";
 import Header from "./components/Header";
@@ -18,10 +18,55 @@ import "./App.css";
 
 // --- Componente principal ---
 const App = () => {
-  const [livros, setLivros] = useState([
-    { id: 1, isbn: "978-85-7522-403-8", titulo: "HTML5 - 2ª Edição", autor: "Maurício Samy Silva" },
-    { id: 2, isbn: "978-85-7522-807-4", titulo: "Introdução ao Pentest", autor: "Daniel Moreno" },
-    { id: 3, isbn: "978-85-7522-780-8", titulo: "Internet das Coisas", autor: "Ricardo Ogliari" }
+  const [pizzas, setPizzas] = useState([
+    {
+      id: 1,
+      nome: "Margherita",
+      ingredientes: "Molho de tomate, mussarela, manjericão fresco",
+      preco: 32.90,
+      tamanho: "Grande",
+      categoria: "Tradicional"
+    },
+    {
+      id: 2,
+      nome: "Calabresa",
+      ingredientes: "Molho de tomate, mussarela, calabresa, cebola",
+      preco: 35.90,
+      tamanho: "Grande",
+      categoria: "Tradicional"
+    },
+    {
+      id: 3,
+      nome: "Portuguesa",
+      ingredientes: "Molho de tomate, mussarela, presunto, ovos, cebola, azeitona",
+      preco: 42.90,
+      tamanho: "Grande",
+      categoria: "Especial"
+    },
+    {
+      id: 4,
+      nome: "Quatro Queijos",
+      ingredientes: "Molho branco, mussarela, gorgonzola, parmesão, provolone",
+      preco: 45.90,
+      tamanho: "Grande",
+      categoria: "Especial"
+    },
+    {
+      id: 5,
+      nome: "Pepperoni",
+      ingredientes: "Molho de tomate, mussarela, pepperoni, orégano",
+      preco: 38.90,
+      tamanho: "Grande",
+      categoria: "Tradicional"
+    },
+    {
+      id: 6,
+      nome: "Frango Catupiry",
+      ingredientes: "Molho de tomate, mussarela, frango desfiado, catupiry",
+      preco: 39.90,
+      tamanho: "Grande",
+      categoria: "Especial"
+    }
   ]);
 
   const [carregando, setCarregando] = useState(true);
@@ -31,19 +76,19 @@ const App = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const inserirLivro = (livro) => {
-    livro.id = livros.length + 1;
-    setLivros((prev) => [...prev, livro]);
+  const inserirPizza = (pizza) => {
+    pizza.id = pizzas.length + 1;
+    setPizzas((prev) => [...prev, pizza]);
   };
 
-  const editarLivro = (livro) => {
-    const atualizados = livros.map((p) => (p.id === livro.id ? livro : p));
-    setLivros(atualizados);
+  const editarPizza = (pizza) => {
+    const atualizados = pizzas.map((p) => (p.id === pizza.id ? pizza : p));
+    setPizzas(atualizados);
   };
 
-  const removerLivro = (livro) => {
-    if (window.confirm("Remover esse livro?")) {
-      setLivros((prev) => prev.filter((p) => p.isbn !== livro.isbn));
+  const removerPizza = (pizza) => {
+    if (window.confirm("Remover essa pizza do cardápio?")) {
+      setPizzas((prev) => prev.filter((p) => p.id !== pizza.id));
     }
   };
 
@@ -53,10 +98,10 @@ const App = () => {
     <Router>
       <AuthProvider>
         <AppLayout
-          livros={livros}
-          inserirLivro={inserirLivro}
-          editarLivro={editarLivro}
-          removerLivro={removerLivro}
+          pizzas={pizzas}
+          inserirPizza={inserirPizza}
+          editarPizza={editarPizza}
+          removerPizza={removerPizza}
         />
       </AuthProvider>
     </Router>
@@ -64,7 +109,7 @@ const App = () => {
 };
 
 // --- Layout com rotas protegidas e header ---
-const AppLayout = ({ livros, inserirLivro, editarLivro, removerLivro }) => {
+const AppLayout = ({ pizzas, inserirPizza, editarPizza, removerPizza }) => {
   const location = useLocation();
   const mostrarHeader = location.pathname !== "/login";
 
@@ -76,12 +121,12 @@ const AppLayout = ({ livros, inserirLivro, editarLivro, removerLivro }) => {
 
         {/* Grupo de rotas protegidas */}
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<TabelaLivros livros={livros} removerLivro={removerLivro} />} />
+          <Route path="/" element={<Cardapio />} />
           <Route
             path="/cadastrar"
             element={
               <CadastrarLivros
-                inserirLivro={inserirLivro}
+                inserirLivro={inserirPizza}
                 livro={{ id: 0, isbn: "", titulo: "", autor: "" }}
               />
             }
@@ -89,7 +134,7 @@ const AppLayout = ({ livros, inserirLivro, editarLivro, removerLivro }) => {
           <Route
             path="/editar/:isbnLivro"
             element={
-              <CadastrarLivrosWrapper livros={livros} editarLivro={editarLivro} />
+              <CadastrarLivrosWrapper pizzas={pizzas} editarPizza={editarPizza} />
             }
           />
         </Route>
@@ -101,17 +146,17 @@ const AppLayout = ({ livros, inserirLivro, editarLivro, removerLivro }) => {
 };
 
 // --- Wrapper para edição ---
-const CadastrarLivrosWrapper = ({ livros, editarLivro }) => {
+const CadastrarLivrosWrapper = ({ pizzas, editarPizza }) => {
   const { isbnLivro } = useParams();
   const navigate = useNavigate();
-  const livro = livros.find((livro) => livro.isbn === isbnLivro);
+  const pizza = pizzas.find((pizza) => pizza.id.toString() === isbnLivro);
 
-  if (!livro) {
+  if (!pizza) {
     navigate("/");
     return null;
   }
 
-  return <CadastrarLivros livro={livro} editarLivro={editarLivro} />;
+  return <CadastrarLivros livro={pizza} editarLivro={editarPizza} />;
 };
 
 // --- Página de não encontrado ---
