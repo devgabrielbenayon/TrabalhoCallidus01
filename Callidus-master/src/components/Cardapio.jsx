@@ -118,7 +118,7 @@ const Cardapio = () => {
           marginBottom: "10px",
           fontFamily: "Georgia, serif"
         }}>
-          🍕 EPAA Pizzaria
+          🍕 EPA Pizzaria
         </h1>
         <p style={{ 
           color: "#666", 

@@ -24,13 +24,14 @@ const Header = () => {
     <header className={`app-header${show ? '' : ' header-hide'}`}>
       <div className='header-content'>
         <div className='logo-area'>
-          <img src='/imagens/callidus-logo.png' alt='Logo' className='header-logo'/>
-          <span className='app-title'>LIVRARIA</span>
+          <img src='../logo.png' alt='Logo' className='header-logo'/>
         </div>
         <nav className='nav-links'>
-          <Link to="/" className={location.pathname === "/" ? "active" : ""}>Home</Link>
-          <Link to="/cadastrar" className={location.pathname === "/cadastrar" ? "active" : ""}>Cadastrar</Link>
-          <Link to="/tabela-livros" className={location.pathname === "/tabela-livros" ? "active" : ""}>Gerenciar Livros</Link>
+          <Link to="/" className={location.pathname === "/" ? "active" : ""}>Menu</Link>
+          <Link to="/cadastrar" className={location.pathname === "/cadastrar" ? "active" : ""}>Cozinha</Link> 
+          <Link to="/tabela-livros" className={location.pathname === "/tabela-livros" ? "active" : ""}>Entregas</Link>
+          <Link to="/carrinho" className={location.pathname === "/carrinho" ? "active" : ""}>🛒</Link>
+          <Link to="/admin" className={location.pathname === "/Admin" ? "active" : ""}>Admin</Link>
 
         </nav>
       </div>      
