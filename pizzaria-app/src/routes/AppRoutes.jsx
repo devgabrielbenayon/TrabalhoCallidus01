@@ -1,17 +1,19 @@
 // src/routes/AppRoutes.jsx
+
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-// Importação das páginas (CORRIGIDO com ../)
+// Importação das Páginas
 import Login from '../pages/Login';
 import Cardapio from '../pages/Cardapio';
+import CarrinhoPage from '../pages/Carrinho'; // 1. Importe a nova página
 import Cozinha from '../pages/Cozinha';
 import Entregas from '../pages/Entregas';
 import Admin from '../pages/Admin';
 import NotFound from '../pages/NotFound';
 
-// Importação de componentes (CORRIGIDO com ../)
+// Importação de Componentes
 import Header from '../components/Header';
-import ProtectedRoute from './ProtectedRoute'; // Este está correto porque está na mesma pasta
+import ProtectedRoute from './ProtectedRoute';
 
 const AppRoutes = () => {
   return (
@@ -23,6 +25,7 @@ const AppRoutes = () => {
           <Route path="/" element={<Navigate to="/cardapio" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cardapio" element={<Cardapio />} />
+          <Route path="/carrinho" element={<CarrinhoPage />} /> {/* 2. Rota para o carrinho adicionada aqui */}
 
           {/* Rotas Protegidas */}
           <Route

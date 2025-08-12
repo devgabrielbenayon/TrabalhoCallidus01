@@ -1,8 +1,8 @@
-// src/pages/Login.jsx (Método Global)
+// src/pages/Login.jsx
 import React, { useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-import './Login.css'; // Importação alterada
+import { AuthContext } from '../context/AuthProvider'; // <-- Verifique esta importação!
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,10 +17,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    if (!email || !senha) {
-      setError('Por favor, preencha todos os campos.');
-      return;
-    }
     try {
       await login(email, senha);
       navigate(from, { replace: true });
@@ -31,7 +27,6 @@ const Login = () => {
   };
 
   return (
-    // ClassNames alteradas para strings
     <div className="loginContainer">
       <h1 className="title">Acesso Restrito</h1>
       <form onSubmit={handleSubmit} className="form">

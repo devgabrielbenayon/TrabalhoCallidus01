@@ -1,0 +1,99 @@
+/* src/pages/CarrinhoPage.css */
+.carrinho-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+}
+
+.carrinho-vazio {
+    text-align: center;
+    padding: 4rem;
+}
+
+.carrinho-vazio h1 {
+    color: var(--cor-secundaria);
+}
+
+.botao-cardapio {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--cor-primaria);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.lista-itens {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.item-carrinho {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--borda-cor);
+}
+
+.item-carrinho:last-child {
+    border-bottom: none;
+}
+
+.item-imagem {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.item-detalhes {
+    flex-grow: 1;
+}
+
+.item-detalhes h2 {
+    margin: 0 0 0.5rem 0;
+}
+
+.item-acoes {
+    text-align: right;
+}
+
+.botao-remover {
+    margin-top: 0.5rem;
+    background-color: transparent;
+    border: 1px solid #777;
+    color: #ccc;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+}
+.botao-remover:hover {
+    background-color: #333;
+}
+
+.carrinho-rodape {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--cor-secundaria);
+    text-align: right;
+}
+
+.rodape-botoes {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.botao-limpar {
+    background-color: #6c757d;
+}
+
+.botao-finalizar {
+    background-color: var(--cor-primaria);
+}
