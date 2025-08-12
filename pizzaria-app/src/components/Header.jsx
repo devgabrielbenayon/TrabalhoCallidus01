@@ -20,7 +20,9 @@ const Header = () => {
   return (
     <header className="header">
       <div className="logo">
-        <NavLink to="/">Pizzaria<span>Dev</span></NavLink>
+        <NavLink to="/">
+        <img src='../logo.png' alt='Logo' className='header-logo'/>
+        </NavLink>
       </div>
 
       <nav className="nav">

@@ -8,10 +8,22 @@
   border-bottom: 2px solid var(--cor-primaria);
 }
 
+/* --- NOVO ESTILO PARA O LOGO --- */
+.header-logo {
+  height: 120px; /* Define a altura do logo. Ajuste este valor conforme necessário. */
+  width: auto;  /* Garante que a largura se ajuste para manter a proporção. */
+  transition: transform 0.2s ease-in-out; /* Adiciona uma transição suave. */
+}
+
+.header-logo:hover {
+  transform: scale(1.05); /* Aumenta levemente o logo ao passar o mouse. */
+}
+/* --- FIM DO NOVO ESTILO --- */
+
 .nav {
   display: flex;
   align-items: center;
-  gap: 2rem; /* Aumentar o espaçamento */
+  gap: 2rem;
 }
 
 .navLink {
@@ -23,6 +35,7 @@
   border-bottom: 2px solid transparent;
   transition: all 0.2s;
 }
+
 .navLink.active, .navLink:hover {
   border-bottom: 2px solid var(--cor-primaria);
   color: var(--cor-primaria);
