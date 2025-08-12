@@ -16,6 +16,7 @@ import Login from "./login/Login";
 import AuthProvider from "./context/AuthContext";
 import PrivateRoute from "./route/PrivateRoute";
 import "./App.css";
+import Carrinho from "./components/Carrinho";
 
 // --- Componente principal ---
 const App = () => {
@@ -149,9 +150,9 @@ const AppLayout = ({ pizzas, pedidos, inserirPizza, editarPizza, removerPizza, a
             } 
           />
           <Route
-            path="/cadastrar"
+            path="/carrinho"
             element={
-              <CadastrarLivros
+              <Carrinho
                 inserirLivro={inserirPizza}
                 livro={{ id: 0, isbn: "", titulo: "", autor: "" }}
               />
