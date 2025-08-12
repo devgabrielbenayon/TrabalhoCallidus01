@@ -226,7 +226,7 @@ table {
   margin: 1em 0;
   background: var(--cor-fundo);
   border-radius: var(--borda-radius);
-  overflow: hidden;
+  overflow: auto;
   box-shadow: var(--sombra-suave);
 }
 

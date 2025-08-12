@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Cardapio from "./components/Cardapio";
 import CadastrarLivros from "./components/CadastrarLivros";
+import Cozinha from "./components/Cozinha";
 import SplashScreen from "./screen/SplashScreen";
 import Header from "./components/Header";
 import Login from "./login/Login";
@@ -69,6 +70,9 @@ const App = () => {
     }
   ]);
 
+  // Estado para gerenciar pedidos
+  const [pedidos, setPedidos] = useState([]);
+
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
@@ -92,6 +96,17 @@ const App = () => {
     }
   };
 
+  // Função para atualizar status dos pedidos
+  const atualizarStatusPedido = (pedidoId, novoStatus) => {
+    setPedidos(prevPedidos => 
+      prevPedidos.map(pedido => 
+        pedido.id === pedidoId 
+          ? { ...pedido, status: novoStatus }
+          : pedido
+      )
+    );
+  };
+
   if (carregando) return <SplashScreen />;
 
   return (
@@ -99,9 +114,11 @@ const App = () => {
       <AuthProvider>
         <AppLayout
           pizzas={pizzas}
+          pedidos={pedidos}
           inserirPizza={inserirPizza}
           editarPizza={editarPizza}
           removerPizza={removerPizza}
+          atualizarStatusPedido={atualizarStatusPedido}
         />
       </AuthProvider>
     </Router>
@@ -109,7 +126,7 @@ const App = () => {
 };
 
 // --- Layout com rotas protegidas e header ---
-const AppLayout = ({ pizzas, inserirPizza, editarPizza, removerPizza }) => {
+const AppLayout = ({ pizzas, pedidos, inserirPizza, editarPizza, removerPizza, atualizarStatusPedido }) => {
   const location = useLocation();
   const mostrarHeader = location.pathname !== "/login";
 
@@ -122,6 +139,15 @@ const AppLayout = ({ pizzas, inserirPizza, editarPizza, removerPizza }) => {
         {/* Grupo de rotas protegidas */}
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Cardapio />} />
+          <Route 
+            path="/Cozinha" 
+            element={
+              <Cozinha 
+                pedidos={pedidos} 
+                atualizarStatusPedido={atualizarStatusPedido} 
+              />
+            } 
+          />
           <Route
             path="/cadastrar"
             element={

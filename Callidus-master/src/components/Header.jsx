@@ -28,11 +28,10 @@ const Header = () => {
         </div>
         <nav className='nav-links'>
           <Link to="/" className={location.pathname === "/" ? "active" : ""}>Menu</Link>
-          <Link to="/cadastrar" className={location.pathname === "/cadastrar" ? "active" : ""}>Cozinha</Link> 
+          <Link to="/Cozinha" className={location.pathname === "/Cozinha" ? "active" : ""}>Cozinha</Link>
           <Link to="/tabela-livros" className={location.pathname === "/tabela-livros" ? "active" : ""}>Entregas</Link>
           <Link to="/carrinho" className={location.pathname === "/carrinho" ? "active" : ""}>🛒</Link>
-          <Link to="/admin" className={location.pathname === "/Admin" ? "active" : ""}>Admin</Link>
-
+          <Link to="/admin" className={location.pathname === "/admin" ? "active" : ""}>Admin</Link>
         </nav>
       </div>      
     </header>
