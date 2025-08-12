@@ -2,6 +2,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 
 // A definição do Contexto
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
 
 // O Provedor com a lógica
