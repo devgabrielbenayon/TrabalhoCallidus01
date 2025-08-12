@@ -1,0 +1,14 @@
+/* src/pages/Cardapio.module.css */
+.title {
+  text-align: center;
+  font-size: 3rem;
+  color: var(--cor-secundaria);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
