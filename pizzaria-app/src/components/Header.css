@@ -1,0 +1,65 @@
+/* src/components/Header.module.css */
+.header {
+  background-color: #1f1f1f;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--cor-primaria);
+}
+
+.logo a {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--texto-dark);
+  text-decoration: none;
+}
+
+.logo span {
+  color: var(--cor-primaria);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navLink {
+  color: var(--texto-dark);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding-bottom: 5px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+/* A classe 'active' é adicionada automaticamente pelo NavLink */
+.navLink.active,
+.navLink:hover {
+  color: var(--cor-secundaria);
+  border-bottom-color: var(--cor-secundaria);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.userInfo span {
+  font-weight: 500;
+}
+
+.logoutButton {
+  background-color: transparent;
+  border: 1px solid var(--cor-secundaria);
+  color: var(--cor-secundaria);
+  padding: 0.5em 1em;
+}
+
+.logoutButton:hover {
+  background-color: var(--cor-secundaria);
+  color: var(--fundo-dark);
+}
