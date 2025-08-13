@@ -50,3 +50,21 @@
   font-weight: 600;
   padding: 0.8em;
 }
+
+/* Adicione este código ao final de src/pages/Login.css */
+
+.credentialsInfo {
+  background-color: #333;
+  border: 1px solid var(--borda-cor);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.credentialsInfo p {
+  margin: 0.5rem 0;
+}

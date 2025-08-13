@@ -1,11 +1,8 @@
 // src/context/AuthProvider.jsx
 import React, { createContext, useState, useEffect } from 'react';
 
-// A definição do Contexto
-// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
 
-// O Provedor com a lógica
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,20 +22,20 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, senha) => {
-    // Lógica de login simulada
+    // Verifique se os valores aqui estão exatamente como você espera
     if (email === 'admin@pizzaria.com' && senha === 'admin123') {
         const userData = { nome: 'Admin Chefe', email, role: 'admin' };
         setUser(userData);
         localStorage.setItem('pizzaria_user', JSON.stringify(userData));
-        return; // Termina a função aqui se o login for bem-sucedido
+        return userData;
     }
     if (email === 'cozinha@pizzaria.com' && senha === 'cozinha123') {
         const userData = { nome: 'Chefe Mário', email, role: 'cozinha' };
         setUser(userData);
         localStorage.setItem('pizzaria_user', JSON.stringify(userData));
-        return; // Termina a função aqui se o login for bem-sucedido
+        return userData;
     }
-    // Se nenhuma das condições acima for atendida, lança um erro.
+    // Se nenhuma combinação acima for válida, a função lança um erro
     throw new Error('Credenciais inválidas.');
   };
 

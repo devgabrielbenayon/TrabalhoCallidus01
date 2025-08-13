@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 import React, { useState, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { AuthContext } from '../context/AuthProvider'; // <-- Verifique esta importação!
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthProvider';
 import './Login.css';
 
 const Login = () => {
@@ -10,16 +10,21 @@ const Login = () => {
   const [error, setError] = useState('');
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
-      await login(email, senha);
-      navigate(from, { replace: true });
+      const loggedInUser = await login(email, senha);
+
+      if (loggedInUser.role === 'cozinha') {
+        navigate('/cozinha', { replace: true });
+      } else if (loggedInUser.role === 'admin') {
+        navigate('/admin', { replace: true });
+      } else {
+        navigate('/cardapio', { replace: true });
+      }
+
     } catch (err) {
       setError('E-mail ou senha inválidos. Tente novamente.');
       console.error(err);
@@ -32,24 +37,20 @@ const Login = () => {
       <form onSubmit={handleSubmit} className="form">
         <div className="inputGroup">
           <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="admin@pizzaria.com"
-          />
+          {/* A alteração está aqui: placeholder foi esvaziado */}
+          <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder=""/>
         </div>
         <div className="inputGroup">
           <label htmlFor="password">Senha</label>
-          <input
-            type="password"
-            id="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            placeholder="admin123"
-          />
+          {/* E aqui também: placeholder foi esvaziado */}
+          <input type="password" id="password" value={senha} onChange={(e) => setSenha(e.target.value)} placeholder=""/>
         </div>
+        
+        <div className="credentialsInfo">
+          <p><strong>Admin:</strong> admin@pizzaria.com / admin123</p>
+          <p><strong>Cozinha:</strong> cozinha@pizzaria.com / cozinha123</p>
+        </div>
+        
         {error && <p className="error">{error}</p>}
         <button type="submit" className="submitButton">Entrar</button>
       </form>

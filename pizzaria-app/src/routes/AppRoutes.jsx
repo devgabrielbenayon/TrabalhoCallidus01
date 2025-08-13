@@ -4,7 +4,7 @@ import Login from '../pages/Login';
 import Cardapio from '../pages/Cardapio';
 import Carrinho from '../pages/Carrinho';
 import Cozinha from '../pages/Cozinha';
-import Entregas from '../pages/Entregas'; // Importa a nova página
+import Entregas from '../pages/Entregas';
 import Admin from '../pages/Admin';
 import NotFound from '../pages/NotFound';
 import Header from '../components/Header';
@@ -24,8 +24,11 @@ const AppRoutes = () => {
 
           {/* Rotas Protegidas */}
           <Route path="/cozinha" element={ <ProtectedRoute allowedRoles={['cozinha', 'admin']}> <Cozinha /> </ProtectedRoute> } />
-          {/* Nova rota de Entregas */}
-          <Route path="/entregas" element={ <ProtectedRoute allowedRoles={['admin']}> <Entregas /> </ProtectedRoute> } />
+
+          {/* --- ALTERAÇÃO AQUI --- */}
+          {/* Agora a página de Entregas pode ser acessada por 'cozinha' E 'admin' */}
+          <Route path="/entregas" element={ <ProtectedRoute allowedRoles={['cozinha', 'admin']}> <Entregas /> </ProtectedRoute> } />
+
           <Route path="/admin" element={ <ProtectedRoute allowedRoles={['admin']}> <Admin /> </ProtectedRoute> } />
 
           <Route path="*" element={<NotFound />} />
