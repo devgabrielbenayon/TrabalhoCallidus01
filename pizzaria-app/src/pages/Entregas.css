@@ -1,0 +1,59 @@
+/* src/pages/Entregas.css */
+.entregas-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.entregas-container h1 {
+  color: var(--cor-secundaria);
+}
+
+/* Reutilizando o grid da cozinha */
+.pedidos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Card com uma cor diferente para diferenciar da cozinha */
+.pedido-card-entrega {
+  background-color: #2a2a2a;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--borda-cor);
+  border-left: 5px solid #007bff; /* Borda azul para indicar "pronto" */
+  display: flex;
+  flex-direction: column;
+}
+
+.pedido-card-entrega h3, .pedido-card-entrega ul {
+  /* Estilos herdados ou copiados da Cozinha.css */
+  margin: 0 0 1rem 0;
+  color: var(--cor-secundaria);
+  list-style: none;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.pedido-card-entrega ul {
+  color: var(--texto-dark);
+  margin: 0.5rem 0 1.5rem 0;
+}
+
+.botao-entregue {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #007bff; /* Azul */
+}
+.botao-entregue:hover {
+  background-color: #0056b3;
+}
+
+.nenhum-pedido {
+  font-size: 1.2rem;
+  color: #777;
+}

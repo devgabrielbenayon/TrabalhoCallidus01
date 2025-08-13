@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
-import { CartContext } from '../context/CartContext'; // Aponta para o novo arquivo
+import { CartContext } from '../context/CartContext';
 import './Header.css';
 
 const Header = () => {
@@ -40,6 +40,11 @@ const Header = () => {
             { (user.role === 'cozinha' || user.role === 'admin') && 
               <NavLink to="/cozinha" className={({ isActive }) => isActive ? "navLink active" : "navLink"}>Cozinha</NavLink> 
             }
+            {/* --- NOVO LINK DE ENTREGAS --- */}
+            { (user.role === 'admin') && 
+              <NavLink to="/entregas" className={({ isActive }) => isActive ? "navLink active" : "navLink"}>Entregas</NavLink>
+            }
+            {/* --- FIM DO NOVO LINK --- */}
             { user.role === 'admin' && 
               <NavLink to="/admin" className={({ isActive }) => isActive ? "navLink active" : "navLink"}>Admin</NavLink> 
             }

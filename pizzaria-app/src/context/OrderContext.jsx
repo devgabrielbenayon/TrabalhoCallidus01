@@ -1,27 +1,24 @@
 // src/context/OrderContext.jsx
 import React, { createContext, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid'; // Precisaremos de uma biblioteca para gerar IDs únicos
+import { v4 as uuidv4 } from 'uuid';
 
 export const OrderContext = createContext(null);
 
 export const OrderProvider = ({ children }) => {
   const [pedidos, setPedidos] = useState([]);
 
-  // Função chamada quando o cliente finaliza a compra
   const adicionarPedido = (itensDoCarrinho, valorTotal) => {
     const novoPedido = {
-      id: uuidv4(), // Gera um ID único para o pedido
+      id: uuidv4(),
       itens: itensDoCarrinho,
       valorTotal: valorTotal,
       status: 'preparando', // Status inicial
       hora: new Date(),
-      // Em um app real, aqui teríamos dados do cliente (nome, endereço, etc.)
       cliente: { nome: 'Cliente Teste', endereco: 'Rua das Pizzas, 123' }
     };
     setPedidos(pedidosAtuais => [...pedidosAtuais, novoPedido]);
   };
 
-  // Função chamada pela Cozinha quando o pedido está pronto
   const marcarComoPronto = (pedidoId) => {
     setPedidos(pedidosAtuais =>
       pedidosAtuais.map(p =>
@@ -30,10 +27,22 @@ export const OrderProvider = ({ children }) => {
     );
   };
 
+  // --- NOVA FUNÇÃO PARA MARCAR COMO ENTREGUE ---
+  const marcarComoEntregue = (pedidoId) => {
+    setPedidos(pedidosAtuais =>
+      pedidosAtuais.map(p =>
+        p.id === pedidoId ? { ...p, status: 'entregue' } : p
+      )
+    );
+  };
+  // --- FIM DA NOVA FUNÇÃO ---
+
+
   const valorDoContexto = {
     pedidos,
     adicionarPedido,
     marcarComoPronto,
+    marcarComoEntregue, // Expondo a nova função
   };
 
   return (
