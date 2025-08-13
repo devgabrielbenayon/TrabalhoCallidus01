@@ -5,11 +5,9 @@ import { OrderContext } from '../context/OrderContext';
 import './Admin.css';
 
 const Admin = () => {
-  // Contextos para gerenciar pizzas e ver pedidos
   const { pizzas, adicionarPizza, excluirPizza } = useContext(MenuContext);
   const { pedidos } = useContext(OrderContext);
 
-  // Estado local para o formulário de nova pizza
   const [novaPizza, setNovaPizza] = useState({
     nome: '',
     ingredientes: '',
@@ -39,7 +37,6 @@ const Admin = () => {
       }
     };
     adicionarPizza(pizzaParaAdicionar);
-    // Limpa o formulário
     setNovaPizza({ nome: '', ingredientes: '', preco_p: '', preco_m: '', preco_g: '', imagem: '', categoria: '' });
   };
 
@@ -47,20 +44,20 @@ const Admin = () => {
     <div className="admin-container">
       <h1>Painel de Administração</h1>
 
-      {/* Seção de Gerenciamento do Cardápio */}
       <section className="admin-section">
         <h2>Gerenciar Cardápio</h2>
         
-        {/* --- O FORMULÁRIO QUE ESTAVA FALTANDO --- */}
         <form onSubmit={handleSubmit} className="pizza-form">
           <h3>Adicionar Nova Pizza</h3>
           <div className="form-group">
             <label>Nome da Pizza</label>
-            <input type="text" name="nome" value={novaPizza.nome} onChange={handleChange} required />
+            {/* --- PLACEHOLDER ADICIONADO --- */}
+            <input type="text" name="nome" value={novaPizza.nome} onChange={handleChange} required placeholder="Ex: Calabresa" />
           </div>
           <div className="form-group">
             <label>Ingredientes (separados por vírgula)</label>
-            <input type="text" name="ingredientes" value={novaPizza.ingredientes} onChange={handleChange} required />
+            {/* --- PLACEHOLDER ADICIONADO --- */}
+            <input type="text" name="ingredientes" value={novaPizza.ingredientes} onChange={handleChange} required placeholder="molho, queijo, calabresa" />
           </div>
           <div className="form-group">
             <label>Preço P</label>
@@ -76,7 +73,8 @@ const Admin = () => {
           </div>
           <div className="form-group">
             <label>URL da Imagem</label>
-            <input type="text" name="imagem" value={novaPizza.imagem} onChange={handleChange} required />
+            {/* --- PLACEHOLDER ADICIONADO --- */}
+            <input type="text" name="imagem" value={novaPizza.imagem} onChange={handleChange} required placeholder="https://exemplo.com/imagem.png" />
           </div>
           <div className="form-group">
             <label>Categoria</label>
@@ -84,7 +82,6 @@ const Admin = () => {
           </div>
           <button type="submit" className="form-button">Adicionar Pizza</button>
         </form>
-        {/* --- FIM DO FORMULÁRIO --- */}
 
         <hr style={{ margin: '2rem 0' }} />
 
@@ -104,7 +101,6 @@ const Admin = () => {
         </ul>
       </section>
 
-      {/* Seção de Histórico de Pedidos */}
       <section className="admin-section">
         <h2>Histórico de Pedidos</h2>
         <ul className="lista-admin">

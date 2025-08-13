@@ -60,12 +60,6 @@
   color: white;
 }
 
-/* Sobrescreve a cor do texto dos botões apenas no Modo Claro */
-.theme-light .botao-limpar,
-.theme-light .botao-finalizar {
-  color: #212529;
-}
-
 .detalhes-pedido-form {
   margin-top: 2rem;
   padding-top: 2rem;
