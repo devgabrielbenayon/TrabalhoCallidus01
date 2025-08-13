@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react';
+// src/pages/Cardapio.jsx
+import React, { useContext } from 'react'; // Importe useContext
 import PizzaCard from '../components/PizzaCard';
+import { MenuContext } from '../context/MenuContext'; // Importe o MenuContext
 import './Cardapio.css';
 
-// Importe os dados do arquivo JSON.
-// O React (com Create React App ou Vite) automaticamente converterá o JSON em um objeto JavaScript.
-import pizzasData from '/public/api/pizzas.json';
-
 const Cardapio = () => {
-  const [pizzas, setPizzas] = useState([]);
-
-  // useEffect para simular uma chamada de API ao montar o componente.
-  useEffect(() => {
-    // Em um cenário real, aqui você faria a chamada para sua API, ex: fetch('/api/pizzas')
-    // Para simular, vamos apenas definir os dados importados no estado do componente.
-    setPizzas(pizzasData);
-  }, []); // O array de dependências vazio [] garante que o efeito seja executado apenas uma vez.
+  // Pega as pizzas diretamente do contexto, não mais de um estado local!
+  const { pizzas } = useContext(MenuContext);
 
   return (
     <div>
