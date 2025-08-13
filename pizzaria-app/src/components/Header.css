@@ -1,6 +1,6 @@
 /* src/components/Header.css */
 .header {
-  background-color: #1f1f1f;
+  background-color: #1f1f1f; /* Fundo sempre escuro */
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
@@ -8,17 +8,15 @@
   border-bottom: 2px solid var(--cor-primaria);
 }
 
-/* --- NOVO ESTILO PARA O LOGO --- */
 .header-logo {
-  height: 120px; /* Define a altura do logo. Ajuste este valor conforme necessário. */
-  width: auto;  /* Garante que a largura se ajuste para manter a proporção. */
-  transition: transform 0.2s ease-in-out; /* Adiciona uma transição suave. */
+  height: 120px;
+  width: auto;
+  transition: transform 0.2s ease-in-out;
 }
 
 .header-logo:hover {
-  transform: scale(1.05); /* Aumenta levemente o logo ao passar o mouse. */
+  transform: scale(1.05);
 }
-/* --- FIM DO NOVO ESTILO --- */
 
 .nav {
   display: flex;
@@ -27,7 +25,9 @@
 }
 
 .navLink {
-  color: var(--texto-dark);
+  /* --- CORREÇÃO AQUI --- */
+  /* Antes, a cor dependia do tema. Agora, definimos uma cor clara fixa. */
+  color: #f0f0f0;
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 500;
@@ -36,6 +36,7 @@
   transition: all 0.2s;
 }
 
+/* O estado ativo/hover continua usando a cor primária, que funciona em ambos os temas */
 .navLink.active, .navLink:hover {
   border-bottom: 2px solid var(--cor-primaria);
   color: var(--cor-primaria);
@@ -47,11 +48,10 @@
   gap: 1rem;
 }
 
-/* Estilos para o novo link do carrinho */
 .cart-nav-link {
   position: relative;
-  font-size: 1.5rem;
-  padding: 4px;
+  font-size: 1.8rem;
+  padding: 5px;
   line-height: 1;
 }
 
@@ -66,4 +66,49 @@
   font-size: 0.8rem;
   font-weight: bold;
   border: 2px solid #1f1f1f;
+}
+
+/* Dentro de src/components/Header.css */
+
+.logoutButton {
+  background-color: var(--cor-primaria);
+  color: white;
+  border: none;
+  padding: 0.6em 1.2em;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit; /* Garante que a fonte seja a mesma do resto do site */
+  font-size: 1em; /* Garante que o tamanho da fonte seja consistente */
+  transition: filter 0.2s;
+}
+
+.logoutButton:hover {
+  filter: brightness(1.1);
+}
+
+.controles-direita {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.theme-toggle-button {
+  background: none;
+  border: 1px solid var(--borda-cor);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  /* Adicionando cor ao ícone para garantir visibilidade */
+  color: var(--texto-principal); 
+}
+.theme-toggle-button:hover {
+  background-color: #333; /* Cor fixa para o hover */
+  transform: rotate(15deg);
 }

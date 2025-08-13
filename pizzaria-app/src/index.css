@@ -1,31 +1,45 @@
 /* src/index.css */
+/* src/index.css */
 :root {
+  /* CORES PADRÃO (TEMA ESCURO) */
   --cor-primaria: #e32d2d;
   --cor-secundaria: #ffc107;
-  --fundo-dark: #1a1a1a;
-  --fundo-light: #ffffff;
-  --texto-dark: #f0f0f0;
-  --texto-light: #212529;
+  --fundo: #1a1a1a;
+  --fundo-componente: #2a2a2a;
+  --texto-principal: #f0f0f0;
+  --texto-secundario: #ccc;
   --borda-cor: #444;
 
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
   font-weight: 400;
-  
-  color-scheme: dark;
-  background-color: var(--fundo-dark);
-  color: var(--texto-dark);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* SOBRESCREVE AS CORES QUANDO O TEMA CLARO ESTIVER ATIVO */
+.theme-light {
+  --cor-primaria: #d9480f;
+  --cor-secundaria: #f59f00;
+  --fundo: #f8f9fa;
+  --fundo-componente: #ffffff;
+  --texto-principal: #212529;
+  --texto-secundario: #495057;
+  --borda-cor: #dee2e6;
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
+  background-color: var(--fundo);
+  color: var(--texto-principal);
+  transition: background-color 0.3s, color 0.3s;
 }
+
+/* ... resto do seu CSS global (botões, links, etc.) continua o mesmo, 
+   pois eles já usam as variáveis de cor ... */
 
 a {
   color: var(--cor-secundaria);
