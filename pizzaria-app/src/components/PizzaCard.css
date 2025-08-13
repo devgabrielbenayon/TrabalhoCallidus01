@@ -1,6 +1,7 @@
-/* src/components/PizzaCard.module.css */
+/* src/components/PizzaCard.css */
 .card {
-  background-color: #2a2a2a;
+  /* ALTERAÇÃO AQUI: Usando a variável de tema para o fundo */
+  background-color: var(--fundo-componente);
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid var(--borda-cor);
@@ -36,7 +37,8 @@
 
 .ingredients {
   margin: 0 0 1.5rem 0;
-  color: #ccc;
+  /* ALTERAÇÃO AQUI: Usando a variável para o texto secundário */
+  color: var(--texto-secundario);
   flex-grow: 1;
 }
 
@@ -49,15 +51,16 @@
 .price {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--texto-dark);
+  /* ALTERAÇÃO AQUI: Usando a variável para o texto principal */
+  color: var(--texto-principal);
 }
 
 .addButton {
   font-size: 1rem;
   font-weight: 600;
+  background-color: var(--cor-primaria);
+  color: white; /* Cor do texto do botão pode ser fixa, pois o fundo é sempre forte */
 }
-
-/* Adicione este código ao final do seu src/components/PizzaCard.css */
 
 .tamanho-seletor {
   display: flex;

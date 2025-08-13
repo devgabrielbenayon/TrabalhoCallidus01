@@ -1,192 +1,128 @@
-/* src/pages/CarrinhoPage.css */
+/* src/pages/Carrinho.css */
+
 .carrinho-container {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #2a2a2a;
-    border-radius: 8px;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--fundo-componente);
+  border: 1px solid var(--borda-cor);
+  border-radius: 8px;
 }
 
 .carrinho-vazio {
-    text-align: center;
-    padding: 4rem;
+  text-align: center;
+  padding: 4rem;
 }
 
 .carrinho-vazio h1 {
-    color: var(--cor-secundaria);
+  color: var(--cor-secundaria);
 }
 
 .botao-cardapio {
-    display: inline-block;
-    margin-top: 2rem;
-    padding: 0.8rem 1.5rem;
-    background-color: var(--cor-primaria);
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.8rem 1.5rem;
+  background-color: var(--cor-primaria);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 .lista-itens {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.item-carrinho {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid var(--borda-cor);
-}
-
-.item-carrinho:last-child {
-    border-bottom: none;
-}
-
-.item-imagem {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-.item-detalhes {
-    flex-grow: 1;
-}
-
-.item-detalhes h2 {
-    margin: 0 0 0.5rem 0;
-}
-
-.item-acoes {
-    text-align: right;
-}
-
-.botao-remover {
-    margin-top: 0.5rem;
-    background-color: transparent;
-    border: 1px solid #777;
-    color: #ccc;
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
-}
-.botao-remover:hover {
-    background-color: #333;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .carrinho-rodape {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 2px solid var(--cor-secundaria);
-    text-align: right;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--cor-secundaria);
+  text-align: right;
 }
 
 .rodape-botoes {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.5rem;
 }
 
+/* Estilos Padrão (Modo Escuro) dos Botões */
 .botao-limpar {
-    background-color: #6c757d;
+  background-color: #6c757d;
+  color: white;
 }
 
 .botao-finalizar {
-    background-color: var(--cor-primaria);
-}
-
-/* Adicione estes estilos no final do seu src/pages/Carrinho.css */
-
-.item-quantidade-controle {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  margin: 0.5rem 0;
-}
-
-.item-quantidade-controle span {
-  font-size: 1.1rem;
-  font-weight: bold;
-  min-width: 20px;
-  text-align: center;
-}
-
-/* src/pages/Carrinho.css */
-
-.botao-quantidade {
-  background-color: #555;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 24px;         /* <-- Diminuí de 30px para 24px */
-  height: 24px;        /* <-- Diminuí de 30px para 24px */
-  font-size: 1rem;     /* <-- Diminuí de 1.2rem para 1rem */
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  transition: background-color 0.2s;
-}
-
-.botao-quantidade:hover {
   background-color: var(--cor-primaria);
+  color: white;
 }
 
-/* Adicione ao final de src/pages/Carrinho.css */
+/* Sobrescreve a cor do texto dos botões apenas no Modo Claro */
+.theme-light .botao-limpar,
+.theme-light .botao-finalizar {
+  color: #212529;
+}
+
 .detalhes-pedido-form {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--borda-cor);
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--borda-cor);
 }
 
 .detalhes-pedido-form h2 {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 .form-group label {
-    margin-bottom: 0.5rem;
-    font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
 }
 
 .form-group input {
-    padding: 0.8rem;
-    border-radius: 4px;
-    border: 1px solid #555;
-    background-color: #333;
-    color: var(--texto-dark);
-    font-size: 1rem;
+  padding: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid var(--borda-cor);
+  background-color: var(--fundo);
+  color: var(--texto-principal);
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+/* Regra para o input preenchido/focado em ambos os temas */
+.form-group input:focus,
+.form-group input:not(:placeholder-shown) {
+  background-color: #444;
+  color: #f0f0f0; /* Garante que o texto digitado seja sempre claro */
 }
 
 .tipo-pedido-seletor {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .tipo-pedido-seletor button {
-    flex: 1;
-    padding: 0.8rem;
-    font-size: 1rem;
-    font-weight: bold;
-    background-color: #444;
-    border: 2px solid #444;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
+  flex: 1;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #444;
+  border: 2px solid #444;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .tipo-pedido-seletor button.ativo {
-    background-color: var(--cor-primaria);
-    border-color: var(--cor-primaria);
+  background-color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
 }

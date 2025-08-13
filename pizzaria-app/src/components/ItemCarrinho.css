@@ -28,20 +28,9 @@
 
 .item-tamanho {
     font-size: 0.9rem;
-    color: #ccc;
-}
-
-.item-acoes {
-    text-align: right;
-}
-
-.botao-remover-item {
-    margin-top: 0.5rem;
-    background-color: transparent;
-    border: none;
-    color: var(--cor-primaria);
-    font-size: 0.9rem;
-    cursor: pointer;
+    /* --- ALTERAÇÃO AQUI: Usando a variável de cor principal --- */
+    color: var(--texto-principal);
+    font-weight: 500; /* Adicionado um leve negrito para combinar com o preço */
 }
 
 .item-quantidade-controle {
@@ -77,4 +66,21 @@
 
 .botao-quantidade:hover {
     background-color: var(--cor-primaria);
+}
+
+.item-acoes {
+    text-align: right;
+}
+
+.item-acoes span {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.botao-remover-item {
+    background-color: transparent;
+    border: none;
+    color: var(--cor-primaria);
+    font-size: 0.9rem;
+    cursor: pointer;
 }
