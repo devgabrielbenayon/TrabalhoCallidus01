@@ -21,7 +21,7 @@ const Header = () => {
     <header className="header">
       <div className="logo">
         <NavLink to="/">
-        <img src='../logo.png' alt='Logo' className='header-logo'/>
+        <img src='/logo.png' alt='Logo' className='header-logo'/>
         </NavLink>
       </div>
 
@@ -44,7 +44,6 @@ const Header = () => {
               <NavLink to="/admin" className={({ isActive }) => isActive ? "navLink active" : "navLink"}>Admin</NavLink> 
             }
             <div className="userInfo">
-              <span>Olá, {user?.nome}</span>
               <button onClick={handleLogout} className="logoutButton">Sair</button>
             </div>
           </>

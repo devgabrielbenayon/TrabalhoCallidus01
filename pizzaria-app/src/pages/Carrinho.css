@@ -97,3 +97,42 @@
 .botao-finalizar {
     background-color: var(--cor-primaria);
 }
+
+/* Adicione estes estilos no final do seu src/pages/Carrinho.css */
+
+.item-quantidade-controle {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0.5rem 0;
+}
+
+.item-quantidade-controle span {
+  font-size: 1.1rem;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* src/pages/Carrinho.css */
+
+.botao-quantidade {
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;         /* <-- Diminuí de 30px para 24px */
+  height: 24px;        /* <-- Diminuí de 30px para 24px */
+  font-size: 1rem;     /* <-- Diminuí de 1.2rem para 1rem */
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background-color 0.2s;
+}
+
+.botao-quantidade:hover {
+  background-color: var(--cor-primaria);
+}

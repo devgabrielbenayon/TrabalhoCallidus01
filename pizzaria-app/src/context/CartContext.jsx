@@ -1,31 +1,40 @@
 // src/context/CartContext.jsx
 import React, { createContext, useState } from 'react';
 
-// Cria o Contexto (o "canal" de comunicação)
-// eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext(null);
 
-// Cria o Provedor (a "memória" com a lógica)
 export const CartProvider = ({ children }) => {
   const [itens, setItens] = useState([]);
 
   const adicionarAoCarrinho = (pizza) => {
     const itemExistente = itens.find(item => item.id === pizza.id);
     if (itemExistente) {
-      setItens(
-        itens.map(item =>
-          item.id === pizza.id
-            ? { ...item, quantidade: item.quantidade + 1 }
-            : item
-        )
-      );
+      // Se já existe, apenas incrementa a quantidade
+      atualizarQuantidade(pizza.id, itemExistente.quantidade + 1);
     } else {
-      setItens([...itens, { ...pizza, quantidade: 1 }]);
+      // Se não existe, adiciona com quantidade 1
+      setItens(itensAtuais => [...itensAtuais, { ...pizza, quantidade: 1 }]);
     }
   };
 
+  // --- NOVA FUNÇÃO PARA ATUALIZAR A QUANTIDADE ---
+  const atualizarQuantidade = (pizzaId, novaQuantidade) => {
+    // Se a nova quantidade for 0 ou menos, remove o item do carrinho
+    if (novaQuantidade <= 0) {
+      removerDoCarrinho(pizzaId);
+      return;
+    }
+
+    // Caso contrário, atualiza a quantidade do item específico
+    setItens(itensAtuais =>
+      itensAtuais.map(item =>
+        item.id === pizzaId ? { ...item, quantidade: novaQuantidade } : item
+      )
+    );
+  };
+
   const removerDoCarrinho = (pizzaId) => {
-    setItens(itens.filter(item => item.id !== pizzaId));
+    setItens(itensAtuais => itensAtuais.filter(item => item.id !== pizzaId));
   };
 
   const limparCarrinho = () => {
@@ -37,6 +46,7 @@ export const CartProvider = ({ children }) => {
     adicionarAoCarrinho,
     removerDoCarrinho,
     limparCarrinho,
+    atualizarQuantidade, // Expondo a nova função para os componentes
   };
 
   return (

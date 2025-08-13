@@ -1,0 +1,54 @@
+/* src/pages/Cozinha.css */
+.cozinha-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.cozinha-container h1 {
+  color: var(--cor-secundaria);
+}
+
+.pedidos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.pedido-card {
+  background-color: #2a2a2a;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--borda-cor);
+  display: flex;
+  flex-direction: column;
+}
+
+.pedido-card h3 {
+  margin: 0 0 1rem 0;
+  color: var(--cor-secundaria);
+}
+
+.pedido-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1.5rem 0;
+  flex-grow: 1; /* Faz a lista crescer para empurrar o botão para baixo */
+}
+
+.botao-pronto {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #28a745; /* Verde */
+}
+.botao-pronto:hover {
+  background-color: #218838;
+}
+
+.nenhum-pedido {
+  font-size: 1.2rem;
+  color: #777;
+}

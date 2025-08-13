@@ -10,7 +10,7 @@
       "orégano"
     ],
     "preco": 45.50,
-    "imagem": "public/images/pizza-calabresa.png"
+    "imagem": "/images/pizza-calabresa.png"
   },
   {
     "id": 2,
@@ -22,9 +22,8 @@
       "manjericão"
     ],
     "preco": 42.00,
-    "imagem": "public/images/pizza-margherita.png"
+    "imagem": "/images/pizza-margherita.png"
   },
- 
   {
     "id": 3,
     "nome": "Portuguesa",
@@ -50,7 +49,7 @@
       "chocolate"
     ],
     "preco": 58.50,
-    "imagem": "public/images/pizza_1.jpg"
+    "imagem": "/images/pizza_1.jpg"
   },
   {
     "id": 5,
