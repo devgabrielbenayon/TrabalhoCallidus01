@@ -1,54 +1,39 @@
 // src/context/CartContext.jsx
 import React, { createContext, useState } from 'react';
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
   const [itens, setItens] = useState([]);
 
-  const adicionarAoCarrinho = (pizza) => {
-    const itemExistente = itens.find(item => item.id === pizza.id);
+  const adicionarAoCarrinho = (itemParaAdicionar) => {
+    const itemExistente = itens.find(item => item.idUnicoCarrinho === itemParaAdicionar.idUnicoCarrinho);
     if (itemExistente) {
-      // Se já existe, apenas incrementa a quantidade
-      atualizarQuantidade(pizza.id, itemExistente.quantidade + 1);
+      atualizarQuantidade(itemParaAdicionar.idUnicoCarrinho, itemExistente.quantidade + 1);
     } else {
-      // Se não existe, adiciona com quantidade 1
-      setItens(itensAtuais => [...itensAtuais, { ...pizza, quantidade: 1 }]);
+      setItens(itensAtuais => [...itensAtuais, { ...itemParaAdicionar, quantidade: 1 }]);
     }
   };
 
-  // --- NOVA FUNÇÃO PARA ATUALIZAR A QUANTIDADE ---
-  const atualizarQuantidade = (pizzaId, novaQuantidade) => {
-    // Se a nova quantidade for 0 ou menos, remove o item do carrinho
+  const atualizarQuantidade = (idUnicoCarrinho, novaQuantidade) => {
     if (novaQuantidade <= 0) {
-      removerDoCarrinho(pizzaId);
+      removerDoCarrinho(idUnicoCarrinho);
       return;
     }
-
-    // Caso contrário, atualiza a quantidade do item específico
     setItens(itensAtuais =>
       itensAtuais.map(item =>
-        item.id === pizzaId ? { ...item, quantidade: novaQuantidade } : item
+        item.idUnicoCarrinho === idUnicoCarrinho ? { ...item, quantidade: novaQuantidade } : item
       )
     );
   };
 
-  const removerDoCarrinho = (pizzaId) => {
-    setItens(itensAtuais => itensAtuais.filter(item => item.id !== pizzaId));
+  const removerDoCarrinho = (idUnicoCarrinho) => {
+    setItens(itensAtuais => itensAtuais.filter(item => item.idUnicoCarrinho !== idUnicoCarrinho));
   };
 
-  const limparCarrinho = () => {
-    setItens([]);
-  };
+  const limparCarrinho = () => { setItens([]); };
 
-  const valorDoContexto = {
-    itens,
-    adicionarAoCarrinho,
-    removerDoCarrinho,
-    limparCarrinho,
-    atualizarQuantidade, // Expondo a nova função para os componentes
-  };
+  const valorDoContexto = { itens, adicionarAoCarrinho, removerDoCarrinho, limparCarrinho, atualizarQuantidade };
 
   return (
     <CartContext.Provider value={valorDoContexto}>

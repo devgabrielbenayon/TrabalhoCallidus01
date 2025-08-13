@@ -56,3 +56,33 @@
   font-size: 1rem;
   font-weight: 600;
 }
+
+/* Adicione este código ao final do seu src/components/PizzaCard.css */
+
+.tamanho-seletor {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tamanho-seletor button {
+  background-color: #555;
+  color: white;
+  border: 2px solid #555;
+  border-radius: 5px;
+  padding: 0.4rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tamanho-seletor button:hover {
+  background-color: #777;
+  border-color: #777;
+}
+
+.tamanho-seletor button.ativo {
+  background-color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}

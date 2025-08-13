@@ -5,13 +5,13 @@ import { CartContext } from '../context/CartContext';
 import { OrderContext } from '../context/OrderContext';
 import './Carrinho.css';
 
+// 1. A FUNÇÃO QUE FALTAVA ESTÁ AQUI
 const formatarPreco = (preco) => {
     return preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 };
 
 const Carrinho = () => {
-    // AQUI É UM PONTO CRÍTICO: Garanta que todas as funções necessárias estão sendo extraídas.
-    const { itens, limparCarrinho, atualizarQuantidade } = useContext(CartContext);
+    const { itens, limparCarrinho, atualizarQuantidade, removerDoCarrinho } = useContext(CartContext);
     const { adicionarPedido } = useContext(OrderContext);
     const navigate = useNavigate();
 
@@ -42,29 +42,22 @@ const Carrinho = () => {
             <h1>Meu Carrinho</h1>
             <ul className="lista-itens">
                 {itens.map(item => (
-                    <li key={item.id} className="item-carrinho">
+                    <li key={item.idUnicoCarrinho} className="item-carrinho">
                         <img src={item.imagem} alt={item.nome} className="item-imagem" />
                         <div className="item-detalhes">
                             <h2>{item.nome}</h2>
+                            <p className="item-tamanho">Tamanho: {item.tamanho.toUpperCase()}</p>
+                            
                             <div className="item-quantidade-controle">
-                                <button 
-                                  onClick={() => atualizarQuantidade(item.id, item.quantidade - 1)} 
-                                  className="botao-quantidade"
-                                >
-                                  -
-                                </button>
+                                <button onClick={() => atualizarQuantidade(item.idUnicoCarrinho, item.quantidade - 1)} className="botao-quantidade">-</button>
                                 <span>{item.quantidade}</span>
-                                <button 
-                                  onClick={() => atualizarQuantidade(item.id, item.quantidade + 1)} 
-                                  className="botao-quantidade"
-                                >
-                                  +
-                                </button>
+                                <button onClick={() => atualizarQuantidade(item.idUnicoCarrinho, item.quantidade + 1)} className="botao-quantidade">+</button>
                             </div>
                             <p>Preço Un.: {formatarPreco(item.preco)}</p>
                         </div>
                         <div className="item-acoes">
                             <span>Subtotal: {formatarPreco(item.preco * item.quantidade)}</span>
+                            <button onClick={() => removerDoCarrinho(item.idUnicoCarrinho)} className="botao-remover-item">Remover</button>
                         </div>
                     </li>
                 ))}
@@ -72,6 +65,7 @@ const Carrinho = () => {
             <div className="carrinho-rodape">
                 <h2>Total: {formatarPreco(valorTotal)}</h2>
                 <div className="rodape-botoes">
+                    {/* 2. O BOTÃO QUE USA A FUNÇÃO 'limparCarrinho' ESTÁ AQUI */}
                     <button onClick={limparCarrinho} className="botao-limpar">Limpar Carrinho</button>
                     <button onClick={handleFinalizarPedido} className="botao-finalizar">Finalizar Pedido</button>
                 </div>
