@@ -4,7 +4,7 @@ import React, { createContext, useState } from 'react';
 export const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
-  const [itens, setItens] = useState([]);
+  const [itens, setItens] = useState([]); // Garante que 'itens' sempre comece como um array
 
   const adicionarAoCarrinho = (itemParaAdicionar) => {
     const itemExistente = itens.find(item => item.idUnicoCarrinho === itemParaAdicionar.idUnicoCarrinho);
@@ -14,7 +14,7 @@ export const CartProvider = ({ children }) => {
       setItens(itensAtuais => [...itensAtuais, { ...itemParaAdicionar, quantidade: 1 }]);
     }
   };
-
+  
   const atualizarQuantidade = (idUnicoCarrinho, novaQuantidade) => {
     if (novaQuantidade <= 0) {
       removerDoCarrinho(idUnicoCarrinho);
@@ -30,10 +30,17 @@ export const CartProvider = ({ children }) => {
   const removerDoCarrinho = (idUnicoCarrinho) => {
     setItens(itensAtuais => itensAtuais.filter(item => item.idUnicoCarrinho !== idUnicoCarrinho));
   };
-
+  
   const limparCarrinho = () => { setItens([]); };
 
-  const valorDoContexto = { itens, adicionarAoCarrinho, removerDoCarrinho, limparCarrinho, atualizarQuantidade };
+  // AQUI GARANTIMOS QUE 'itens' está sendo fornecido para os outros componentes
+  const valorDoContexto = { 
+    itens, 
+    adicionarAoCarrinho, 
+    removerDoCarrinho, 
+    limparCarrinho, 
+    atualizarQuantidade 
+  };
 
   return (
     <CartContext.Provider value={valorDoContexto}>

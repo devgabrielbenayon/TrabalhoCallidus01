@@ -13,19 +13,21 @@ const Entregas = () => {
     <div className="entregas-container">
       <h1>Painel de Entrega</h1>
       <p>Pedidos prontos para serem entregues ou servidos.</p>
-
+      
       <div className="pedidos-grid">
         {pedidosProntos.length > 0 ? (
           pedidosProntos.map(pedido => (
             <div key={pedido.id} className="pedido-card-entrega">
               <h3>Pedido #{pedido.id.substring(0, 8)}</h3>
               <p><strong>Cliente:</strong> {pedido.cliente.nome}</p>
-              <p><strong>Endereço:</strong> {pedido.cliente.endereco}</p>
+              <p><strong>{pedido.cliente.tipo === 'entrega' ? 'Endereço:' : 'Mesa:'}</strong> {pedido.cliente.detalhe}</p>
               <hr/>
               <strong>Itens:</strong>
               <ul>
                 {pedido.itens.map(item => (
-                  <li key={item.id}>{item.quantidade}x {item.nome}</li>
+                  <li key={item.idUnicoCarrinho}>
+                    {item.quantidade}x {item.nome} ({item.tamanho.toUpperCase()})
+                  </li>
                 ))}
               </ul>
               <button 
