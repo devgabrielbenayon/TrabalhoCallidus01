@@ -2,6 +2,7 @@
   {
     "id": 1,
     "nome": "Calabresa",
+    "categoria": "Clássica",
     "ingredientes": ["Molho de tomate", "queijo muçarela", "calabresa", "cebola", "orégano"],
     "preco": { "p": 35.50, "m": 45.50, "g": 55.50 },
     "imagem": "/images/pizza-calabresa.png"
@@ -9,6 +10,7 @@
   {
     "id": 2,
     "nome": "Margherita",
+    "categoria": "Vegetariana",
     "ingredientes": ["Molho de tomate", "queijo muçarela", "tomate fresco", "manjericão"],
     "preco": { "p": 32.00, "m": 42.00, "g": 52.00 },
     "imagem": "/images/pizza-margherita.png"
@@ -16,28 +18,32 @@
   {
     "id": 3,
     "nome": "Portuguesa",
+    "categoria": "Clássica",
     "ingredientes": ["Molho de tomate", "queijo muçarela", "presunto", "ovo", "cebola", "azeitona"],
     "preco": { "p": 45.00, "m": 55.00, "g": 65.00 },
     "imagem": "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400"
   },
   {
     "id": 4,
-    "nome": "Pizza Doce",
-    "ingredientes": ["Molho de tomate", "queijo muçarela", "provolone", "parmesão", "chocolate"],
+    "nome": "Pizza Doce de Chocolate",
+    "categoria": "Doce",
+    "ingredientes": ["Creme de leite", "chocolate", "morango"],
     "preco": { "p": 48.50, "m": 58.50, "g": 68.50 },
     "imagem": "/images/pizza_1.jpg"
   },
   {
     "id": 5,
     "nome": "Pepperoni",
+    "categoria": "Clássica",
     "ingredientes": ["Molho de tomate", "queijo muçarela", "pepperoni"],
     "preco": { "p": 44.90, "m": 54.90, "g": 64.90 },
     "imagem": "https://images.unsplash.com/photo-1594007654729-407eedc4be65?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400"
   },
   {
     "id": 6,
-    "nome": "Vegetariana",
-    "ingredientes": ["Molho de tomate", "queijo muçarela", "pimentão", "cebola", "milho", "ervilha", "azeitona"],
+    "nome": "Jardineira Vegana",
+    "categoria": "Vegana",
+    "ingredientes": ["Molho de tomate", "queijo vegano", "pimentão", "cebola", "milho", "brócolis"],
     "preco": { "p": 39.90, "m": 49.90, "g": 59.90 },
     "imagem": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400"
   }

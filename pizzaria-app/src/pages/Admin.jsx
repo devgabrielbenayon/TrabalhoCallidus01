@@ -12,9 +12,12 @@ const Admin = () => {
   // Estado local para o formulário de nova pizza
   const [novaPizza, setNovaPizza] = useState({
     nome: '',
-    ingredientes: '', // Será uma string separada por vírgulas
-    preco: '',
-    imagem: ''
+    ingredientes: '',
+    preco_p: '',
+    preco_m: '',
+    preco_g: '',
+    imagem: '',
+    categoria: ''
   });
 
   const handleChange = (e) => {
@@ -24,10 +27,20 @@ const Admin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Converte o preço para número antes de adicionar
-    adicionarPizza({ ...novaPizza, preco: parseFloat(novaPizza.preco) });
+    const pizzaParaAdicionar = {
+      nome: novaPizza.nome,
+      ingredientes: novaPizza.ingredientes,
+      imagem: novaPizza.imagem,
+      categoria: novaPizza.categoria || 'Clássica', 
+      preco: {
+        p: parseFloat(novaPizza.preco_p.replace(',', '.')),
+        m: parseFloat(novaPizza.preco_m.replace(',', '.')),
+        g: parseFloat(novaPizza.preco_g.replace(',', '.'))
+      }
+    };
+    adicionarPizza(pizzaParaAdicionar);
     // Limpa o formulário
-    setNovaPizza({ nome: '', ingredientes: '', preco: '', imagem: '' });
+    setNovaPizza({ nome: '', ingredientes: '', preco_p: '', preco_m: '', preco_g: '', imagem: '', categoria: '' });
   };
 
   return (
@@ -37,8 +50,8 @@ const Admin = () => {
       {/* Seção de Gerenciamento do Cardápio */}
       <section className="admin-section">
         <h2>Gerenciar Cardápio</h2>
-
-        {/* Formulário para Adicionar Nova Pizza */}
+        
+        {/* --- O FORMULÁRIO QUE ESTAVA FALTANDO --- */}
         <form onSubmit={handleSubmit} className="pizza-form">
           <h3>Adicionar Nova Pizza</h3>
           <div className="form-group">
@@ -50,25 +63,37 @@ const Admin = () => {
             <input type="text" name="ingredientes" value={novaPizza.ingredientes} onChange={handleChange} required />
           </div>
           <div className="form-group">
-            <label>Preço</label>
-            <input type="number" step="0.01" name="preco" value={novaPizza.preco} onChange={handleChange} required />
+            <label>Preço P</label>
+            <input type="text" name="preco_p" value={novaPizza.preco_p} onChange={handleChange} required placeholder="Ex: 35.50" />
+          </div>
+          <div className="form-group">
+            <label>Preço M</label>
+            <input type="text" name="preco_m" value={novaPizza.preco_m} onChange={handleChange} required placeholder="Ex: 45.50" />
+          </div>
+          <div className="form-group">
+            <label>Preço G</label>
+            <input type="text" name="preco_g" value={novaPizza.preco_g} onChange={handleChange} required placeholder="Ex: 55.50" />
           </div>
           <div className="form-group">
             <label>URL da Imagem</label>
             <input type="text" name="imagem" value={novaPizza.imagem} onChange={handleChange} required />
           </div>
+          <div className="form-group">
+            <label>Categoria</label>
+            <input type="text" name="categoria" value={novaPizza.categoria} onChange={handleChange} required placeholder="Ex: Clássica" />
+          </div>
           <button type="submit" className="form-button">Adicionar Pizza</button>
         </form>
+        {/* --- FIM DO FORMULÁRIO --- */}
 
         <hr style={{ margin: '2rem 0' }} />
 
-        {/* Lista de Pizzas Existentes */}
         <h3>Pizzas Atuais</h3>
         <ul className="lista-admin">
           {pizzas.map(pizza => (
             <li key={pizza.id}>
               <div className="item-info">
-                <strong>{pizza.nome}</strong> - R$ {pizza.preco.toFixed(2)}
+                <strong>{pizza.nome}</strong>
               </div>
               <div className="item-acoes">
                 <button>Editar</button>
@@ -83,14 +108,18 @@ const Admin = () => {
       <section className="admin-section">
         <h2>Histórico de Pedidos</h2>
         <ul className="lista-admin">
-          {pedidos.length > 0 ? pedidos.map(pedido => (
-            <li key={pedido.id}>
-              <div className="item-info">
-                Pedido #{pedido.id.substring(0, 8)} - Total: R$ {pedido.valorTotal.toFixed(2)}
-                - <strong className={`status-${pedido.status}`}>{pedido.status.toUpperCase()}</strong>
-              </div>
-            </li>
-          )) : <p>Nenhum pedido foi feito ainda.</p>}
+          {pedidos && pedidos.length > 0 ? (
+            pedidos.map(pedido => (
+              <li key={pedido.id}>
+                <div className="item-info">
+                  Pedido #{pedido.id.substring(0, 8)} - Total: {pedido.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                  - <strong className={`status-${pedido.status}`}>{pedido.status.toUpperCase()}</strong>
+                </div>
+              </li>
+            ))
+          ) : (
+            <p>Nenhum pedido foi feito ainda.</p>
+          )}
         </ul>
       </section>
     </div>
