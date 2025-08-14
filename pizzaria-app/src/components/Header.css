@@ -112,3 +112,26 @@
   background-color: #333; /* Cor fixa para o hover */
   transform: rotate(15deg);
 }
+
+/* Adicione ao final de src/components/Header.css */
+
+/* --- REGRAS PARA RESPONSIVIDADE --- */
+
+/* Para telas com largura máxima de 768px (tablets e celulares) */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column; /* Empilha os itens verticalmente */
+    gap: 1rem; /* Adiciona um espaço entre o logo e a navegação */
+    padding: 1rem; /* Reduz o padding lateral */
+  }
+
+  .nav {
+    flex-wrap: wrap; /* Permite que os links quebrem a linha */
+    justify-content: center; /* Centraliza os links quando quebram a linha */
+    gap: 1rem; /* Reduz o espaço entre os links */
+  }
+
+  .header-logo {
+    height: 100px; /* Diminui um pouco o logo */
+  }
+}

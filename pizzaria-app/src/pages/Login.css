@@ -1,9 +1,10 @@
-/* src/pages/Login.module.css */
+/* src/pages/Login.css */
 .loginContainer {
   max-width: 400px;
   margin: 4rem auto;
   padding: 2rem;
-  background-color: #2a2a2a;
+  /* ALTERAÇÃO AQUI: Fundo agora usa a variável de tema */
+  background-color: var(--fundo-componente);
   border-radius: 8px;
   border: 1px solid var(--borda-cor);
 }
@@ -27,14 +28,15 @@
 .inputGroup label {
   margin-bottom: 0.5rem;
   font-weight: 500;
+  /* A cor do label agora é herdada do body, que tem o contraste correto */
 }
 
 .inputGroup input {
   padding: 0.8rem;
   border-radius: 4px;
-  border: 1px solid #555;
-  background-color: #333;
-  color: var(--texto-dark);
+  border: 1px solid var(--borda-cor);
+  background-color: var(--fundo);
+  color: var(--texto-principal);
   font-size: 1rem;
 }
 
@@ -51,10 +53,9 @@
   padding: 0.8em;
 }
 
-/* Adicione este código ao final de src/pages/Login.css */
-
 .credentialsInfo {
-  background-color: #333;
+  /* ALTERAÇÃO AQUI: Fundo agora usa a variável de tema */
+  background-color: var(--fundo);
   border: 1px solid var(--borda-cor);
   padding: 1rem;
   border-radius: 4px;

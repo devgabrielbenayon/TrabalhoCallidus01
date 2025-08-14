@@ -51,34 +51,32 @@ const Admin = () => {
           <h3>Adicionar Nova Pizza</h3>
           <div className="form-group">
             <label>Nome da Pizza</label>
-            {/* --- PLACEHOLDER ADICIONADO --- */}
-            <input type="text" name="nome" value={novaPizza.nome} onChange={handleChange} required placeholder="Ex: Calabresa" />
+            <input type="text" name="nome" value={novaPizza.nome} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Ingredientes (separados por vírgula)</label>
-            {/* --- PLACEHOLDER ADICIONADO --- */}
-            <input type="text" name="ingredientes" value={novaPizza.ingredientes} onChange={handleChange} required placeholder="molho, queijo, calabresa" />
+            {/* --- ALTERAÇÃO AQUI: placeholder removido --- */}
+            <input type="text" name="ingredientes" value={novaPizza.ingredientes} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Preço P</label>
-            <input type="text" name="preco_p" value={novaPizza.preco_p} onChange={handleChange} required placeholder="Ex: 35.50" />
+            <input type="text" name="preco_p" value={novaPizza.preco_p} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Preço M</label>
-            <input type="text" name="preco_m" value={novaPizza.preco_m} onChange={handleChange} required placeholder="Ex: 45.50" />
+            <input type="text" name="preco_m" value={novaPizza.preco_m} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Preço G</label>
-            <input type="text" name="preco_g" value={novaPizza.preco_g} onChange={handleChange} required placeholder="Ex: 55.50" />
+            <input type="text" name="preco_g" value={novaPizza.preco_g} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>URL da Imagem</label>
-            {/* --- PLACEHOLDER ADICIONADO --- */}
-            <input type="text" name="imagem" value={novaPizza.imagem} onChange={handleChange} required placeholder="https://exemplo.com/imagem.png" />
+            <input type="text" name="imagem" value={novaPizza.imagem} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Categoria</label>
-            <input type="text" name="categoria" value={novaPizza.categoria} onChange={handleChange} required placeholder="Ex: Clássica" />
+            <input type="text" name="categoria" value={novaPizza.categoria} onChange={handleChange} required />
           </div>
           <button type="submit" className="form-button">Adicionar Pizza</button>
         </form>

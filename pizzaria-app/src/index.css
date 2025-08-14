@@ -74,3 +74,11 @@ button:hover {
   margin: 0 auto;
   padding: 2rem;
 }
+
+/* Adicione ao final de src/index.css */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem; /* Reduz o padding principal em telas menores */
+  }
+}

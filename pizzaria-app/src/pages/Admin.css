@@ -6,7 +6,6 @@
 }
 
 .admin-section {
-    /* ALTERAÇÃO AQUI: Fundo agora usa a variável de tema */
     background-color: var(--fundo-componente);
     border: 1px solid var(--borda-cor);
     padding: 2rem;
@@ -21,7 +20,6 @@
     margin-bottom: 1.5rem;
 }
 
-/* Formulário */
 .pizza-form {
     display: flex;
     flex-direction: column;
@@ -41,17 +39,52 @@
 .form-group input {
     padding: 0.8rem;
     border-radius: 4px;
-    /* ALTERAÇÕES AQUI: Inputs também usam variáveis de tema */
     border: 1px solid var(--borda-cor);
     background-color: var(--fundo);
     color: var(--texto-principal);
     font-size: 1rem;
+    transition: background-color 0.2s ease;
 }
     
 .form-button {
     margin-top: 1rem;
     padding: 0.8rem;
     font-size: 1.1rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: filter 0.2s;
+    flex-grow: 1;
+}
+
+.form-button:hover {
+    filter: brightness(1.1);
+}
+
+.form-botoes-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-button-cancelar {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Regra para o input preenchido/focado no MODO ESCURO (padrão) */
+.admin-container .form-group input:focus,
+.admin-container .form-group input:not(:placeholder-shown) {
+  background-color: #444;
+  color: #f0f0f0;
+}
+
+/* --- ALTERAÇÃO AQUI --- */
+/* Regra que sobrescreve a anterior APENAS NO MODO CLARO */
+.theme-light .admin-container .form-group input:focus,
+.theme-light .admin-container .form-group input:not(:placeholder-shown) {
+  background-color: #e9ecef; /* Um cinza claro para o fundo */
+  color: var(--texto-principal); /* O texto já será escuro no modo claro */
 }
 
 /* Lista de Pizzas e Pedidos */
@@ -68,8 +101,6 @@
     border-bottom: 1px solid var(--borda-cor);
 }
 .lista-admin li:nth-child(even) {
-    /* ALTERAÇÃO AQUI: Fundo da linha alternada também usa uma variável */
-    /* Usando a variável --fundo para um leve contraste com --fundo-componente */
     background-color: var(--fundo);
 }
 
@@ -87,7 +118,7 @@
     background-color: var(--cor-primaria);
 }
     
-/* Histórico de Pedidos */
-.status-preparando { color: #ffc107; } /* Amarelo */
-.status-pronto { color: #007bff; } /* Azul */
-.status-entregue { color: #28a745; } /* Verde */
+/* Status do Histórico de Pedidos */
+.status-preparando { color: #ffc107; }
+.status-pronto { color: #007bff; }
+.status-entregue { color: #28a745; }
