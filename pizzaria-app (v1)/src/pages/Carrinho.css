@@ -1,0 +1,155 @@
+/* src/pages/Carrinho.css */
+
+.carrinho-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--fundo-componente);
+  border: 1px solid var(--borda-cor);
+  border-radius: 8px;
+}
+
+.carrinho-vazio {
+  text-align: center;
+  padding: 4rem;
+}
+
+.carrinho-vazio h1 {
+  color: var(--cor-secundaria);
+}
+
+.botao-cardapio {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.8rem 1.5rem;
+  background-color: var(--cor-primaria);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.lista-itens {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.carrinho-rodape {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--cor-secundaria);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.rodape-botoes {
+  margin-top: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  width: 100%;
+}
+
+.botao-limpar {
+  background-color: #6c757d;
+  color: white;
+}
+
+.botao-finalizar {
+  background-color: var(--cor-primaria);
+  color: white;
+}
+
+.theme-light .botao-limpar,
+.theme-light .botao-finalizar {
+  color: #212529;
+}
+
+.detalhes-pedido-form {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--borda-cor);
+}
+
+.detalhes-pedido-form h2 {
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input {
+  padding: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid var(--borda-cor);
+  background-color: var(--fundo);
+  color: var(--texto-principal);
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.carrinho-container .form-group input:focus,
+.carrinho-container .form-group input:not(:placeholder-shown) {
+  background-color: #444;
+  color: #f0f0f0; 
+}
+
+.theme-light .carrinho-container .form-group input:focus,
+.theme-light .carrinho-container .form-group input:not(:placeholder-shown) {
+  background-color: #e9ecef;
+  color: var(--texto-principal);
+}
+
+.tipo-pedido-seletor {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tipo-pedido-seletor button {
+  flex: 1;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #444;
+  border: 2px solid #444;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tipo-pedido-seletor button.ativo {
+  background-color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+
+
+/* --- REGRAS PARA RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+    .carrinho-container {
+        padding: 1rem;
+    }
+
+    .carrinho-rodape {
+        align-items: center;
+    }
+    
+    .rodape-botoes {
+        justify-content: center;
+    }
+
+    .tipo-pedido-seletor {
+        flex-direction: column;
+    }
+}

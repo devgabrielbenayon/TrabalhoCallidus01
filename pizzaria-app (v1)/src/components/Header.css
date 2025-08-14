@@ -1,0 +1,137 @@
+/* src/components/Header.css */
+.header {
+  background-color: #1f1f1f; /* Fundo sempre escuro */
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--cor-primaria);
+}
+
+.header-logo {
+  height: 120px;
+  width: auto;
+  transition: transform 0.2s ease-in-out;
+}
+
+.header-logo:hover {
+  transform: scale(1.05);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navLink {
+  /* --- CORREÇÃO AQUI --- */
+  /* Antes, a cor dependia do tema. Agora, definimos uma cor clara fixa. */
+  color: #f0f0f0;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding-bottom: 5px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+/* O estado ativo/hover continua usando a cor primária, que funciona em ambos os temas */
+.navLink.active, .navLink:hover {
+  border-bottom: 2px solid var(--cor-primaria);
+  color: var(--cor-primaria);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cart-nav-link {
+  position: relative;
+  font-size: 1.8rem;
+  padding: 5px;
+  line-height: 1;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background-color: var(--cor-primaria);
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border: 2px solid #1f1f1f;
+}
+
+/* Dentro de src/components/Header.css */
+
+.logoutButton {
+  background-color: var(--cor-primaria);
+  color: white;
+  border: none;
+  padding: 0.6em 1.2em;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit; /* Garante que a fonte seja a mesma do resto do site */
+  font-size: 1em; /* Garante que o tamanho da fonte seja consistente */
+  transition: filter 0.2s;
+}
+
+.logoutButton:hover {
+  filter: brightness(1.1);
+}
+
+.controles-direita {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.theme-toggle-button {
+  background: none;
+  border: 1px solid var(--borda-cor);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  /* Adicionando cor ao ícone para garantir visibilidade */
+  color: var(--texto-principal); 
+}
+.theme-toggle-button:hover {
+  background-color: #333; /* Cor fixa para o hover */
+  transform: rotate(15deg);
+}
+
+/* Adicione ao final de src/components/Header.css */
+
+/* --- REGRAS PARA RESPONSIVIDADE --- */
+
+/* Para telas com largura máxima de 768px (tablets e celulares) */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column; /* Empilha os itens verticalmente */
+    gap: 1rem; /* Adiciona um espaço entre o logo e a navegação */
+    padding: 1rem; /* Reduz o padding lateral */
+  }
+
+  .nav {
+    flex-wrap: wrap; /* Permite que os links quebrem a linha */
+    justify-content: center; /* Centraliza os links quando quebram a linha */
+    gap: 1rem; /* Reduz o espaço entre os links */
+  }
+
+  .header-logo {
+    height: 100px; /* Diminui um pouco o logo */
+  }
+}

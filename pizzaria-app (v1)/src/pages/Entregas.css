@@ -1,0 +1,63 @@
+/* src/pages/Entregas.css */
+.entregas-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.entregas-container h1 {
+  color: var(--cor-secundaria);
+}
+
+.pedidos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.pedido-card-entrega {
+  /* ALTERAÇÕES AQUI */
+  background-color: var(--fundo-componente);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--borda-cor);
+  border-left: 5px solid #007bff;
+  display: flex;
+  flex-direction: column;
+}
+
+.pedido-card-entrega h3, .pedido-card-entrega ul {
+  margin: 0 0 1rem 0;
+  color: var(--cor-secundaria);
+  list-style: none;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.pedido-card-entrega ul {
+  color: var(--texto-principal);
+  margin: 0.5rem 0 1.5rem 0;
+}
+
+.botao-entregue {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #007bff;
+}
+.botao-entregue:hover {
+  background-color: #0056b3;
+}
+
+.nenhum-pedido {
+  font-size: 1.2rem;
+  color: #777;
+}
+
+@media (max-width: 768px) {
+  .entregas-container {
+    padding: 1rem;
+  }
+}

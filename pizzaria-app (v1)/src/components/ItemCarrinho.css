@@ -1,0 +1,99 @@
+/* src/components/ItemCarrinho.css */
+.item-carrinho {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--borda-cor);
+}
+
+.item-carrinho:last-child {
+    border-bottom: none;
+}
+
+.item-imagem {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.item-detalhes {
+    flex-grow: 1;
+}
+
+.item-detalhes h2 {
+    margin: 0 0 0.5rem 0;
+}
+
+.item-tamanho {
+    font-size: 0.9rem;
+    color: var(--texto-principal);
+    font-weight: 500;
+}
+
+.item-quantidade-controle {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 0.5rem 0;
+}
+
+.item-quantidade-controle span {
+    font-size: 1.1rem;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+}
+
+.botao-quantidade {
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: background-color 0.2s;
+}
+
+.botao-quantidade:hover {
+    background-color: var(--cor-primaria);
+}
+
+.item-acoes {
+    text-align: right;
+}
+
+.botao-remover-item {
+    background-color: transparent;
+    border: none;
+    color: var(--cor-primaria);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* --- REGRAS PARA RESPONSIVIDADE --- */
+@media (max-width: 480px) {
+    .item-carrinho {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .item-detalhes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .item-acoes {
+        text-align: center;
+    }
+}
