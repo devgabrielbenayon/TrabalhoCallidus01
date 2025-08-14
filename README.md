@@ -15,12 +15,12 @@ Este projeto foi desenvolvido como parte de um exercício prático, proposto pel
 - 🗂️ Estrutura modular e organização de projetos React
 - 🧠 UX e boas práticas de desenvolvimento front-end
 
-# Fluxograma do Aplicativo da Pizzaria  
+# Fluxo da Aplicação
 
 ```mermaid
 flowchart TD
     A[Início] --> B[Login]
-    B --> C{Usuário}
+    A --> C{Usuário}
     C -->|Cliente| D[Cardápio]
     D --> E[Adicionar ao Carrinho]
     E --> F[Visualizar Carrinho]
@@ -39,8 +39,6 @@ flowchart TD
 
     C -->|Admin| Q[Gerenciar Cardápio]
     Q --> R[Adicionar/Editar/Remover Itens]
-    C -->|Admin| S[Gerenciar Usuários]
-    S --> T[Adicionar/Editar Permissões]
     C -->|Admin| U[Relatórios de Vendas]
     U --> V[Analisar Dados]
     V --> W[Fim]
