@@ -1,122 +1,158 @@
-// src/pages/Admin.jsx
+// src/pages/Admin.jsx (Versão com MUI)
 import React, { useContext, useState } from 'react';
 import { MenuContext } from '../context/MenuContext';
 import { OrderContext } from '../context/OrderContext';
-import './Admin.css';
+
+// Importando os componentes do MUI
+import {
+  Container, Box, Typography, Paper, TextField, Button,
+  List, ListItem, ListItemText, IconButton, Divider, Grid
+} from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+const formInicial = {
+  id: null, nome: '', ingredientes: '', preco_p: '', preco_m: '',
+  preco_g: '', imagem: '', categoria: ''
+};
 
 const Admin = () => {
-  const { pizzas, adicionarPizza, excluirPizza } = useContext(MenuContext);
+  const { pizzas, adicionarPizza, editarPizza, excluirPizza } = useContext(MenuContext);
   const { pedidos } = useContext(OrderContext);
-
-  const [novaPizza, setNovaPizza] = useState({
-    nome: '',
-    ingredientes: '',
-    preco_p: '',
-    preco_m: '',
-    preco_g: '',
-    imagem: '',
-    categoria: ''
-  });
+  const [formData, setFormData] = useState(formInicial);
+  const [modoEdicao, setModoEdicao] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNovaPizza(prevState => ({ ...prevState, [name]: value }));
+    setFormData(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  const handleEditar = (pizza) => {
+    setModoEdicao(true);
+    setFormData({
+      id: pizza.id,
+      nome: pizza.nome,
+      ingredientes: pizza.ingredientes.join(', '),
+      preco_p: pizza.preco.p,
+      preco_m: pizza.preco.m,
+      preco_g: pizza.preco.g,
+      imagem: pizza.imagem,
+      categoria: pizza.categoria
+    });
+    window.scrollTo(0, 0);
+  };
+
+  const handleCancelarEdicao = () => {
+    setModoEdicao(false);
+    setFormData(formInicial);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const pizzaParaAdicionar = {
-      nome: novaPizza.nome,
-      ingredientes: novaPizza.ingredientes,
-      imagem: novaPizza.imagem,
-      categoria: novaPizza.categoria || 'Clássica', 
+    const pizzaFormatada = {
+      id: formData.id,
+      nome: formData.nome,
+      ingredientes: formData.ingredientes.split(',').map(ing => ing.trim()),
+      imagem: formData.imagem,
+      categoria: formData.categoria || 'Clássica', 
       preco: {
-        p: parseFloat(novaPizza.preco_p.replace(',', '.')),
-        m: parseFloat(novaPizza.preco_m.replace(',', '.')),
-        g: parseFloat(novaPizza.preco_g.replace(',', '.'))
+        p: parseFloat(String(formData.preco_p).replace(',', '.')),
+        m: parseFloat(String(formData.preco_m).replace(',', '.')),
+        g: parseFloat(String(formData.preco_g).replace(',', '.'))
       }
     };
-    adicionarPizza(pizzaParaAdicionar);
-    setNovaPizza({ nome: '', ingredientes: '', preco_p: '', preco_m: '', preco_g: '', imagem: '', categoria: '' });
+
+    if (modoEdicao) {
+      editarPizza(pizzaFormatada);
+    } else {
+      adicionarPizza(pizzaFormatada);
+    }
+    handleCancelarEdicao();
   };
 
   return (
-    <div className="admin-container">
-      <h1>Painel de Administração</h1>
+    <Container maxWidth="lg" sx={{ my: 4 }}>
+      <Typography variant="h4" gutterBottom>Painel de Administração</Typography>
 
-      <section className="admin-section">
-        <h2>Gerenciar Cardápio</h2>
-        
-        <form onSubmit={handleSubmit} className="pizza-form">
-          <h3>Adicionar Nova Pizza</h3>
-          <div className="form-group">
-            <label>Nome da Pizza</label>
-            <input type="text" name="nome" value={novaPizza.nome} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Ingredientes (separados por vírgula)</label>
-            {/* --- ALTERAÇÃO AQUI: placeholder removido --- */}
-            <input type="text" name="ingredientes" value={novaPizza.ingredientes} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Preço P</label>
-            <input type="text" name="preco_p" value={novaPizza.preco_p} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Preço M</label>
-            <input type="text" name="preco_m" value={novaPizza.preco_m} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Preço G</label>
-            <input type="text" name="preco_g" value={novaPizza.preco_g} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>URL da Imagem</label>
-            <input type="text" name="imagem" value={novaPizza.imagem} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Categoria</label>
-            <input type="text" name="categoria" value={novaPizza.categoria} onChange={handleChange} required />
-          </div>
-          <button type="submit" className="form-button">Adicionar Pizza</button>
-        </form>
+      <Grid container spacing={4}>
+        {/* Coluna da Esquerda: Gerenciar Cardápio */}
+        <Grid item xs={12} md={6}>
+          <Paper elevation={3} sx={{ p: 3 }}>
+            <Typography variant="h5" gutterBottom>Gerenciar Cardápio</Typography>
+            <Box component="form" onSubmit={handleSubmit} noValidate>
+              <Typography variant="h6">{modoEdicao ? 'Editar Pizza' : 'Adicionar Nova Pizza'}</Typography>
+              <TextField name="nome" label="Nome da Pizza" value={formData.nome} onChange={handleChange} fullWidth margin="normal" required />
+              <TextField name="ingredientes" label="Ingredientes (separados por vírgula)" value={formData.ingredientes} onChange={handleChange} fullWidth margin="normal" required />
+              <Grid container spacing={2}>
+                <Grid item xs={4}><TextField name="preco_p" label="Preço P" value={formData.preco_p} onChange={handleChange} fullWidth required /></Grid>
+                <Grid item xs={4}><TextField name="preco_m" label="Preço M" value={formData.preco_m} onChange={handleChange} fullWidth required /></Grid>
+                <Grid item xs={4}><TextField name="preco_g" label="Preço G" value={formData.preco_g} onChange={handleChange} fullWidth required /></Grid>
+              </Grid>
+              <TextField name="imagem" label="URL da Imagem" value={formData.imagem} onChange={handleChange} fullWidth margin="normal" required />
+              <TextField name="categoria" label="Categoria" value={formData.categoria} onChange={handleChange} fullWidth margin="normal" required />
+              <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
+                <Button type="submit" variant="contained" size="large" sx={{ flexGrow: 1 }}>
+                  {modoEdicao ? 'Salvar Alterações' : 'Adicionar Pizza'}
+                </Button>
+                {modoEdicao && (
+                  <Button onClick={handleCancelarEdicao} variant="outlined" size="large">
+                    Cancelar
+                  </Button>
+                )}
+              </Box>
+            </Box>
 
-        <hr style={{ margin: '2rem 0' }} />
+            <Divider sx={{ my: 3 }} />
 
-        <h3>Pizzas Atuais</h3>
-        <ul className="lista-admin">
-          {pizzas.map(pizza => (
-            <li key={pizza.id}>
-              <div className="item-info">
-                <strong>{pizza.nome}</strong>
-              </div>
-              <div className="item-acoes">
-                <button>Editar</button>
-                <button onClick={() => excluirPizza(pizza.id)} className="botao-excluir">Excluir</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section>
+            <Typography variant="h6">Pizzas Atuais</Typography>
+            <List>
+              {pizzas.map(pizza => (
+                <ListItem key={pizza.id} secondaryAction={
+                  <>
+                    <IconButton edge="end" aria-label="edit" onClick={() => handleEditar(pizza)}>
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton edge="end" aria-label="delete" onClick={() => excluirPizza(pizza.id)} sx={{ ml: 1 }}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </>
+                }>
+                  <ListItemText primary={pizza.nome} secondary={pizza.categoria} />
+                </ListItem>
+              ))}
+            </List>
+          </Paper>
+        </Grid>
 
-      <section className="admin-section">
-        <h2>Histórico de Pedidos</h2>
-        <ul className="lista-admin">
-          {pedidos && pedidos.length > 0 ? (
-            pedidos.map(pedido => (
-              <li key={pedido.id}>
-                <div className="item-info">
-                  Pedido #{pedido.id.substring(0, 8)} - Total: {pedido.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                  - <strong className={`status-${pedido.status}`}>{pedido.status.toUpperCase()}</strong>
-                </div>
-              </li>
-            ))
-          ) : (
-            <p>Nenhum pedido foi feito ainda.</p>
-          )}
-        </ul>
-      </section>
-    </div>
+        {/* Coluna da Direita: Histórico de Pedidos */}
+        <Grid item xs={12} md={6}>
+          <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
+            <Typography variant="h5" gutterBottom>Histórico de Pedidos</Typography>
+            <List>
+              {pedidos && pedidos.length > 0 ? (
+                pedidos.map(pedido => (
+                  <ListItem key={pedido.id}>
+                    <ListItemText 
+                      primary={`Pedido #${pedido.id.substring(0, 8)}`}
+                      secondary={`Total: ${pedido.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`}
+                    />
+                    <Typography variant="body2" sx={{ 
+                        fontWeight: 'bold',
+                        color: pedido.status === 'preparando' ? 'secondary.main' : 
+                               pedido.status === 'pronto' ? 'info.main' : 'success.main'
+                    }}>
+                      {pedido.status.toUpperCase()}
+                    </Typography>
+                  </ListItem>
+                ))
+              ) : (
+                <Typography color="text.secondary">Nenhum pedido foi feito ainda.</Typography>
+              )}
+            </List>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

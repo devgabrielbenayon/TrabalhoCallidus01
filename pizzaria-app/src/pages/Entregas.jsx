@@ -1,48 +1,76 @@
-// src/pages/Entregas.jsx
+// src/pages/Entregas.jsx (Versão com MUI)
 import React, { useContext } from 'react';
 import { OrderContext } from '../context/OrderContext';
-import './Entregas.css';
+
+// Importando componentes e ícones do MUI
+import { Container, Typography, Grid, Card, CardContent, CardActions, Button, List, ListItem, ListItemText, Divider } from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const Entregas = () => {
   const { pedidos, marcarComoEntregue } = useContext(OrderContext);
 
-  // Filtra para pegar apenas os pedidos que estão prontos para entrega
+  // A única diferença na lógica: filtra por status 'pronto'
   const pedidosProntos = pedidos.filter(p => p.status === 'pronto');
 
   return (
-    <div className="entregas-container">
-      <h1>Painel de Entrega</h1>
-      <p>Pedidos prontos para serem entregues ou servidos.</p>
-      
-      <div className="pedidos-grid">
+    <Container maxWidth="lg" sx={{ my: 4 }}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Painel de Entrega
+      </Typography>
+      <Typography color="text.secondary" sx={{ mb: 3 }}>
+        Pedidos prontos para serem entregues ou servidos.
+      </Typography>
+
+      <Grid container spacing={3}>
         {pedidosProntos.length > 0 ? (
           pedidosProntos.map(pedido => (
-            <div key={pedido.id} className="pedido-card-entrega">
-              <h3>Pedido #{pedido.id.substring(0, 8)}</h3>
-              <p><strong>Cliente:</strong> {pedido.cliente.nome}</p>
-              <p><strong>{pedido.cliente.tipo === 'entrega' ? 'Endereço:' : 'Mesa:'}</strong> {pedido.cliente.detalhe}</p>
-              <hr/>
-              <strong>Itens:</strong>
-              <ul>
-                {pedido.itens.map(item => (
-                  <li key={item.idUnicoCarrinho}>
-                    {item.quantidade}x {item.nome} ({item.tamanho.toUpperCase()})
-                  </li>
-                ))}
-              </ul>
-              <button 
-                onClick={() => marcarComoEntregue(pedido.id)}
-                className="botao-entregue"
-              >
-                Marcar como Entregue
-              </button>
-            </div>
+            <Grid item xs={12} sm={6} md={4} key={pedido.id}>
+              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography variant="h6" component="h2" gutterBottom>
+                    Pedido #{pedido.id.substring(0, 8)}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    <strong>Cliente:</strong> {pedido.cliente.nome}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    <strong>{pedido.cliente.tipo === 'entrega' ? 'Endereço:' : 'Mesa:'}</strong> {pedido.cliente.detalhe}
+                  </Typography>
+                  <Divider />
+                  <List dense>
+                    {pedido.itens.map(item => (
+                      <ListItem key={item.idUnicoCarrinho} disableGutters>
+                        <ListItemText 
+                          primary={`${item.quantidade}x ${item.nome}`}
+                          secondary={`Tamanho: ${item.tamanho.toUpperCase()}`} 
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </CardContent>
+                <CardActions sx={{ justifyContent: 'center', p: 2 }}>
+                  <Button 
+                    variant="contained" 
+                    color="info" // Cor azul
+                    startIcon={<CheckCircleOutlineIcon />}
+                    onClick={() => marcarComoEntregue(pedido.id)}
+                    fullWidth
+                  >
+                    Marcar como Entregue
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
           ))
         ) : (
-          <p className="nenhum-pedido">Nenhum pedido pronto no momento.</p>
+          <Grid item xs={12}>
+            <Typography color="text.secondary" sx={{ mt: 4, textAlign: 'center' }}>
+              Nenhum pedido pronto no momento.
+            </Typography>
+          </Grid>
         )}
-      </div>
-    </div>
+      </Grid>
+    </Container>
   );
 };
 

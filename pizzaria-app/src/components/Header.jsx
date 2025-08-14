@@ -4,15 +4,23 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 import { CartContext } from '../context/CartContext';
 import { ThemeContext } from '../context/ThemeContext';
-import './Header.css';
+
+// Importando componentes e ícones do MUI
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 const Header = () => {
   const { isAuthenticated, user, logout } = useContext(AuthContext);
   const { itens } = useContext(CartContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
-
-  // A variável 'totalItensNoCarrinho' é usada abaixo no JSX
   const totalItensNoCarrinho = itens.reduce((total, item) => total + item.quantidade, 0);
 
   const handleLogout = () => {
@@ -21,62 +29,70 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
-      <div className="logo">
-        <NavLink to={isAuthenticated && user?.role === 'cozinha' ? '/cozinha' : '/'}>
-          <img src='/logo.png' alt='Logo' className='header-logo'/>
-        </NavLink>
-      </div>
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: '#1f1f1f',
+        color: '#f0f0f0',
+      }}
+    >
+      <Toolbar>
+        {/* Logo */}
+        <Box sx={{ flexGrow: 1 }}>
+          <NavLink to={isAuthenticated && user?.role === 'cozinha' ? '/cozinha' : '/'}>
+            <img
+              src={'/logo.png'}
+              alt="Logo"
+              // --- ALTERAÇÃO AQUI: Aumentando o tamanho da logo ---
+              style={{ height: '100px', verticalAlign: 'middle' }}
+            />
+          </NavLink>
+        </Box>
 
-      <nav className="nav">
-        {/* Links do cliente/públicos (só aparecem se não for da cozinha) */}
+        {/* Links de Navegação */}
         {(!user || user.role !== 'cozinha') && (
-          <>
-            <NavLink to="/cardapio" className={({ isActive }) => isActive ? "navLink active" : "navLink"}>
-              Cardápio
-            </NavLink>
-            <NavLink to="/carrinho" className="cart-nav-link">
-              🛒
-              {totalItensNoCarrinho > 0 && (
-                <span className="cart-count">{totalItensNoCarrinho}</span>
-              )}
-            </NavLink>
-          </>
+          // --- ALTERAÇÃO AQUI: Aumentando o tamanho da fonte do botão ---
+          <Button component={NavLink} to="/cardapio" color="inherit" sx={{ fontSize: '1rem' }}>
+            Cardápio
+          </Button>
         )}
         
-        {/* Links de funcionário (visibilidade baseada na role do 'user') */}
-        {isAuthenticated ? (
-          <>
-            { (user.role === 'cozinha' || user.role === 'admin') && 
-              <NavLink to="/cozinha" className={({ isActive }) => isActive ? "navLink active" : "navLink"}>Cozinha</NavLink> 
-            }
-            { (user.role === 'cozinha' || user.role === 'admin') && 
-              <NavLink to="/entregas" className={({ isActive }) => isActive ? "navLink active" : "navLink"}>Entregas</NavLink>
-            }
-            { user.role === 'admin' && 
-              <NavLink to="/admin" className={({ isActive }) => isActive ? "navLink active" : "navLink"}>Admin</NavLink> 
-            }
-            <div className="controles-direita">
-              <button onClick={toggleTheme} className="theme-toggle-button">
-                {theme === 'light' ? '🌙' : '☀️'}
-              </button>
-              <div className="userInfo">
-                <button onClick={handleLogout} className="logoutButton">Sair</button>
-              </div>
-            </div>
-          </>
-        ) : (
-          <div className="controles-direita">
-            <button onClick={toggleTheme} className="theme-toggle-button">
-              {theme === 'light' ? '🌙' : '☀️'}
-            </button>
-            <NavLink to="/login" className={({ isActive }) => isActive ? "navLink active" : "navLink"}>
-              Login
-            </NavLink>
-          </div>
+        {isAuthenticated && (user.role === 'cozinha' || user.role === 'admin') && (
+          <Button component={NavLink} to="/cozinha" color="inherit" sx={{ fontSize: '1rem' }}>Cozinha</Button>
         )}
-      </nav>
-    </header>
+        {isAuthenticated && (user.role === 'cozinha' || user.role === 'admin') && (
+          <Button component={NavLink} to="/entregas" color="inherit" sx={{ fontSize: '1rem' }}>Entregas</Button>
+        )}
+        {isAuthenticated && user.role === 'admin' && (
+          <Button component={NavLink} to="/admin" color="inherit" sx={{ fontSize: '1rem' }}>Admin</Button>
+        )}
+        
+        {/* Controles da Direita */}
+        {(!user || user.role !== 'cozinha') && (
+          // --- ALTERAÇÃO AQUI: Aumentando o tamanho do ícone ---
+          <IconButton component={NavLink} to="/carrinho" color="inherit" aria-label="carrinho" size="large">
+            <Badge badgeContent={totalItensNoCarrinho} color="primary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        )}
+
+        <IconButton onClick={toggleTheme} color="inherit" aria-label="trocar tema" size="large">
+          {theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+        </IconButton>
+
+        {isAuthenticated ? (
+          // --- ALTERAÇÃO AQUI: Aumentando o tamanho do botão "Sair" ---
+          <Button color="primary" variant="contained" onClick={handleLogout} sx={{ ml: 2 }} size="large">
+            Sair
+          </Button>
+        ) : (
+          <Button component={NavLink} to="/login" color="inherit" sx={{ fontSize: '1rem' }}>
+            Login
+          </Button>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 

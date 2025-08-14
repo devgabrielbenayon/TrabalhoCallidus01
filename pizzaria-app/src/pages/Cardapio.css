@@ -62,9 +62,16 @@
     grid-template-columns: 1fr;
   }
 
-  .title {
-    font-size: 2.2rem; /* Diminui o título principal */
-  }
+/* Em src/pages/Cardapio.css */
+
+.title {
+  text-align: center; /* <-- ESTA É A LINHA QUE CENTRALIZA O TÍTULO */
+  font-size: 3rem;
+  color: var(--cor-secundaria);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
 
   .campo-busca {
     font-size: 0.9rem;
