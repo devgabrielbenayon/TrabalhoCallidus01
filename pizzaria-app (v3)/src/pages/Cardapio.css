@@ -1,4 +1,12 @@
-/* Adicione este código ao final do seu src/pages/Cardapio.css */
+/* src/pages/Cardapio.css */
+.title {
+  text-align: center;
+  font-size: 3rem;
+  color: var(--cor-secundaria);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
 
 .filtros-container {
   display: flex;
@@ -14,8 +22,8 @@
   padding: 0.8rem 1rem;
   border-radius: 20px;
   border: 1px solid var(--borda-cor);
-  background-color: #333;
-  color: var(--texto-dark);
+  background-color: var(--fundo-componente);
+  color: var(--texto-principal);
   font-size: 1rem;
 }
 
@@ -47,33 +55,39 @@
   border-color: var(--cor-primaria);
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(345px, 1fr));
+  gap: 2rem;
+}
+
 .nenhuma-pizza-encontrada {
   text-align: center;
   font-size: 1.2rem;
   color: #777;
-  grid-column: 1 / -1; /* Ocupa a largura inteira do grid */
+  width: 100%;
 }
 
-/* Adicione ao final de src/pages/Cardapio.css */
+/* --- ESTILO PARA OS NOVOS BOTÕES 'PIZZAS' E 'BEBIDAS' --- */
+.tipo-filtro {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem; /* Espaço antes dos outros filtros */
+}
 
-@media (max-width: 480px) {
-  .grid {
-    /* Altera o grid para ter apenas uma coluna em telas de celular */
-    grid-template-columns: 1fr;
-  }
-
-/* Em src/pages/Cardapio.css */
-
-.title {
-  text-align: center; /* <-- ESTA É A LINHA QUE CENTRALIZA O TÍTULO */
-  font-size: 3rem;
-  color: var(--cor-secundaria);
-  margin-bottom: 2rem;
-  text-transform: uppercase;
+.tipo-filtro button {
+  padding: 0.8rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  border: 2px solid var(--borda-cor);
+  background-color: transparent;
+  color: var(--texto-principal);
   font-weight: bold;
+  cursor: pointer;
 }
 
-  .campo-busca {
-    font-size: 0.9rem;
-  }
+.tipo-filtro button.ativo {
+  background-color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+  color: white;
 }

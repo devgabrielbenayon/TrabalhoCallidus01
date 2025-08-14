@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "tipo": "pizza",
+    "nome": "Calabresa",
+    "categoria": "Clássica",
+    "ingredientes": [
+      "Molho de tomate",
+      "queijo muçarela",
+      "calabresa",
+      "cebola",
+      "orégano"
+    ],
+    "preco": { "p": 35.50, "m": 45.50, "g": 55.50 },
+    "imagem": "https://images.unsplash.com/photo-1574126154517-d1e0d89ef734?ixlib=rb-4.0.3&q=80&w=400"
+  },
+  {
+    "id": 2,
+    "tipo": "pizza",
+    "nome": "Margherita",
+    "categoria": "Vegetariana",
+    "ingredientes": [
+      "Molho de tomate",
+      "queijo muçarela",
+      "tomate fresco",
+      "manjericão"
+    ],
+    "preco": { "p": 32.00, "m": 42.00, "g": 52.00 },
+    "imagem": "https://images.unsplash.com/photo-1595854337175-742081702fca?ixlib=rb-4.0.3&q=80&w=400"
+  },
+  {
+    "id": 3,
+    "tipo": "pizza",
+    "nome": "Portuguesa",
+    "categoria": "Clássica",
+    "ingredientes": [
+      "Molho de tomate",
+      "queijo muçarela",
+      "presunto",
+      "ovo",
+      "cebola",
+      "azeitona"
+    ],
+    "preco": { "p": 45.00, "m": 55.00, "g": 65.00 },
+    "imagem": "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400"
+  },
+  {
+    "id": 4,
+    "tipo": "pizza",
+    "nome": "Pizza Doce de Chocolate",
+    "categoria": "Doce",
+    "ingredientes": [
+      "Creme de leite",
+      "chocolate",
+      "morango"
+    ],
+    "preco": { "p": 48.50, "m": 58.50, "g": 68.50 },
+    "imagem": "https://images.unsplash.com/photo-1574085733264-933413342375?ixlib=rb-4.0.3&q=80&w=400"
+  },
+  {
+    "id": 5,
+    "tipo": "pizza",
+    "nome": "Pepperoni",
+    "categoria": "Clássica",
+    "ingredientes": [
+      "Molho de tomate",
+      "queijo muçarela",
+      "pepperoni"
+    ],
+    "preco": { "p": 44.90, "m": 54.90, "g": 64.90 },
+    "imagem": "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?ixlib=rb-4.0.3&q=80&w=400"
+  },
+  {
+    "id": 6,
+    "tipo": "pizza",
+    "nome": "Jardineira Vegana",
+    "categoria": "Vegana",
+    "ingredientes": [
+      "Molho de tomate",
+      "queijo vegano",
+      "pimentão",
+      "cebola",
+      "milho",
+      "brócolis"
+    ],
+    "preco": { "p": 39.90, "m": 49.90, "g": 59.90 },
+    "imagem": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&q=80&w=400"
+  },
+  {
+    "id": 7,
+    "tipo": "bebida",
+    "nome": "Refrigerante",
+    "categoria": "Refrigerante",
+    "descricao": "Lata 350ml",
+    "preco": 6.50,
+    "imagem": "https://images.unsplash.com/photo-1625740823568-2cef1 chuckled-soft-drink-in-can-on-ice-with-lemon-slices?ixlib=rb-4.0.3&q=80&w=400"
+  },
+  {
+    "id": 8,
+    "tipo": "bebida",
+    "nome": "Suco Natural",
+    "categoria": "Suco",
+    "descricao": "Copo 500ml",
+    "preco": 9.00,
+    "imagem": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?ixlib=rb-4.0.3&q=80&w=400"
+  },
+  {
+    "id": 9,
+    "tipo": "bebida",
+    "nome": "Cerveja Artesanal",
+    "categoria": "Cerveja",
+    "descricao": "Garrafa 600ml",
+    "preco": 18.00,
+    "imagem": "https://images.unsplash.com/photo-1608270586620-248524c67de9?ixlib=rb-4.0.3&q=80&w=400"
+  },
+  {
+    "id": 10,
+    "tipo": "combo",
+    "nome": "Combo Casal",
+    "categoria": "Combo",
+    "itens": ["1 Pizza Grande (qualquer sabor)", "1 Refrigerante 2L"],
+    "preco": 75.00,
+    "imagem": "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&q=80&w=400"
+  },
+  {
+    "id": 11,
+    "tipo": "combo",
+    "nome": "Combo Família",
+    "categoria": "Combo",
+    "itens": ["2 Pizzas Grandes (qualquer sabor)", "1 Pizza Doce Pequena", "1 Refrigerante 2L"],
+    "preco": 120.00,
+    "imagem": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&q=80&w=400"
+  }
+]

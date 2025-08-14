@@ -1,42 +1,49 @@
 // src/context/MenuContext.jsx
 import React, { createContext, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import pizzasIniciais from '/public/api/pizzas.json';
+
+// 1. Importa os dados do novo arquivo renomeado
+import itensIniciais from '/public/api/cardapio.json';
 
 export const MenuContext = createContext(null);
 
 export const MenuProvider = ({ children }) => {
-  const [pizzas, setPizzas] = useState([]);
+  // 2. O estado agora se chama 'itensCardapio' para ser mais genérico
+  const [itensCardapio, setItensCardapio] = useState([]);
 
   useEffect(() => {
-    setPizzas(pizzasIniciais);
+    setItensCardapio(itensIniciais);
   }, []);
 
+  // Nota: Estas funções por enquanto só funcionam corretamente para adicionar/editar pizzas.
+  // Precisaríamos ajustá-las para que o formulário de Admin também possa lidar com bebidas.
   const adicionarPizza = (novaPizza) => {
     const pizzaParaAdicionar = {
+      tipo: 'pizza', // Garante que o tipo seja 'pizza'
       ...novaPizza,
       id: uuidv4(),
       ingredientes: Array.isArray(novaPizza.ingredientes) 
         ? novaPizza.ingredientes 
         : novaPizza.ingredientes.split(',').map(ing => ing.trim()),
     };
-    setPizzas(pizzasAtuais => [...pizzasAtuais, pizzaParaAdicionar]);
+    setItensCardapio(itensAtuais => [...itensAtuais, pizzaParaAdicionar]);
   };
 
   const editarPizza = (pizzaEditada) => {
-    setPizzas(pizzasAtuais => 
-      pizzasAtuais.map(p => 
+    setItensCardapio(itensAtuais => 
+      itensAtuais.map(p => 
         p.id === pizzaEditada.id ? { ...p, ...pizzaEditada } : p
       )
     );
   };
 
   const excluirPizza = (pizzaId) => {
-    setPizzas(pizzasAtuais => pizzasAtuais.filter(p => p.id !== pizzaId));
+    setItensCardapio(itensAtuais => itensAtuais.filter(p => p.id !== pizzaId));
   };
 
   const valorDoContexto = {
-    pizzas,
+    // 3. Fornece a nova variável de estado
+    itensCardapio,
     adicionarPizza,
     editarPizza,
     excluirPizza,

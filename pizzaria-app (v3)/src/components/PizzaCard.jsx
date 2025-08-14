@@ -1,7 +1,7 @@
 // src/components/PizzaCard.jsx
 import React, { useState, useContext } from 'react';
 import { CartContext } from '../context/CartContext';
-import './PizzaCard.css';
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, ToggleButton, ToggleButtonGroup } from '@mui/material';
 
 const formatarPreco = (preco) => {
   return preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -9,60 +9,65 @@ const formatarPreco = (preco) => {
 
 const PizzaCard = ({ pizza }) => {
   const { adicionarAoCarrinho } = useContext(CartContext);
-  // Estado local para guardar o tamanho selecionado. Começa como 'M'
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState('m');
 
+  const handleSizeChange = (event, newSize) => {
+    if (newSize !== null) {
+      setTamanhoSelecionado(newSize);
+    }
+  };
+
   const handleAddToCart = () => {
-    // Cria um item único para o carrinho que inclui o tamanho
     const itemParaAdicionar = {
       ...pizza,
-      // Cria um ID único combinando o ID da pizza e o tamanho
       idUnicoCarrinho: `${pizza.id}-${tamanhoSelecionado}`,
       tamanho: tamanhoSelecionado,
-      // Pega o preço correto do objeto de preços
       preco: pizza.preco[tamanhoSelecionado]
     };
     adicionarAoCarrinho(itemParaAdicionar);
   };
 
   return (
-    <div className="card">
-      <img src={pizza.imagem} alt={`Pizza de ${pizza.nome}`} className="image" />
-      <div className="content">
-        <h3 className="title">{pizza.nome}</h3>
-        <p className="ingredients">{pizza.ingredientes.join(', ')}</p>
-
-        {/* --- SELETOR DE TAMANHO --- */}
-        <div className="tamanho-seletor">
-          <button 
-            onClick={() => setTamanhoSelecionado('p')}
-            className={tamanhoSelecionado === 'p' ? 'ativo' : ''}
-          >
-            P
-          </button>
-          <button 
-            onClick={() => setTamanhoSelecionado('m')}
-            className={tamanhoSelecionado === 'm' ? 'ativo' : ''}
-          >
-            M
-          </button>
-          <button 
-            onClick={() => setTamanhoSelecionado('g')}
-            className={tamanhoSelecionado === 'g' ? 'ativo' : ''}
-          >
-            G
-          </button>
-        </div>
-        {/* --- FIM DO SELETOR --- */}
-
-        <div className="footer">
-          <span className="price">{formatarPreco(pizza.preco[tamanhoSelecionado])}</span>
-          <button onClick={handleAddToCart} className="addButton">
-            Adicionar
-          </button>
-        </div>
-      </div>
-    </div>
+    // 1. Garante que o card ocupe 100% da altura e use flexbox para alinhar o rodapé
+    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <CardMedia
+        component="img"
+        height="200"
+        image={pizza.imagem}
+        alt={pizza.nome}
+      />
+      {/* 2. O conteúdo principal agora cresce para preencher o espaço, empurrando o rodapé para baixo */}
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography gutterBottom variant="h5" component="div">
+          {pizza.nome}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          {pizza.ingredientes.join(', ')}
+        </Typography>
+        {/* 3. Seletor de tamanho movido para o conteúdo principal */}
+        <ToggleButtonGroup
+          value={tamanhoSelecionado}
+          exclusive
+          onChange={handleSizeChange}
+          color="primary"
+          size="small"
+          fullWidth
+        >
+          <ToggleButton value="p">P</ToggleButton>
+          <ToggleButton value="m">M</ToggleButton>
+          <ToggleButton value="g">G</ToggleButton>
+        </ToggleButtonGroup>
+      </CardContent>
+      {/* 4. Rodapé padronizado */}
+      <CardActions sx={{ p: 2, justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="h5">
+          {formatarPreco(pizza.preco[tamanhoSelecionado])}
+        </Typography>
+        <Button variant="contained" onClick={handleAddToCart}>
+          Adicionar
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 
