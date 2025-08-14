@@ -26,7 +26,7 @@
       "manjericão"
     ],
     "preco": { "p": 32.00, "m": 42.00, "g": 52.00 },
-    "imagem": "https://images.unsplash.com/photo-1595854337175-742081702fca?ixlib=rb-4.0.3&q=80&w=400"
+    "imagem": "/images/pizza-margherita.png"
   },
   {
     "id": 3,
@@ -55,7 +55,7 @@
       "morango"
     ],
     "preco": { "p": 48.50, "m": 58.50, "g": 68.50 },
-    "imagem": "https://images.unsplash.com/photo-1574085733264-933413342375?ixlib=rb-4.0.3&q=80&w=400"
+    "imagem": "/images/pizza_1.jpg"
   },
   {
     "id": 5,
@@ -93,7 +93,7 @@
     "categoria": "Refrigerante",
     "descricao": "Lata 350ml",
     "preco": 6.50,
-    "imagem": "https://images.unsplash.com/photo-1625740823568-2cef1 chuckled-soft-drink-in-can-on-ice-with-lemon-slices?ixlib=rb-4.0.3&q=80&w=400"
+    "imagem": "/images/refri.jpg"
   },
   {
     "id": 8,
@@ -120,7 +120,7 @@
     "categoria": "Combo",
     "itens": ["1 Pizza Grande (qualquer sabor)", "1 Refrigerante 2L"],
     "preco": 75.00,
-    "imagem": "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&q=80&w=400"
+    "imagem": "/images/combo-casal.png"
   },
   {
     "id": 11,
@@ -129,6 +129,6 @@
     "categoria": "Combo",
     "itens": ["2 Pizzas Grandes (qualquer sabor)", "1 Pizza Doce Pequena", "1 Refrigerante 2L"],
     "preco": 120.00,
-    "imagem": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&q=80&w=400"
+    "imagem": "/images/combo-familia.png"
   }
 ]
