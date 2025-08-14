@@ -53,3 +53,9 @@
   font-size: 1.2rem;
   color: #777;
 }
+
+@media (max-width: 768px) {
+  .cozinha-container {
+    padding: 1rem;
+  }
+}

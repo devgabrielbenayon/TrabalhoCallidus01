@@ -39,17 +39,20 @@
   margin-top: 2rem;
   padding-top: 2rem;
   border-top: 2px solid var(--cor-secundaria);
-  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
 }
 
 .rodape-botoes {
-  margin-top: 1rem;
+  margin-top: 0;
   display: flex;
   justify-content: flex-end;
-  gap: 1.5rem;
+  gap: 1rem;
+  width: 100%;
 }
 
-/* Estilos Padrão (Modo Escuro) dos Botões */
 .botao-limpar {
   background-color: #6c757d;
   color: white;
@@ -58,6 +61,11 @@
 .botao-finalizar {
   background-color: var(--cor-primaria);
   color: white;
+}
+
+.theme-light .botao-limpar,
+.theme-light .botao-finalizar {
+  color: #212529;
 }
 
 .detalhes-pedido-form {
@@ -91,11 +99,16 @@
   transition: background-color 0.2s ease;
 }
 
-/* Regra para o input preenchido/focado em ambos os temas */
-.form-group input:focus,
-.form-group input:not(:placeholder-shown) {
+.carrinho-container .form-group input:focus,
+.carrinho-container .form-group input:not(:placeholder-shown) {
   background-color: #444;
-  color: #f0f0f0; /* Garante que o texto digitado seja sempre claro */
+  color: #f0f0f0; 
+}
+
+.theme-light .carrinho-container .form-group input:focus,
+.theme-light .carrinho-container .form-group input:not(:placeholder-shown) {
+  background-color: #e9ecef;
+  color: var(--texto-principal);
 }
 
 .tipo-pedido-seletor {
@@ -119,4 +132,24 @@
 .tipo-pedido-seletor button.ativo {
   background-color: var(--cor-primaria);
   border-color: var(--cor-primaria);
+}
+
+
+/* --- REGRAS PARA RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+    .carrinho-container {
+        padding: 1rem;
+    }
+
+    .carrinho-rodape {
+        align-items: center;
+    }
+    
+    .rodape-botoes {
+        justify-content: center;
+    }
+
+    .tipo-pedido-seletor {
+        flex-direction: column;
+    }
 }

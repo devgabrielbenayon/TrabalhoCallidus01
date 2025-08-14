@@ -28,9 +28,8 @@
 
 .item-tamanho {
     font-size: 0.9rem;
-    /* --- ALTERAÇÃO AQUI: Usando a variável de cor principal --- */
     color: var(--texto-principal);
-    font-weight: 500; /* Adicionado um leve negrito para combinar com o preço */
+    font-weight: 500;
 }
 
 .item-quantidade-controle {
@@ -72,15 +71,29 @@
     text-align: right;
 }
 
-.item-acoes span {
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
 .botao-remover-item {
     background-color: transparent;
     border: none;
     color: var(--cor-primaria);
     font-size: 0.9rem;
     cursor: pointer;
+}
+
+/* --- REGRAS PARA RESPONSIVIDADE --- */
+@media (max-width: 480px) {
+    .item-carrinho {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .item-detalhes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .item-acoes {
+        text-align: center;
+    }
 }

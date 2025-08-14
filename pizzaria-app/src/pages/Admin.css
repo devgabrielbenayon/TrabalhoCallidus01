@@ -45,7 +45,24 @@
     font-size: 1rem;
     transition: background-color 0.2s ease;
 }
+
+.admin-container .form-group input:focus,
+.admin-container .form-group input:not(:placeholder-shown) {
+  background-color: #444;
+  color: #f0f0f0;
+}
+
+.theme-light .admin-container .form-group input:focus,
+.theme-light .admin-container .form-group input:not(:placeholder-shown) {
+  background-color: #e9ecef;
+  color: var(--texto-principal);
+}
     
+.form-botoes-container {
+  display: flex;
+  gap: 1rem;
+}
+
 .form-button {
     margin-top: 1rem;
     padding: 0.8rem;
@@ -62,32 +79,11 @@
     filter: brightness(1.1);
 }
 
-.form-botoes-container {
-  display: flex;
-  gap: 1rem;
-}
-
 .form-button-cancelar {
   background-color: #6c757d;
   color: white;
 }
 
-/* Regra para o input preenchido/focado no MODO ESCURO (padrão) */
-.admin-container .form-group input:focus,
-.admin-container .form-group input:not(:placeholder-shown) {
-  background-color: #444;
-  color: #f0f0f0;
-}
-
-/* --- ALTERAÇÃO AQUI --- */
-/* Regra que sobrescreve a anterior APENAS NO MODO CLARO */
-.theme-light .admin-container .form-group input:focus,
-.theme-light .admin-container .form-group input:not(:placeholder-shown) {
-  background-color: #e9ecef; /* Um cinza claro para o fundo */
-  color: var(--texto-principal); /* O texto já será escuro no modo claro */
-}
-
-/* Lista de Pizzas e Pedidos */
 .lista-admin {
     list-style: none;
     padding: 0;
@@ -106,19 +102,44 @@
 
 .item-info {
     flex-grow: 1;
+    word-break: break-word;
 }
     
 .item-acoes button {
     margin-left: 0.5rem;
     font-size: 0.8rem;
     padding: 0.4rem 0.8rem;
+    white-space: nowrap;
 }
     
 .botao-excluir {
     background-color: var(--cor-primaria);
 }
     
-/* Status do Histórico de Pedidos */
 .status-preparando { color: #ffc107; }
 .status-pronto { color: #007bff; }
 .status-entregue { color: #28a745; }
+
+
+/* --- REGRAS PARA RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+    .admin-section {
+        padding: 1rem;
+    }
+
+    .lista-admin li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .item-acoes {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .item-acoes button {
+        margin-left: 0.8rem;
+    }
+}
