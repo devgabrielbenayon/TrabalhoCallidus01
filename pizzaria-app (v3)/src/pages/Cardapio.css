@@ -1,0 +1,79 @@
+/* Adicione este código ao final do seu src/pages/Cardapio.css */
+
+.filtros-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.campo-busca {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.8rem 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--borda-cor);
+  background-color: #333;
+  color: var(--texto-dark);
+  font-size: 1rem;
+}
+
+.botoes-categoria {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.botoes-categoria button {
+  background-color: #444;
+  color: white;
+  border: 2px solid #444;
+  border-radius: 20px;
+  padding: 0.5rem 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.botoes-categoria button:hover {
+  background-color: #555;
+  border-color: #555;
+}
+
+.botoes-categoria button.ativo {
+  background-color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+
+.nenhuma-pizza-encontrada {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #777;
+  grid-column: 1 / -1; /* Ocupa a largura inteira do grid */
+}
+
+/* Adicione ao final de src/pages/Cardapio.css */
+
+@media (max-width: 480px) {
+  .grid {
+    /* Altera o grid para ter apenas uma coluna em telas de celular */
+    grid-template-columns: 1fr;
+  }
+
+/* Em src/pages/Cardapio.css */
+
+.title {
+  text-align: center; /* <-- ESTA É A LINHA QUE CENTRALIZA O TÍTULO */
+  font-size: 3rem;
+  color: var(--cor-secundaria);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+  .campo-busca {
+    font-size: 0.9rem;
+  }
+}

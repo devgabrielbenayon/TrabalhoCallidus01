@@ -1,0 +1,84 @@
+/* src/index.css */
+/* src/index.css */
+:root {
+  /* CORES PADRÃO (TEMA ESCURO) */
+  --cor-primaria: #e32d2d;
+  --cor-secundaria: #ffc107;
+  --fundo: #1a1a1a;
+  --fundo-componente: #2a2a2a;
+  --texto-principal: #f0f0f0;
+  --texto-secundario: #ccc;
+  --borda-cor: #444;
+
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* SOBRESCREVE AS CORES QUANDO O TEMA CLARO ESTIVER ATIVO */
+.theme-light {
+  --cor-primaria: #d9480f;
+  --cor-secundaria: #f59f00;
+  --fundo: #f8f9fa;
+  --fundo-componente: #ffffff;
+  --texto-principal: #212529;
+  --texto-secundario: #495057;
+  --borda-cor: #dee2e6;
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  background-color: var(--fundo);
+  color: var(--texto-principal);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ... resto do seu CSS global (botões, links, etc.) continua o mesmo, 
+   pois eles já usam as variáveis de cor ... */
+
+a {
+  color: var(--cor-secundaria);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #ffda70;
+}
+
+button {
+  border-radius: 8px;
+  border: none;
+  padding: 0.7em 1.5em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--cor-primaria);
+  color: var(--fundo-light);
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Adicione ao final de src/index.css */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem; /* Reduz o padding principal em telas menores */
+  }
+}
