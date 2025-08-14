@@ -1,4 +1,4 @@
-// src/components/ItemCarrinho.jsx (Versão com MUI)
+// src/components/ItemCarrinho.jsx
 import React, { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 
@@ -22,7 +22,6 @@ const ItemCarrinho = ({ item }) => {
   const { atualizarQuantidade, removerDoCarrinho } = useContext(CartContext);
 
   return (
-    // <ListItem> é o container principal para um item de lista
     <ListItem
       secondaryAction={
         <IconButton edge="end" aria-label="delete" onClick={() => removerDoCarrinho(item.idUnicoCarrinho)}>
@@ -35,7 +34,9 @@ const ItemCarrinho = ({ item }) => {
       </ListItemAvatar>
       <ListItemText
         primary={item.nome}
-        secondary={`Tamanho: ${item.tamanho.toUpperCase()}`}
+        // --- ALTERAÇÃO DE SEGURANÇA AQUI ---
+        // Agora, o tamanho só é exibido se a propriedade item.tamanho existir
+        secondary={item.tamanho ? `Tamanho: ${item.tamanho.toUpperCase()}` : null}
       />
       <Box sx={{ display: 'flex', alignItems: 'center', mx: 4 }}>
         <IconButton onClick={() => atualizarQuantidade(item.idUnicoCarrinho, item.quantidade - 1)} size="small">

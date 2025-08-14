@@ -1,9 +1,9 @@
-// src/pages/Admin.jsx (Versão com MUI)
+// src/pages/Admin.jsx
 import React, { useContext, useState } from 'react';
 import { MenuContext } from '../context/MenuContext';
 import { OrderContext } from '../context/OrderContext';
 
-// Importando os componentes do MUI
+// Importando componentes do MUI
 import {
   Container, Box, Typography, Paper, TextField, Button,
   List, ListItem, ListItemText, IconButton, Divider, Grid
@@ -17,6 +17,7 @@ const formInicial = {
 };
 
 const Admin = () => {
+  // Agora 'pizzas' é uma lista garantida apenas de pizzas, vinda do contexto
   const { pizzas, adicionarPizza, editarPizza, excluirPizza } = useContext(MenuContext);
   const { pedidos } = useContext(OrderContext);
   const [formData, setFormData] = useState(formInicial);
@@ -41,7 +42,7 @@ const Admin = () => {
     });
     window.scrollTo(0, 0);
   };
-
+  
   const handleCancelarEdicao = () => {
     setModoEdicao(false);
     setFormData(formInicial);
@@ -73,7 +74,6 @@ const Admin = () => {
   return (
     <Container maxWidth="lg" sx={{ my: 4 }}>
       <Typography variant="h4" gutterBottom>Painel de Administração</Typography>
-
       <Grid container spacing={4}>
         {/* Coluna da Esquerda: Gerenciar Cardápio */}
         <Grid item xs={12} md={6}>
@@ -101,7 +101,7 @@ const Admin = () => {
                 )}
               </Box>
             </Box>
-
+            
             <Divider sx={{ my: 3 }} />
 
             <Typography variant="h6">Pizzas Atuais</Typography>
@@ -138,7 +138,7 @@ const Admin = () => {
                     />
                     <Typography variant="body2" sx={{ 
                         fontWeight: 'bold',
-                        color: pedido.status === 'preparando' ? 'secondary.main' : 
+                        color: pedido.status === 'preparando' ? 'warning.main' : 
                                pedido.status === 'pronto' ? 'info.main' : 'success.main'
                     }}>
                       {pedido.status.toUpperCase()}

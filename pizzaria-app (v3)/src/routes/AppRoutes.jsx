@@ -23,14 +23,22 @@ const AppRoutes = () => {
           <Route path="/carrinho" element={<Carrinho />} />
 
           {/* Rotas Protegidas */}
-          <Route path="/cozinha" element={ <ProtectedRoute allowedRoles={['cozinha', 'admin']}> <Cozinha /> </ProtectedRoute> } />
+          <Route 
+            path="/cozinha" 
+            element={ <ProtectedRoute allowedRoles={['cozinha', 'admin']}> <Cozinha /> </ProtectedRoute> } 
+          />
+          
+          {/* --- ALTERAÇÃO AQUI: Rota de Entregas agora é para admin e entregador --- */}
+          <Route 
+            path="/entregas" 
+            element={ <ProtectedRoute allowedRoles={['admin', 'entregador']}> <Entregas /> </ProtectedRoute> } 
+          />
 
-          {/* --- ALTERAÇÃO AQUI --- */}
-          {/* Agora a página de Entregas pode ser acessada por 'cozinha' E 'admin' */}
-          <Route path="/entregas" element={ <ProtectedRoute allowedRoles={['cozinha', 'admin']}> <Entregas /> </ProtectedRoute> } />
-
-          <Route path="/admin" element={ <ProtectedRoute allowedRoles={['admin']}> <Admin /> </ProtectedRoute> } />
-
+          <Route 
+            path="/admin" 
+            element={ <ProtectedRoute allowedRoles={['admin']}> <Admin /> </ProtectedRoute> } 
+          />
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

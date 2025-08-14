@@ -1,5 +1,5 @@
 // src/context/AuthProvider.jsx
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useMemo } from 'react';
 
 export const AuthContext = createContext(null);
 
@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, senha) => {
-    // Verifique se os valores aqui estão exatamente como você espera
     if (email === 'admin@pizzaria.com' && senha === 'admin123') {
         const userData = { nome: 'Admin Chefe', email, role: 'admin' };
         setUser(userData);
@@ -35,7 +34,13 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('pizzaria_user', JSON.stringify(userData));
         return userData;
     }
-    // Se nenhuma combinação acima for válida, a função lança um erro
+    // --- NOVO USUÁRIO ENTREGADOR ADICIONADO AQUI ---
+    if (email === 'entrega@pizzaria.com' && senha === 'entrega123') {
+        const userData = { nome: 'Entregador 1', email, role: 'entregador' };
+        setUser(userData);
+        localStorage.setItem('pizzaria_user', JSON.stringify(userData));
+        return userData;
+    }
     throw new Error('Credenciais inválidas.');
   };
 
@@ -44,12 +49,12 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('pizzaria_user');
   };
   
-  const authContextValue = {
+  const authContextValue = useMemo(() => ({
     isAuthenticated: !!user,
     user,
     login,
     logout,
-  };
+  }), [user]);
 
   if (loading) {
     return <div>Carregando aplicação...</div>;

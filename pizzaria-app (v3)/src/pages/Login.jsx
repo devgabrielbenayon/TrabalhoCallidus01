@@ -1,9 +1,9 @@
-// src/pages/Login.jsx (Versão com MUI)
+// src/pages/Login.jsx
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 
-// 1. Importando os componentes do MUI
+// Importando os componentes do MUI
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -23,13 +23,19 @@ const Login = () => {
     setError('');
     try {
       const loggedInUser = await login(email, senha);
-      if (loggedInUser.role === 'cozinha') {
+      
+      // --- LÓGICA DE REDIRECIONAMENTO ATUALIZADA ---
+      if (loggedInUser.role === 'entregador') {
+        navigate('/entregas', { replace: true });
+      } else if (loggedInUser.role === 'cozinha') {
         navigate('/cozinha', { replace: true });
       } else if (loggedInUser.role === 'admin') {
         navigate('/admin', { replace: true });
       } else {
-        navigate('/cardapio', { replace: true });
+        navigate('/cardapio', { replace: true }); // Padrão
       }
+      // --- FIM DA LÓGICA ---
+
     } catch (err) {
       setError('E-mail ou senha inválidos. Tente novamente.');
       console.error(err);
@@ -37,9 +43,7 @@ const Login = () => {
   };
 
   return (
-    // 2. <Container> centraliza nosso conteúdo na página
     <Container component="main" maxWidth="xs">
-      {/* <Box> é como uma div superpoderosa para layout */}
       <Box
         sx={{
           marginTop: 8,
@@ -48,7 +52,7 @@ const Login = () => {
           alignItems: 'center',
           p: 3,
           borderRadius: 2,
-          bgcolor: 'background.paper', // Usa a cor de fundo do tema
+          bgcolor: 'background.paper',
           boxShadow: 3,
         }}
       >
@@ -56,7 +60,6 @@ const Login = () => {
           Acesso Restrito
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          {/* <TextField> substitui <label> e <input> */}
           <TextField
             margin="normal"
             required
@@ -82,8 +85,7 @@ const Login = () => {
             onChange={(e) => setSenha(e.target.value)}
           />
           
-          {/* Mostra o erro de forma mais elegante com o componente <Alert> */}
-          {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+          {error && <Alert severity="error" sx={{ my: 2 }}>{error}</Alert>}
 
           <Button
             type="submit"
@@ -94,12 +96,15 @@ const Login = () => {
             Entrar
           </Button>
           
-          {/* A caixa de informações agora usa o componente <Alert> */}
           <Alert severity="info" sx={{ textAlign: 'center' }}>
-            <Typography variant="caption">
+            <Typography variant="caption" component="div">
               <strong>Admin:</strong> admin@pizzaria.com / admin123
-              <br />
+            </Typography>
+            <Typography variant="caption" component="div">
               <strong>Cozinha:</strong> cozinha@pizzaria.com / cozinha123
+            </Typography>
+            <Typography variant="caption" component="div">
+              <strong>Entrega:</strong> entrega@pizzaria.com / entrega123
             </Typography>
           </Alert>
         </Box>

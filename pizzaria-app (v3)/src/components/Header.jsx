@@ -6,12 +6,7 @@ import { CartContext } from '../context/CartContext';
 import { ThemeContext } from '../context/ThemeContext';
 
 // Importando componentes e ícones do MUI
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
+import { AppBar, Toolbar, Box, Button, IconButton, Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -28,69 +23,74 @@ const Header = () => {
     navigate('/login');
   };
 
+  // Define a página inicial correta para o link do logo
+  const homePath = () => {
+    if (!isAuthenticated) return '/';
+    if (user.role === 'cozinha') return '/cozinha';
+    if (user.role === 'entregador') return '/entregas';
+    return '/'; // Padrão para admin e cliente
+  };
+
   return (
-    <AppBar
-      position="static"
-      sx={{
-        backgroundColor: '#1f1f1f',
-        color: '#f0f0f0',
-      }}
-    >
+    <AppBar position="static" sx={{ backgroundColor: '#1f1f1f', color: '#f0f0f0' }}>
       <Toolbar>
-        {/* Logo */}
         <Box sx={{ flexGrow: 1 }}>
-          <NavLink to={isAuthenticated && user?.role === 'cozinha' ? '/cozinha' : '/'}>
-            <img
-              src={'/logo.png'}
-              alt="Logo"
-              // --- ALTERAÇÃO AQUI: Aumentando o tamanho da logo ---
-              style={{ height: '100px', verticalAlign: 'middle' }}
-            />
+          <NavLink to={homePath()}>
+            <img src={'/logo-dark.png'} alt="Logo" style={{ height: '100px', verticalAlign: 'middle' }}/>
           </NavLink>
         </Box>
 
-        {/* Links de Navegação */}
-        {(!user || user.role !== 'cozinha') && (
-          // --- ALTERAÇÃO AQUI: Aumentando o tamanho da fonte do botão ---
-          <Button component={NavLink} to="/cardapio" color="inherit" sx={{ fontSize: '1rem' }}>
-            Cardápio
-          </Button>
-        )}
+        {/* --- LÓGICA DE EXIBIÇÃO BASEADA NA FUNÇÃO DO USUÁRIO --- */}
         
-        {isAuthenticated && (user.role === 'cozinha' || user.role === 'admin') && (
-          <Button component={NavLink} to="/cozinha" color="inherit" sx={{ fontSize: '1rem' }}>Cozinha</Button>
-        )}
-        {isAuthenticated && (user.role === 'cozinha' || user.role === 'admin') && (
-          <Button component={NavLink} to="/entregas" color="inherit" sx={{ fontSize: '1rem' }}>Entregas</Button>
-        )}
-        {isAuthenticated && user.role === 'admin' && (
-          <Button component={NavLink} to="/admin" color="inherit" sx={{ fontSize: '1rem' }}>Admin</Button>
-        )}
-        
-        {/* Controles da Direita */}
-        {(!user || user.role !== 'cozinha') && (
-          // --- ALTERAÇÃO AQUI: Aumentando o tamanho do ícone ---
-          <IconButton component={NavLink} to="/carrinho" color="inherit" aria-label="carrinho" size="large">
-            <Badge badgeContent={totalItensNoCarrinho} color="primary">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
+        {/* VISÃO DO ENTREGADOR (A MAIS SIMPLES) */}
+        {isAuthenticated && user.role === 'entregador' && (
+          <>
+            <Button component={NavLink} to="/entregas" color="inherit" sx={{ fontSize: '1rem' }}>
+              Entregas
+            </Button>
+            <IconButton onClick={toggleTheme} color="inherit" size="large">
+              {theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+            </IconButton>
+            <Button color="primary" variant="contained" onClick={handleLogout} size="large" sx={{ ml: 2 }}>
+              Sair
+            </Button>
+          </>
         )}
 
-        <IconButton onClick={toggleTheme} color="inherit" aria-label="trocar tema" size="large">
-          {theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
-        </IconButton>
-
-        {isAuthenticated ? (
-          // --- ALTERAÇÃO AQUI: Aumentando o tamanho do botão "Sair" ---
-          <Button color="primary" variant="contained" onClick={handleLogout} sx={{ ml: 2 }} size="large">
-            Sair
-          </Button>
-        ) : (
-          <Button component={NavLink} to="/login" color="inherit" sx={{ fontSize: '1rem' }}>
-            Login
-          </Button>
+        {/* VISÃO DOS OUTROS USUÁRIOS LOGADOS (ADMIN, COZINHA) */}
+        {isAuthenticated && user.role !== 'entregador' && (
+           <>
+            {/* Links de cliente (não aparecem para a cozinha) */}
+            {(!user || user.role !== 'cozinha') && (
+              <>
+                <Button component={NavLink} to="/cardapio" color="inherit" sx={{ fontSize: '1rem' }}>Cardápio</Button>
+                <IconButton component={NavLink} to="/carrinho" color="inherit" size="large">
+                  <Badge badgeContent={totalItensNoCarrinho} color="primary"><ShoppingCartIcon /></Badge>
+                </IconButton>
+              </>
+            )}
+            {/* Links de funcionário */}
+            {(user.role === 'cozinha' || user.role === 'admin') && <Button component={NavLink} to="/cozinha" color="inherit" sx={{ fontSize: '1rem' }}>Cozinha</Button>}
+            {user.role === 'admin' && <Button component={NavLink} to="/entregas" color="inherit" sx={{ fontSize: '1rem' }}>Entregas</Button>}
+            {user.role === 'admin' && <Button component={NavLink} to="/admin" color="inherit" sx={{ fontSize: '1rem' }}>Admin</Button>}
+            
+            <IconButton onClick={toggleTheme} color="inherit" size="large">{theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />}</IconButton>
+            <Button color="primary" variant="contained" onClick={handleLogout} sx={{ ml: 2 }} size="large">Sair</Button>
+          </>
         )}
+
+        {/* VISÃO DO USUÁRIO DESLOGADO */}
+        {!isAuthenticated && (
+          <>
+            <Button component={NavLink} to="/cardapio" color="inherit" sx={{ fontSize: '1rem' }}>Cardápio</Button>
+            <IconButton component={NavLink} to="/carrinho" color="inherit" size="large">
+              <Badge badgeContent={totalItensNoCarrinho} color="primary"><ShoppingCartIcon /></Badge>
+            </IconButton>
+            <IconButton onClick={toggleTheme} color="inherit" size="large">{theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />}</IconButton>
+            <Button component={NavLink} to="/login" color="inherit" sx={{ fontSize: '1rem' }}>Login</Button>
+          </>
+        )}
+
       </Toolbar>
     </AppBar>
   );

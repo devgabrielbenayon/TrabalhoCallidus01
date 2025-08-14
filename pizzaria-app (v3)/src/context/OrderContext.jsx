@@ -18,7 +18,7 @@ export const OrderProvider = ({ children }) => {
   useEffect(() => {
     try {
       localStorage.setItem('pizzaria_pedidos', JSON.stringify(pedidos));
-    } catch (error) {
+    } catch (error)      {
       console.error("Erro ao salvar pedidos no localStorage", error);
     }
   }, [pedidos]);
@@ -38,8 +38,16 @@ export const OrderProvider = ({ children }) => {
   const marcarComoPronto = (pedidoId) => {
     setPedidos(pedidosAtuais =>
       pedidosAtuais.map(p =>
-        // A variável 'pedidoId' é USADA AQUI na comparação
         p.id === pedidoId ? { ...p, status: 'pronto' } : p
+      )
+    );
+  };
+
+  // --- NOVA FUNÇÃO PARA O ENTREGADOR ACEITAR O PEDIDO ---
+  const aceitarEntrega = (pedidoId) => {
+    setPedidos(pedidosAtuais =>
+      pedidosAtuais.map(p =>
+        p.id === pedidoId ? { ...p, status: 'em_entrega' } : p
       )
     );
   };
@@ -47,7 +55,6 @@ export const OrderProvider = ({ children }) => {
   const marcarComoEntregue = (pedidoId) => {
     setPedidos(pedidosAtuais =>
       pedidosAtuais.map(p =>
-        // A variável 'pedidoId' também é USADA AQUI na comparação
         p.id === pedidoId ? { ...p, status: 'entregue' } : p
       )
     );
@@ -57,6 +64,7 @@ export const OrderProvider = ({ children }) => {
     pedidos,
     adicionarPedido,
     marcarComoPronto,
+    aceitarEntrega, // Disponibilizando a nova função
     marcarComoEntregue,
   };
 
