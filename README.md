@@ -19,27 +19,33 @@ Este projeto foi desenvolvido como parte de um exercício prático, proposto pel
 
 ```mermaid
 flowchart TD
-    A[Início] --> B[Login]
-    A --> C{Usuário}
-    C -->|Cliente| D[Cardápio]
-    D --> E[Adicionar ao Carrinho]
-    E --> F[Visualizar Carrinho]
+    A["Início"] --> B["Cardápio Público"]
+    B --> D["Visualizar Produtos"]
+    D --> E["Adicionar ao Carrinho"]
+    E --> F["Visualizar Carrinho"]
     F --> G{Finalizar Pedido?}
-    G -->|Sim| H[Pedido Confirmado]
-    G -->|Não| D
-    H --> I[Acompanhar Pedido]
-    I --> J[Pedido Entregue]
-    J --> K[Fim]
-
-    C -->|Cozinha| L[Ver Pedidos Pendentes]
-    L --> M[Preparar Pedido]
-    M --> N[Pedido Pronto]
-    N --> O[Entregar Pedido]
-    O --> P[Fim]
-
-    C -->|Admin| Q[Gerenciar Cardápio]
-    Q --> R[Adicionar/Editar/Remover Itens]
-    C -->|Admin| U[Relatórios de Vendas]
-    U --> V[Analisar Dados]
-    V --> W[Fim]
+    
+    G -->|Sim| J["Pedido Confirmado"]
+    G -->|Não| B
+    
+    J --> K["Acompanhar Pedido"]
+    K --> L["Pedido Entregue"]
+    L --> M["Fim"]
+    
+    %% Fluxo da Cozinha
+    P["Login Cozinha"] --> Q["Ver Pedidos Pendentes"]
+    Q --> R["Preparar Pedido"]
+    R --> S["Pedido Pronto"]
+    S --> T["Entregar Pedido"]
+    T --> U["Fim"]
+    
+    %% Fluxo do Admin
+    V["Login Admin"] --> W["Gerenciar Cardápio"]
+    V --> AD["Relatórios"]
+    
+    W --> X["Adicionar/Editar/Remover Itens"]
+    X --> AC["Fim"]
+    
+    AD --> AE["Vendas, Pedidos, Estoque"]
+    AE --> AC["Fim"]
 ```
