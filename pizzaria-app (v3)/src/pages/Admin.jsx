@@ -20,7 +20,7 @@ const formInicial = {
 
 const Admin = () => {
   const { pizzas, adicionarPizza, editarPizza, excluirPizza } = useContext(MenuContext);
-  const { pedidos, removerPedido } = useContext(OrderContext); // Puxa a nova função 'removerPedido'
+  const { pedidos, removerPedido } = useContext(OrderContext);
   const { garcons, adicionarGarcom, removerGarcom, editarGarcom } = useContext(WaiterContext);
   
   const [formData, setFormData] = useState(formInicial);
@@ -156,7 +156,7 @@ const Admin = () => {
           </Paper>
         </Grid>
 
-        {/* Coluna da Direita (Menor): Contém os outros dois painéis aninhados */}
+        {/* Coluna da Direita (Menor): Garçons e Histórico */}
         <Grid item xs={12} md={5}>
           <Grid container spacing={3} direction="column">
             
@@ -173,7 +173,16 @@ const Admin = () => {
                     variant="outlined"
                     size="small"
                   />
-                  <IconButton type="submit" color="primary" aria-label="adicionar garçom">
+                  <IconButton 
+                    type="submit" 
+                    aria-label="adicionar garçom"
+                    sx={{
+                      color: 'text.secondary', // Cor padrão (cinza)
+                      '&:hover': {
+                        color: 'primary.main', // Cor primária (vermelho) ao passar o mouse
+                      },
+                    }}
+                  >
                     <PersonAddIcon />
                   </IconButton>
                 </Box>
@@ -199,24 +208,38 @@ const Admin = () => {
                 <Typography variant="h5" gutterBottom>Histórico de Pedidos</Typography>
                 <List>
                   {pedidos && pedidos.length > 0 ? (
-                    pedidos.map(pedido => (
-                      <ListItem 
-                        key={pedido.id}
-                        secondaryAction={
-                          <IconButton edge="end" aria-label="delete" onClick={() => removerPedido(pedido.id)}>
-                            <DeleteIcon />
-                          </IconButton>
-                        }
-                      >
-                        <ListItemText 
-                          primary={`Pedido #${pedido.id.substring(0, 8)}`}
-                          secondary={`Total: ${pedido.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`}
-                        />
-                        <Typography variant="body2" sx={{ fontWeight: 'bold', color: pedido.status === 'preparando' ? 'warning.main' : pedido.status === 'pronto' ? 'info.main' : 'success.main' }}>
-                          {pedido.status.toUpperCase()}
-                        </Typography>
-                      </ListItem>
-                    ))
+                    pedidos.map(pedido => {
+                      let statusText = pedido.status.toUpperCase();
+                      let statusColor = 'text.secondary';
+
+                      if (pedido.status === 'preparando') {
+                        statusColor = 'warning.main';
+                      } else if (pedido.status === 'pronto' || pedido.status === 'em_entrega' || pedido.status === 'servindo') {
+                        statusColor = 'info.main';
+                      } else if (pedido.status === 'entregue') {
+                        statusColor = 'success.main';
+                        statusText = pedido.cliente.tipo === 'mesa' ? 'SERVIDO' : 'ENTREGUE';
+                      }
+
+                      return (
+                        <ListItem 
+                          key={pedido.id}
+                          secondaryAction={
+                            <IconButton edge="end" aria-label="delete" onClick={() => removerPedido(pedido.id)}>
+                              <DeleteIcon />
+                            </IconButton>
+                          }
+                        >
+                          <ListItemText 
+                            primary={`Pedido #${pedido.id.substring(0, 8)}`}
+                            secondary={`Total: ${pedido.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`}
+                          />
+                          <Typography variant="body2" sx={{ fontWeight: 'bold', color: statusColor }}>
+                            {statusText}
+                          </Typography>
+                        </ListItem>
+                      );
+                    })
                   ) : (
                     <Typography color="text.secondary">Nenhum pedido foi feito ainda.</Typography>
                   )}

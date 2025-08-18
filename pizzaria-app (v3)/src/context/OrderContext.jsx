@@ -51,6 +51,15 @@ export const OrderProvider = ({ children }) => {
     );
   };
 
+  // --- NOVA FUNÇÃO PARA ATRIBUIR UM GARÇOM A UM PEDIDO DE MESA ---
+  const atribuirGarcom = (pedidoId, garcom) => {
+    setPedidos(pedidosAtuais =>
+      pedidosAtuais.map(p =>
+        p.id === pedidoId ? { ...p, status: 'servindo', garcom: garcom } : p
+      )
+    );
+  };
+
   const marcarComoEntregue = (pedidoId) => {
     setPedidos(pedidosAtuais =>
       pedidosAtuais.map(p =>
@@ -59,19 +68,18 @@ export const OrderProvider = ({ children }) => {
     );
   };
 
-  // --- NOVA FUNÇÃO PARA REMOVER UM PEDIDO ---
   const removerPedido = (pedidoId) => {
     setPedidos(pedidosAtuais => pedidosAtuais.filter(p => p.id !== pedidoId));
   };
-  // --- FIM DA NOVA FUNÇÃO ---
 
   const valorDoContexto = {
     pedidos,
     adicionarPedido,
     marcarComoPronto,
     aceitarEntrega,
+    atribuirGarcom, // Disponibilizando a nova função
     marcarComoEntregue,
-    removerPedido, // Disponibilizando a nova função
+    removerPedido,
   };
 
   return (
