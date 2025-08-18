@@ -43,7 +43,6 @@ export const OrderProvider = ({ children }) => {
     );
   };
 
-  // --- NOVA FUNÇÃO PARA O ENTREGADOR ACEITAR O PEDIDO ---
   const aceitarEntrega = (pedidoId) => {
     setPedidos(pedidosAtuais =>
       pedidosAtuais.map(p =>
@@ -60,12 +59,19 @@ export const OrderProvider = ({ children }) => {
     );
   };
 
+  // --- NOVA FUNÇÃO PARA REMOVER UM PEDIDO ---
+  const removerPedido = (pedidoId) => {
+    setPedidos(pedidosAtuais => pedidosAtuais.filter(p => p.id !== pedidoId));
+  };
+  // --- FIM DA NOVA FUNÇÃO ---
+
   const valorDoContexto = {
     pedidos,
     adicionarPedido,
     marcarComoPronto,
-    aceitarEntrega, // Disponibilizando a nova função
+    aceitarEntrega,
     marcarComoEntregue,
+    removerPedido, // Disponibilizando a nova função
   };
 
   return (

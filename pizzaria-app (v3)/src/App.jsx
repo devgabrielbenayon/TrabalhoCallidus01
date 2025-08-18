@@ -1,19 +1,23 @@
 // src/App.jsx
-import { ThemeProvider } from './context/ThemeContext'; // 1. Importe
+import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthProvider';
 import { MenuProvider } from './context/MenuContext';
 import { CartProvider } from './context/CartContext';
 import { OrderProvider } from './context/OrderContext';
+import { WaiterProvider } from './context/WaiterContext'; // 1. Importe
+
 import AppRoutes from './routes/AppRoutes';
 
 function App() {
   return (
-    <ThemeProvider> {/* 2. Envolva todos os outros provedores */}
+    <ThemeProvider>
       <AuthProvider>
         <MenuProvider>
           <CartProvider>
             <OrderProvider>
-              <AppRoutes />
+              <WaiterProvider>
+                <AppRoutes />
+              </WaiterProvider>
             </OrderProvider>
           </CartProvider>
         </MenuProvider>

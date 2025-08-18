@@ -2,14 +2,16 @@
 import React, { useContext, useState } from 'react';
 import { MenuContext } from '../context/MenuContext';
 import { OrderContext } from '../context/OrderContext';
+import { WaiterContext } from '../context/WaiterContext';
 
-// Importando componentes do MUI
 import {
   Container, Box, Typography, Paper, TextField, Button,
-  List, ListItem, ListItemText, IconButton, Divider, Grid
+  List, ListItem, ListItemText, IconButton, Divider, Grid,
+  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const formInicial = {
   id: null, nome: '', ingredientes: '', preco_p: '', preco_m: '',
@@ -17,11 +19,18 @@ const formInicial = {
 };
 
 const Admin = () => {
-  // Agora 'pizzas' é uma lista garantida apenas de pizzas, vinda do contexto
   const { pizzas, adicionarPizza, editarPizza, excluirPizza } = useContext(MenuContext);
-  const { pedidos } = useContext(OrderContext);
+  const { pedidos, removerPedido } = useContext(OrderContext); // Puxa a nova função 'removerPedido'
+  const { garcons, adicionarGarcom, removerGarcom, editarGarcom } = useContext(WaiterContext);
+  
   const [formData, setFormData] = useState(formInicial);
   const [modoEdicao, setModoEdicao] = useState(false);
+  
+  const [nomeGarcom, setNomeGarcom] = useState('');
+
+  const [dialogAberto, setDialogAberto] = useState(false);
+  const [garcomParaEditar, setGarcomParaEditar] = useState(null);
+  const [novoNomeGarcom, setNovoNomeGarcom] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,25 +80,54 @@ const Admin = () => {
     handleCancelarEdicao();
   };
 
+  const handleAdicionarGarcom = (e) => {
+    e.preventDefault();
+    if (nomeGarcom.trim()) {
+      adicionarGarcom(nomeGarcom);
+      setNomeGarcom('');
+    }
+  };
+
+  const handleAbrirDialog = (garcom) => {
+    setGarcomParaEditar(garcom);
+    setNovoNomeGarcom(garcom.nome);
+    setDialogAberto(true);
+  };
+
+  const handleFecharDialog = () => {
+    setDialogAberto(false);
+    setGarcomParaEditar(null);
+    setNovoNomeGarcom('');
+  };
+
+  const handleSalvarEdicaoGarcom = () => {
+    if (garcomParaEditar) {
+      editarGarcom(garcomParaEditar.id, novoNomeGarcom);
+    }
+    handleFecharDialog();
+  };
+
   return (
-    <Container maxWidth="lg" sx={{ my: 4 }}>
+    <Container maxWidth="xl" sx={{ my: 4 }}>
       <Typography variant="h4" gutterBottom>Painel de Administração</Typography>
-      <Grid container spacing={4}>
-        {/* Coluna da Esquerda: Gerenciar Cardápio */}
-        <Grid item xs={12} md={6}>
+      
+      <Grid container spacing={3}>
+        
+        {/* Coluna da Esquerda (Maior): Gerenciar Cardápio */}
+        <Grid item xs={12} md={7}>
           <Paper elevation={3} sx={{ p: 3 }}>
             <Typography variant="h5" gutterBottom>Gerenciar Cardápio</Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate>
               <Typography variant="h6">{modoEdicao ? 'Editar Pizza' : 'Adicionar Nova Pizza'}</Typography>
-              <TextField name="nome" label="Nome da Pizza" value={formData.nome} onChange={handleChange} fullWidth margin="normal" required />
-              <TextField name="ingredientes" label="Ingredientes (separados por vírgula)" value={formData.ingredientes} onChange={handleChange} fullWidth margin="normal" required />
+              <TextField name="nome" label="Nome da Pizza" value={formData.nome} onChange={handleChange} fullWidth margin="normal" required size="small" />
+              <TextField name="ingredientes" label="Ingredientes (separados por vírgula)" value={formData.ingredientes} onChange={handleChange} fullWidth margin="normal" required size="small" />
               <Grid container spacing={2}>
-                <Grid item xs={4}><TextField name="preco_p" label="Preço P" value={formData.preco_p} onChange={handleChange} fullWidth required /></Grid>
-                <Grid item xs={4}><TextField name="preco_m" label="Preço M" value={formData.preco_m} onChange={handleChange} fullWidth required /></Grid>
-                <Grid item xs={4}><TextField name="preco_g" label="Preço G" value={formData.preco_g} onChange={handleChange} fullWidth required /></Grid>
+                <Grid item xs={4}><TextField name="preco_p" label="Preço P" value={formData.preco_p} onChange={handleChange} fullWidth required size="small" /></Grid>
+                <Grid item xs={4}><TextField name="preco_m" label="Preço M" value={formData.preco_m} onChange={handleChange} fullWidth required size="small" /></Grid>
+                <Grid item xs={4}><TextField name="preco_g" label="Preço G" value={formData.preco_g} onChange={handleChange} fullWidth required size="small" /></Grid>
               </Grid>
-              <TextField name="imagem" label="URL da Imagem" value={formData.imagem} onChange={handleChange} fullWidth margin="normal" required />
-              <TextField name="categoria" label="Categoria" value={formData.categoria} onChange={handleChange} fullWidth margin="normal" required />
+              <TextField name="imagem" label="URL da Imagem" value={formData.imagem} onChange={handleChange} fullWidth margin="normal" required size="small" />
+              <TextField name="categoria" label="Categoria" value={formData.categoria} onChange={handleChange} fullWidth margin="normal" required size="small" />
               <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
                 <Button type="submit" variant="contained" size="large" sx={{ flexGrow: 1 }}>
                   {modoEdicao ? 'Salvar Alterações' : 'Adicionar Pizza'}
@@ -101,20 +139,14 @@ const Admin = () => {
                 )}
               </Box>
             </Box>
-            
             <Divider sx={{ my: 3 }} />
-
             <Typography variant="h6">Pizzas Atuais</Typography>
             <List>
               {pizzas.map(pizza => (
                 <ListItem key={pizza.id} secondaryAction={
                   <>
-                    <IconButton edge="end" aria-label="edit" onClick={() => handleEditar(pizza)}>
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton edge="end" aria-label="delete" onClick={() => excluirPizza(pizza.id)} sx={{ ml: 1 }}>
-                      <DeleteIcon />
-                    </IconButton>
+                    <IconButton edge="end" aria-label="edit" onClick={() => handleEditar(pizza)}><EditIcon /></IconButton>
+                    <IconButton edge="end" aria-label="delete" onClick={() => excluirPizza(pizza.id)} sx={{ ml: 1 }}><DeleteIcon /></IconButton>
                   </>
                 }>
                   <ListItemText primary={pizza.nome} secondary={pizza.categoria} />
@@ -124,34 +156,102 @@ const Admin = () => {
           </Paper>
         </Grid>
 
-        {/* Coluna da Direita: Histórico de Pedidos */}
-        <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h5" gutterBottom>Histórico de Pedidos</Typography>
-            <List>
-              {pedidos && pedidos.length > 0 ? (
-                pedidos.map(pedido => (
-                  <ListItem key={pedido.id}>
-                    <ListItemText 
-                      primary={`Pedido #${pedido.id.substring(0, 8)}`}
-                      secondary={`Total: ${pedido.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`}
-                    />
-                    <Typography variant="body2" sx={{ 
-                        fontWeight: 'bold',
-                        color: pedido.status === 'preparando' ? 'warning.main' : 
-                               pedido.status === 'pronto' ? 'info.main' : 'success.main'
-                    }}>
-                      {pedido.status.toUpperCase()}
-                    </Typography>
-                  </ListItem>
-                ))
-              ) : (
-                <Typography color="text.secondary">Nenhum pedido foi feito ainda.</Typography>
-              )}
-            </List>
-          </Paper>
+        {/* Coluna da Direita (Menor): Contém os outros dois painéis aninhados */}
+        <Grid item xs={12} md={5}>
+          <Grid container spacing={3} direction="column">
+            
+            {/* Item 1 da Coluna Direita: Gerenciar Garçons */}
+            <Grid item>
+              <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
+                <Typography variant="h5" gutterBottom>Gerenciar Garçons</Typography>
+                <Box component="form" onSubmit={handleAdicionarGarcom} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                  <TextField 
+                    label="Nome do Garçom" 
+                    value={nomeGarcom}
+                    onChange={(e) => setNomeGarcom(e.target.value)}
+                    fullWidth 
+                    variant="outlined"
+                    size="small"
+                  />
+                  <IconButton type="submit" color="primary" aria-label="adicionar garçom">
+                    <PersonAddIcon />
+                  </IconButton>
+                </Box>
+                <Divider />
+                <List>
+                  {garcons.map(garcom => (
+                    <ListItem key={garcom.id} secondaryAction={
+                      <>
+                        <IconButton edge="end" aria-label="edit" onClick={() => handleAbrirDialog(garcom)}><EditIcon /></IconButton>
+                        <IconButton edge="end" aria-label="delete" onClick={() => removerGarcom(garcom.id)} sx={{ ml: 1 }}><DeleteIcon /></IconButton>
+                      </>
+                    }>
+                      <ListItemText primary={garcom.nome} />
+                    </ListItem>
+                  ))}
+                </List>
+              </Paper>
+            </Grid>
+
+            {/* Item 2 da Coluna Direita: Histórico de Pedidos */}
+            <Grid item>
+              <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
+                <Typography variant="h5" gutterBottom>Histórico de Pedidos</Typography>
+                <List>
+                  {pedidos && pedidos.length > 0 ? (
+                    pedidos.map(pedido => (
+                      <ListItem 
+                        key={pedido.id}
+                        secondaryAction={
+                          <IconButton edge="end" aria-label="delete" onClick={() => removerPedido(pedido.id)}>
+                            <DeleteIcon />
+                          </IconButton>
+                        }
+                      >
+                        <ListItemText 
+                          primary={`Pedido #${pedido.id.substring(0, 8)}`}
+                          secondary={`Total: ${pedido.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`}
+                        />
+                        <Typography variant="body2" sx={{ fontWeight: 'bold', color: pedido.status === 'preparando' ? 'warning.main' : pedido.status === 'pronto' ? 'info.main' : 'success.main' }}>
+                          {pedido.status.toUpperCase()}
+                        </Typography>
+                      </ListItem>
+                    ))
+                  ) : (
+                    <Typography color="text.secondary">Nenhum pedido foi feito ainda.</Typography>
+                  )}
+                </List>
+              </Paper>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
+      
+      {/* Modal (Dialog) para Edição de Garçom */}
+      <Dialog open={dialogAberto} onClose={handleFecharDialog}>
+        <DialogTitle>Editar Nome do Garçom</DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ mb: 2 }}>
+            Por favor, insira o novo nome para "{garcomParaEditar?.nome}".
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Novo Nome"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={novoNomeGarcom}
+            onChange={(e) => setNovoNomeGarcom(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handleSalvarEdicaoGarcom()}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleFecharDialog}>Cancelar</Button>
+          <Button onClick={handleSalvarEdicaoGarcom} variant="contained">Salvar</Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };

@@ -36,7 +36,7 @@ const Header = () => {
       <Toolbar>
         <Box sx={{ flexGrow: 1 }}>
           <NavLink to={homePath()}>
-            <img src={'/logo-dark.png'} alt="Logo" style={{ height: '100px', verticalAlign: 'middle' }}/>
+            <img src={'/logo.png'} alt="Logo" style={{ height: '100px', verticalAlign: 'middle' }}/>
           </NavLink>
         </Box>
 
