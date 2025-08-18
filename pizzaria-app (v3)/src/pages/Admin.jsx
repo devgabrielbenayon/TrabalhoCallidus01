@@ -173,15 +173,11 @@ const Admin = () => {
                     variant="outlined"
                     size="small"
                   />
+                  {/* --- ALTERAÇÃO AQUI --- */}
                   <IconButton 
                     type="submit" 
                     aria-label="adicionar garçom"
-                    sx={{
-                      color: 'text.secondary', // Cor padrão (cinza)
-                      '&:hover': {
-                        color: 'primary.main', // Cor primária (vermelho) ao passar o mouse
-                      },
-                    }}
+                    color="inherit" /* Faz o ícone usar a cor padrão do texto (branco/preto) */
                   >
                     <PersonAddIcon />
                   </IconButton>
