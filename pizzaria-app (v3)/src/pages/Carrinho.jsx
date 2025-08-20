@@ -1,25 +1,15 @@
-// src/pages/Carrinho.jsx (Versão com MUI)
+// src/pages/Carrinho.jsx
 import React, { useContext, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { OrderContext } from '../context/OrderContext';
 import ItemCarrinho from '../components/ItemCarrinho';
 
-// Importando componentes do MUI
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import TextField from '@mui/material/TextField';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
+import { Container, Typography, Box, List, Divider, TextField, ToggleButton, ToggleButtonGroup, Button, Paper, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const formatarPreco = (preco) => {
-  return preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    return preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 };
 
 const Carrinho = () => {
@@ -30,17 +20,27 @@ const Carrinho = () => {
     const [tipoPedido, setTipoPedido] = useState('entrega');
     const [nomeCliente, setNomeCliente] = useState('');
     const [detalhePedido, setDetalhePedido] = useState('');
+    const [incluirTaxa, setIncluirTaxa] = useState(true);
 
-    const valorTotal = itens.reduce((total, item) => total + (item.preco * item.quantidade), 0);
+    const itensDoCarrinho = itens || [];
 
+    const subtotal = itensDoCarrinho.reduce((total, item) => total + (item.preco * item.quantidade), 0);
+    const taxaServico = tipoPedido === 'mesa' && incluirTaxa ? subtotal * 0.10 : 0;
+    const valorTotal = subtotal + taxaServico;
+    
     const handleFinalizarPedido = () => {
-        if (itens.length === 0 || !nomeCliente || !detalhePedido) {
+        if (itensDoCarrinho.length === 0 || !nomeCliente || !detalhePedido) {
             alert('Por favor, preencha seu nome e os detalhes do pedido.');
             return;
         }
-
-        const detalhesCliente = { nome: nomeCliente, tipo: tipoPedido, detalhe: detalhePedido };
-        adicionarPedido(itens, valorTotal, detalhesCliente);
+        
+        const detalhesCliente = { 
+            nome: nomeCliente, 
+            tipo: tipoPedido, 
+            detalhe: detalhePedido,
+            taxaInclusa: incluirTaxa 
+        };
+        adicionarPedido(itensDoCarrinho, valorTotal, detalhesCliente);
         limparCarrinho();
         alert('Pedido enviado para a cozinha com sucesso!');
         navigate('/cardapio');
@@ -49,11 +49,14 @@ const Carrinho = () => {
     const handleTipoPedidoChange = (event, newTipo) => {
         if (newTipo !== null) {
             setTipoPedido(newTipo);
-            setDetalhePedido(''); // Limpa o detalhe ao trocar o tipo
+            setDetalhePedido('');
+            if (newTipo === 'mesa') {
+                setIncluirTaxa(true);
+            }
         }
     };
 
-    if (!itens || itens.length === 0) {
+    if (itensDoCarrinho.length === 0) {
         return (
             <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 8 }}>
                 <Typography variant="h4" gutterBottom>Seu carrinho está vazio</Typography>
@@ -72,7 +75,7 @@ const Carrinho = () => {
             <Paper elevation={3} sx={{ p: 3 }}>
                 <Typography variant="h4" gutterBottom>Meu Carrinho</Typography>
                 <List>
-                    {itens.map(item => (
+                    {itensDoCarrinho.map(item => (
                         <ItemCarrinho key={item.idUnicoCarrinho} item={item} />
                     ))}
                 </List>
@@ -80,41 +83,82 @@ const Carrinho = () => {
 
                 <Box component="form" noValidate autoComplete="off">
                     <Typography variant="h5" gutterBottom>Detalhes do Pedido</Typography>
-                    <TextField
-                        label="Seu Nome"
-                        fullWidth
-                        margin="normal"
-                        value={nomeCliente}
-                        onChange={(e) => setNomeCliente(e.target.value)}
+                    <TextField 
+                        label="Seu Nome" 
+                        fullWidth 
+                        margin="normal" 
+                        value={nomeCliente} 
+                        onChange={(e) => setNomeCliente(e.target.value)} 
                     />
-                    <ToggleButtonGroup
-                        value={tipoPedido}
-                        exclusive
-                        onChange={handleTipoPedidoChange}
-                        fullWidth
+                    <ToggleButtonGroup 
+                        value={tipoPedido} 
+                        exclusive 
+                        onChange={handleTipoPedidoChange} 
+                        fullWidth 
                         sx={{ mb: 2 }}
                     >
                         <ToggleButton value="entrega">Para Entrega</ToggleButton>
                         <ToggleButton value="mesa">Na Mesa</ToggleButton>
                     </ToggleButtonGroup>
-                    <TextField
-                        label={tipoPedido === 'entrega' ? 'Endereço de Entrega' : 'Número da Mesa'}
-                        fullWidth
-                        margin="normal"
-                        value={detalhePedido}
-                        onChange={(e) => setDetalhePedido(e.target.value)}
+                    <TextField 
+                        label={tipoPedido === 'entrega' ? 'Endereço de Entrega' : 'Número da Mesa'} 
+                        fullWidth 
+                        margin="normal" 
+                        value={detalhePedido} 
+                        onChange={(e) => setDetalhePedido(e.target.value)} 
                     />
                 </Box>
 
                 <Divider sx={{ my: 3 }} />
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="h5">Total: {formatarPreco(valorTotal)}</Typography>
-                    <Box>
-                        <Button onClick={limparCarrinho} sx={{ mr: 2 }}>Limpar Carrinho</Button>
-                        <Button variant="contained" size="large" onClick={handleFinalizarPedido}>
-                            Finalizar Pedido
-                        </Button>
+
+                {/* --- SEÇÃO DE RESUMO DO PEDIDO COM LAYOUT CORRIGIDO USANDO GRID --- */}
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Box sx={{
+                        display: 'grid',
+                        // Define 3 colunas: 1. Label (flexível), 2. Preço (auto), 3. Ícone (auto)
+                        gridTemplateColumns: '1fr auto auto',
+                        alignItems: 'center',
+                        gap: '8px 16px', // 8px de espaço vertical, 16px horizontal
+                        width: '100%',
+                        maxWidth: '350px',
+                    }}>
+                        {/* Linha do Subtotal */}
+                        <Typography variant="body1" color="text.secondary" sx={{ gridColumn: '1 / 2' }}>Subtotal:</Typography>
+                        <Typography variant="body1" color="text.secondary" sx={{ gridColumn: '2 / 3', textAlign: 'right' }}>{formatarPreco(subtotal)}</Typography>
+                        {/* Célula vazia na 3ª coluna para manter o alinhamento */}
+                        <Box sx={{ gridColumn: '3 / 4' }} />
+
+                        {/* Linha da Taxa de Serviço (condicional) */}
+                        {tipoPedido === 'mesa' && (
+                            incluirTaxa ? (
+                                <>
+                                    <Typography variant="body1" color="text.secondary" sx={{ gridColumn: '1 / 2' }}>Taxa de Serviço (10%):</Typography>
+                                    <Typography variant="body1" color="text.secondary" sx={{ gridColumn: '2 / 3', textAlign: 'right' }}>{formatarPreco(taxaServico)}</Typography>
+                                    <IconButton size="small" onClick={() => setIncluirTaxa(false)} title="Remover taxa" sx={{ gridColumn: '3 / 4' }}>
+                                        <DeleteIcon fontSize="inherit" />
+                                    </IconButton>
+                                </>
+                            ) : (
+                                // Ocupa todas as 3 colunas quando a taxa é removida
+                                <Button size="small" onClick={() => setIncluirTaxa(true)} sx={{ gridColumn: '1 / -1' }}>Incluir Taxa de Serviço (10%)</Button>
+                            )
+                        )}
+
+                        {/* Linha do Total */}
+                        <Divider sx={{ gridColumn: '1 / -1', my: 1 }} />
+                        <Typography variant="h6" sx={{ fontWeight: 'bold', gridColumn: '1 / 2' }}>Total:</Typography>
+                        <Typography variant="h6" sx={{ fontWeight: 'bold', gridColumn: '2 / 3', textAlign: 'right' }}>{formatarPreco(valorTotal)}</Typography>
+                         {/* Célula vazia na 3ª coluna para manter o alinhamento */}
+                        <Box sx={{ gridColumn: '3 / 4' }} />
                     </Box>
+                </Box>
+                {/* --- FIM DA SEÇÃO DE RESUMO --- */}
+
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 3 }}>
+                    <Button onClick={limparCarrinho}>Limpar Carrinho</Button>
+                    <Button variant="contained" size="large" onClick={handleFinalizarPedido}>
+                        Finalizar Pedido
+                    </Button>
                 </Box>
             </Paper>
         </Container>
