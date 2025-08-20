@@ -20,13 +20,14 @@ const Carrinho = () => {
     const [tipoPedido, setTipoPedido] = useState('entrega');
     const [nomeCliente, setNomeCliente] = useState('');
     const [detalhePedido, setDetalhePedido] = useState('');
-    const [incluirTaxa, setIncluirTaxa] = useState(true);
+    const [incluirTaxaServico, setIncluirTaxaServico] = useState(true);
 
     const itensDoCarrinho = itens || [];
 
     const subtotal = itensDoCarrinho.reduce((total, item) => total + (item.preco * item.quantidade), 0);
-    const taxaServico = tipoPedido === 'mesa' && incluirTaxa ? subtotal * 0.10 : 0;
-    const valorTotal = subtotal + taxaServico;
+    const taxaServico = tipoPedido === 'mesa' && incluirTaxaServico ? subtotal * 0.10 : 0;
+    const taxaEntrega = tipoPedido === 'entrega' ? 12.99 : 0;
+    const valorTotal = subtotal + taxaServico + taxaEntrega;
     
     const handleFinalizarPedido = () => {
         if (itensDoCarrinho.length === 0 || !nomeCliente || !detalhePedido) {
@@ -38,7 +39,7 @@ const Carrinho = () => {
             nome: nomeCliente, 
             tipo: tipoPedido, 
             detalhe: detalhePedido,
-            taxaInclusa: incluirTaxa 
+            taxaInclusa: tipoPedido === 'mesa' ? incluirTaxaServico : false
         };
         adicionarPedido(itensDoCarrinho, valorTotal, detalhesCliente);
         limparCarrinho();
@@ -51,7 +52,7 @@ const Carrinho = () => {
             setTipoPedido(newTipo);
             setDetalhePedido('');
             if (newTipo === 'mesa') {
-                setIncluirTaxa(true);
+                setIncluirTaxaServico(true);
             }
         }
     };
@@ -111,45 +112,55 @@ const Carrinho = () => {
 
                 <Divider sx={{ my: 3 }} />
 
-                {/* --- SEÇÃO DE RESUMO DO PEDIDO COM LAYOUT CORRIGIDO USANDO GRID --- */}
+                {/* --- SEÇÃO DE RESUMO DO PEDIDO COM LAYOUT FINAL --- */}
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Box sx={{
-                        display: 'grid',
-                        // Define 3 colunas: 1. Label (flexível), 2. Preço (auto), 3. Ícone (auto)
-                        gridTemplateColumns: '1fr auto auto',
-                        alignItems: 'center',
-                        gap: '8px 16px', // 8px de espaço vertical, 16px horizontal
                         width: '100%',
                         maxWidth: '350px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        minHeight: '110px'
                     }}>
-                        {/* Linha do Subtotal */}
-                        <Typography variant="body1" color="text.secondary" sx={{ gridColumn: '1 / 2' }}>Subtotal:</Typography>
-                        <Typography variant="body1" color="text.secondary" sx={{ gridColumn: '2 / 3', textAlign: 'right' }}>{formatarPreco(subtotal)}</Typography>
-                        {/* Célula vazia na 3ª coluna para manter o alinhamento */}
-                        <Box sx={{ gridColumn: '3 / 4' }} />
+                        {/* PARTE DE CIMA (variável) */}
+                        <Box>
+                            {/* Subtotal */}
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '32px' }}>
+                                <Typography variant="body1" color="text.secondary">Subtotal:</Typography>
+                                <Typography variant="body1" color="text.secondary">{formatarPreco(subtotal)}</Typography>
+                            </Box>
+                            {/* Taxa de Entrega (condicional) */}
+                            {tipoPedido === 'entrega' && (
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '32px' }}>
+                                    <Typography variant="body1" color="text.secondary">Taxa de Entrega:</Typography>
+                                    <Typography variant="body1" color="text.secondary">{formatarPreco(taxaEntrega)}</Typography>
+                                </Box>
+                            )}
+                            {/* Taxa de Serviço (condicional) */}
+                            {tipoPedido === 'mesa' && (
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '32px' }}>
+                                    {incluirTaxaServico ? (
+                                        <>
+                                            <Typography variant="body1" color="text.secondary">Taxa de Serviço (10%):</Typography>
+                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                <Typography variant="body1" color="text.secondary">{formatarPreco(taxaServico)}</Typography>
+                                                <IconButton size="small" onClick={() => setIncluirTaxaServico(false)} title="Remover taxa"><DeleteIcon fontSize="inherit" /></IconButton>
+                                            </Box>
+                                        </>
+                                    ) : (
+                                        <Button size="small" onClick={() => setIncluirTaxaServico(true)} sx={{ width: '100%' }}>Incluir Taxa de Serviço (10%)</Button>
+                                    )}
+                                </Box>
+                            )}
+                        </Box>
 
-                        {/* Linha da Taxa de Serviço (condicional) */}
-                        {tipoPedido === 'mesa' && (
-                            incluirTaxa ? (
-                                <>
-                                    <Typography variant="body1" color="text.secondary" sx={{ gridColumn: '1 / 2' }}>Taxa de Serviço (10%):</Typography>
-                                    <Typography variant="body1" color="text.secondary" sx={{ gridColumn: '2 / 3', textAlign: 'right' }}>{formatarPreco(taxaServico)}</Typography>
-                                    <IconButton size="small" onClick={() => setIncluirTaxa(false)} title="Remover taxa" sx={{ gridColumn: '3 / 4' }}>
-                                        <DeleteIcon fontSize="inherit" />
-                                    </IconButton>
-                                </>
-                            ) : (
-                                // Ocupa todas as 3 colunas quando a taxa é removida
-                                <Button size="small" onClick={() => setIncluirTaxa(true)} sx={{ gridColumn: '1 / -1' }}>Incluir Taxa de Serviço (10%)</Button>
-                            )
-                        )}
-
-                        {/* Linha do Total */}
-                        <Divider sx={{ gridColumn: '1 / -1', my: 1 }} />
-                        <Typography variant="h6" sx={{ fontWeight: 'bold', gridColumn: '1 / 2' }}>Total:</Typography>
-                        <Typography variant="h6" sx={{ fontWeight: 'bold', gridColumn: '2 / 3', textAlign: 'right' }}>{formatarPreco(valorTotal)}</Typography>
-                         {/* Célula vazia na 3ª coluna para manter o alinhamento */}
-                        <Box sx={{ gridColumn: '3 / 4' }} />
+                        {/* PARTE DE BAIXO (empurrada para o final) */}
+                        <Box sx={{ marginTop: 'auto', paddingTop: '8px' }}>
+                            <Divider sx={{ mb: 1 }} />
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Total:</Typography>
+                                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{formatarPreco(valorTotal)}</Typography>
+                            </Box>
+                        </Box>
                     </Box>
                 </Box>
                 {/* --- FIM DA SEÇÃO DE RESUMO --- */}
