@@ -1,7 +1,7 @@
 // src/components/ComboCard.jsx
 import React, { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
-import { Card, CardMedia, CardContent, Typography, CardActions, Button, List, ListItem, ListItemIcon, ListItemText } from '@mui//material';
+import { Card, CardMedia, CardContent, Typography, CardActions, Button, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 
 const formatarPreco = (preco) => {
@@ -21,21 +21,23 @@ const ComboCard = ({ combo }) => {
   };
 
   return (
-    // Garante que o card ocupe 100% da altura e use flexbox
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardMedia
         component="img"
-        height="200"
+        // REMOVENDO height como prop e definindo via sx
         image={combo.imagem}
         alt={combo.nome}
+        sx={{
+          height: 200, // DEFININDO ALTURA FIXA AQUI
+          objectFit: 'cover'
+        }}
       />
-      {/* O conteúdo principal cresce para preencher o espaço */}
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h5" component="div">
           {combo.nome}
         </Typography>
         <List dense>
-          {combo.itens.map((item, index) => (
+          {combo.itens?.map((item, index) => (
             <ListItem key={index} disableGutters>
               <ListItemIcon sx={{ minWidth: '32px' }}>
                 <CheckIcon fontSize="small" color="primary" />
@@ -45,7 +47,6 @@ const ComboCard = ({ combo }) => {
           ))}
         </List>
       </CardContent>
-      {/* Rodapé padronizado */}
       <CardActions sx={{ p: 2, justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="h5">
           {formatarPreco(combo.preco)}

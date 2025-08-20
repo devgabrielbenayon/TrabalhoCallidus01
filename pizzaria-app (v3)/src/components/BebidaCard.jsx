@@ -20,15 +20,17 @@ const BebidaCard = ({ bebida }) => {
   };
 
   return (
-    // Garante que o card ocupe 100% da altura e use flexbox
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardMedia
         component="img"
-        height="200"
+        // REMOVENDO height como prop e definindo via sx
         image={bebida.imagem}
         alt={bebida.nome}
+        sx={{
+          height: 200, // DEFININDO ALTURA FIXA AQUI
+          objectFit: 'cover'
+        }}
       />
-      {/* O conteúdo principal cresce para preencher o espaço */}
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h5" component="div">
           {bebida.nome}
@@ -37,7 +39,6 @@ const BebidaCard = ({ bebida }) => {
           {bebida.descricao}
         </Typography>
       </CardContent>
-      {/* Rodapé padronizado */}
       <CardActions sx={{ p: 2, justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="h5">
           {formatarPreco(bebida.preco)}

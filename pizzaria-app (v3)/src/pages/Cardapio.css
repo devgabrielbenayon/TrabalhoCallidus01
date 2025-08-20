@@ -1,12 +1,4 @@
 /* src/pages/Cardapio.css */
-.title {
-  text-align: center;
-  font-size: 3rem;
-  color: var(--cor-secundaria);
-  margin-bottom: 2rem;
-  text-transform: uppercase;
-  font-weight: bold;
-}
 
 .filtros-container {
   display: flex;
@@ -55,39 +47,55 @@
   border-color: var(--cor-primaria);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(345px, 1fr));
-  gap: 2rem;
-}
-
-.nenhuma-pizza-encontrada {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #777;
-  width: 100%;
-}
-
-/* --- ESTILO PARA OS NOVOS BOTÕES 'PIZZAS' E 'BEBIDAS' --- */
 .tipo-filtro {
   display: flex;
+  justify-content: center;
   gap: 1rem;
-  margin-bottom: 2rem; /* Espaço antes dos outros filtros */
+  margin-bottom: 2rem;
 }
 
 .tipo-filtro button {
   padding: 0.8rem 2rem;
   font-size: 1.2rem;
   border-radius: 8px;
-  border: 2px solid var(--borda-cor);
+  border: 1px solid var(--borda-cor);
   background-color: transparent;
   color: var(--texto-principal);
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tipo-filtro button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .tipo-filtro button.ativo {
   background-color: var(--cor-primaria);
   border-color: var(--cor-primaria);
   color: white;
+}
+
+/* --- GRID CUSTOMIZADO E ROBUSTO PARA O CARDÁPIO --- */
+.cardapio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2rem;
+  
+  /* Esta propriedade alinha todos os cards na mesma altura, esticando os menores */
+  align-items: stretch;
+}
+
+/* Garante que o componente Card (filho do grid) se estique para preencher 100% da altura */
+.cardapio-grid > * {
+  height: 100%;
+}
+
+
+.nenhuma-pizza-encontrada {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--texto-secundario);
+  /* Ocupa todas as colunas do grid */
+  grid-column: 1 / -1;
 }

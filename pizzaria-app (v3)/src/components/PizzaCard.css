@@ -1,6 +1,5 @@
 /* src/components/PizzaCard.css */
 .card {
-  /* ALTERAÇÃO AQUI: Usando a variável de tema para o fundo */
   background-color: var(--fundo-componente);
   border-radius: 10px;
   overflow: hidden;
@@ -8,6 +7,7 @@
   transition: transform 0.3s, box-shadow 0.3s;
   display: flex;
   flex-direction: column;
+  height: 100%; /* Isso fará com que todos os cards na mesma linha de grid tenham a mesma altura */
 }
 
 .card:hover {
@@ -36,22 +36,21 @@
 }
 
 .ingredients {
-  margin: 0 0 1.5rem 0;
-  /* ALTERAÇÃO AQUI: Usando a variável para o texto secundário */
+  margin: 0 0 1rem 0;
   color: var(--texto-secundario);
-  flex-grow: 1;
+  flex-grow: 1; /* Faz os ingredientes ocuparem o espaço, alinhando os rodapés */
 }
 
 .footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: auto; /* Empurra o rodapé para o fundo do card */
 }
 
 .price {
   font-size: 1.8rem;
   font-weight: 700;
-  /* ALTERAÇÃO AQUI: Usando a variável para o texto principal */
   color: var(--texto-principal);
 }
 
@@ -59,7 +58,11 @@
   font-size: 1rem;
   font-weight: 600;
   background-color: var(--cor-primaria);
-  color: white; /* Cor do texto do botão pode ser fixa, pois o fundo é sempre forte */
+  color: white;
+  padding: 0.6em 1.2em;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
 .tamanho-seletor {

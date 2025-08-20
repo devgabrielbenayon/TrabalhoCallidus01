@@ -37,15 +37,13 @@ const Entregas = () => {
   };
 
   const renderPedidoCard = (pedido) => (
-    <Grid item xs={12} sm={6} md={4} key={pedido.id}>
+    <Grid key={pedido.id} xs={12} sm={6} md={4}>
       <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography variant="h6" component="h2">Pedido #{pedido.id.substring(0, 8)}</Typography>
           <Typography variant="body2" color="text.secondary"><strong>Cliente:</strong> {pedido.cliente.nome}</Typography>
           
-          {/* Mostra o garçom se já estiver atribuído */}
           {pedido.garcom && (
-             // --- ALTERAÇÃO AQUI: Estilo padronizado com as outras informações ---
              <Typography variant="body2" color="text.secondary">
                 <strong>Garçom:</strong> {pedido.garcom.nome}
              </Typography>
@@ -86,7 +84,13 @@ const Entregas = () => {
 
   return (
     <Container maxWidth="lg" sx={{ my: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
+      {/* --- TÍTULO RESPONSIVO --- */}
+      <Typography 
+        variant="h4" 
+        component="h1" 
+        gutterBottom 
+        sx={{ fontSize: { xs: '1.8rem', sm: '2.2rem' } }}
+      >
         Painel de Entregas e Mesas
       </Typography>
       
@@ -95,7 +99,7 @@ const Entregas = () => {
         <Grid container spacing={3}>
           {pedidosDisponiveis.length > 0 ? 
             pedidosDisponiveis.map(pedido => renderPedidoCard(pedido)) : 
-            <Grid item xs={12}><Typography color="text.secondary">Nenhum pedido aguardando atendimento.</Typography></Grid>
+            <Grid xs={12}><Typography color="text.secondary">Nenhum pedido aguardando atendimento.</Typography></Grid>
           }
         </Grid>
       </Box>
@@ -107,7 +111,7 @@ const Entregas = () => {
         <Grid container spacing={3}>
           {pedidosEmAndamento.length > 0 ? 
             pedidosEmAndamento.map(pedido => renderPedidoCard(pedido)) :
-            <Grid item xs={12}><Typography color="text.secondary">Nenhum pedido em andamento.</Typography></Grid>
+            <Grid xs={12}><Typography color="text.secondary">Nenhum pedido em andamento.</Typography></Grid>
           }
         </Grid>
       </Box>

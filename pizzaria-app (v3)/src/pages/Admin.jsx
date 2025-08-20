@@ -101,7 +101,7 @@ const Admin = () => {
   };
 
   const handleSalvarEdicaoGarcom = () => {
-    if (garcomParaEditar) {
+    if (garcomParaEditar && novoNomeGarcom.trim()) {
       editarGarcom(garcomParaEditar.id, novoNomeGarcom);
     }
     handleFecharDialog();
@@ -109,13 +109,15 @@ const Admin = () => {
 
   return (
     <Container maxWidth="xl" sx={{ my: 4 }}>
-      <Typography variant="h4" gutterBottom>Painel de Administração</Typography>
+      {/* --- AJUSTE RESPONSIVO NO TÍTULO --- */}
+      <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: '1.8rem', sm: '2.2rem' } }}>
+        Painel de Administração
+      </Typography>
       
       <Grid container spacing={3}>
         
-        {/* Coluna da Esquerda (Maior): Gerenciar Cardápio */}
         <Grid item xs={12} md={7}>
-          <Paper elevation={3} sx={{ p: 3 }}>
+          <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 } }}>
             <Typography variant="h5" gutterBottom>Gerenciar Cardápio</Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate>
               <Typography variant="h6">{modoEdicao ? 'Editar Pizza' : 'Adicionar Nova Pizza'}</Typography>
@@ -156,13 +158,11 @@ const Admin = () => {
           </Paper>
         </Grid>
 
-        {/* Coluna da Direita (Menor): Garçons e Histórico */}
         <Grid item xs={12} md={5}>
           <Grid container spacing={3} direction="column">
             
-            {/* Item 1 da Coluna Direita: Gerenciar Garçons */}
             <Grid item>
-              <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
+              <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 }, height: '100%' }}>
                 <Typography variant="h5" gutterBottom>Gerenciar Garçons</Typography>
                 <Box component="form" onSubmit={handleAdicionarGarcom} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                   <TextField 
@@ -173,12 +173,7 @@ const Admin = () => {
                     variant="outlined"
                     size="small"
                   />
-                  {/* --- ALTERAÇÃO AQUI --- */}
-                  <IconButton 
-                    type="submit" 
-                    aria-label="adicionar garçom"
-                    color="inherit" /* Faz o ícone usar a cor padrão do texto (branco/preto) */
-                  >
+                  <IconButton type="submit" color="inherit" aria-label="adicionar garçom">
                     <PersonAddIcon />
                   </IconButton>
                 </Box>
@@ -198,9 +193,8 @@ const Admin = () => {
               </Paper>
             </Grid>
 
-            {/* Item 2 da Coluna Direita: Histórico de Pedidos */}
             <Grid item>
-              <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
+              <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 }, height: '100%' }}>
                 <Typography variant="h5" gutterBottom>Histórico de Pedidos</Typography>
                 <List>
                   {pedidos && pedidos.length > 0 ? (
@@ -246,7 +240,6 @@ const Admin = () => {
         </Grid>
       </Grid>
       
-      {/* Modal (Dialog) para Edição de Garçom */}
       <Dialog open={dialogAberto} onClose={handleFecharDialog}>
         <DialogTitle>Editar Nome do Garçom</DialogTitle>
         <DialogContent>
