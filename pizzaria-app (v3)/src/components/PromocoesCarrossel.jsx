@@ -56,7 +56,7 @@ const PromocoesCarrossel = () => {
     {
       titulo: "Terça da Pizza Doce",
       descricao: "Compre uma pizza salgada e leve uma doce pela metade do preço.",
-      imagem: "https://images.unsplash.com/photo-1574085733264-93342375?ixlib=rb-4.0.3&q=80&w=1024"
+      imagem: "/images/doce.png"
     },
     {
       titulo: "Bebidas em Dobro",
@@ -68,7 +68,7 @@ const PromocoesCarrossel = () => {
   return (
     <div 
       // Usando a prop "sx" do Material-UI para estilização
-      sx={{
+      style={{
         width: '90%',
         maxWidth: '1400px',
         margin: '2rem auto 4rem auto',
