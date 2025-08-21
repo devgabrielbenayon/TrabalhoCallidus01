@@ -3,10 +3,8 @@ import React, { useState, useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 import { Card, CardActions, CardContent, CardMedia, Button, Typography, ToggleButton, ToggleButtonGroup } from '@mui/material';
 
-// Importando o CSS customizado
-import './PizzaCard.css';
-
 const formatarPreco = (preco) => {
+  if (typeof preco !== 'number') return '';
   return preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 };
 
@@ -31,36 +29,45 @@ const PizzaCard = ({ pizza }) => {
   };
 
   return (
-    // A classe 'card' do nosso CSS customizado é a principal
-    <div className="card">
-      <img src={pizza.imagem} alt={pizza.nome} className="image" />
-      <div className="content">
-        <h3 className="title">{pizza.nome}</h3>
-        <p className="ingredients">{pizza.ingredientes.join(', ')}</p>
-
-        <div className="tamanho-seletor">
-          <button 
-            onClick={() => setTamanhoSelecionado('p')}
-            className={tamanhoSelecionado === 'p' ? 'ativo' : ''}
-          >P</button>
-          <button 
-            onClick={() => setTamanhoSelecionado('m')}
-            className={tamanhoSelecionado === 'm' ? 'ativo' : ''}
-          >M</button>
-          <button 
-            onClick={() => setTamanhoSelecionado('g')}
-            className={tamanhoSelecionado === 'g' ? 'ativo' : ''}
-          >G</button>
-        </div>
-        
-        <div className="footer">
-          <span className="price">{formatarPreco(pizza.preco[tamanhoSelecionado])}</span>
-          <button onClick={handleAddToCart} className="addButton">
-            Adicionar
-          </button>
-        </div>
-      </div>
-    </div>
+    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <CardMedia
+        component="img"
+        image={pizza.imagem}
+        alt={pizza.nome}
+        sx={{
+          height: '200px',      // Força a altura da área da imagem para 200px
+          objectFit: 'cover'  // Garante que a imagem preencha a área sem distorcer
+        }}
+      />
+      <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+        <Typography gutterBottom variant="h5" component="div">
+          {pizza.nome}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2, flexGrow: 1 }}>
+          {pizza.ingredientes.join(', ')}
+        </Typography>
+        <ToggleButtonGroup
+          value={tamanhoSelecionado}
+          exclusive
+          onChange={handleSizeChange}
+          color="primary"
+          size="small"
+          fullWidth
+        >
+          <ToggleButton value="p" sx={{ color: 'text.secondary' }}>P</ToggleButton>
+          <ToggleButton value="m" sx={{ color: 'text.secondary' }}>M</ToggleButton>
+          <ToggleButton value="g" sx={{ color: 'text.secondary' }}>G</ToggleButton>
+        </ToggleButtonGroup>
+      </CardContent>
+      <CardActions sx={{ p: 2, justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="h5">
+          {formatarPreco(pizza.preco[tamanhoSelecionado])}
+        </Typography>
+        <Button variant="contained" onClick={handleAddToCart}>
+          Adicionar
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 

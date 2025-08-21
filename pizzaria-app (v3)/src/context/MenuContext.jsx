@@ -1,18 +1,31 @@
 // src/context/MenuContext.jsx
 import React, { createContext, useState, useEffect, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import itensIniciais from '/public/api/cardapio.json';
 
 export const MenuContext = createContext(null);
 
 export const MenuProvider = ({ children }) => {
   const [itensCardapio, setItensCardapio] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setItensCardapio(itensIniciais);
+    fetch('/api/cardapio.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro de rede ao buscar o cardápio');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setItensCardapio(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Falha crítica ao carregar o cardápio:", error);
+        setLoading(false);
+      });
   }, []);
 
-  // Cria uma lista memorizada contendo apenas os itens do tipo 'pizza'
   const pizzas = useMemo(() => 
     itensCardapio.filter(item => item.tipo === 'pizza'), 
     [itensCardapio]
@@ -39,13 +52,13 @@ export const MenuProvider = ({ children }) => {
   };
 
   const excluirPizza = (pizzaId) => {
-    // A exclusão agora acontece na lista principal de itens
     setItensCardapio(itensAtuais => itensAtuais.filter(p => p.id !== pizzaId));
   };
 
   const valorDoContexto = {
-    itensCardapio,  // A lista completa com pizzas, bebidas, combos
-    pizzas,         // A lista contendo apenas as pizzas
+    itensCardapio,
+    pizzas,
+    loading,
     adicionarPizza,
     editarPizza,
     excluirPizza,

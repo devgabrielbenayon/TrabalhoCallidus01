@@ -4,6 +4,7 @@ import { CartContext } from '../context/CartContext';
 import { Card, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
 
 const formatarPreco = (preco) => {
+  if (typeof preco !== 'number') return '';
   return preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 };
 
@@ -23,11 +24,10 @@ const BebidaCard = ({ bebida }) => {
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardMedia
         component="img"
-        // REMOVENDO height como prop e definindo via sx
         image={bebida.imagem}
         alt={bebida.nome}
         sx={{
-          height: 200, // DEFININDO ALTURA FIXA AQUI
+          height: '200px',
           objectFit: 'cover'
         }}
       />

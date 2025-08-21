@@ -3,123 +3,144 @@ import React, { useContext, useState, useMemo } from 'react';
 import PizzaCard from '../components/PizzaCard';
 import BebidaCard from '../components/BebidaCard';
 import ComboCard from '../components/ComboCard';
+import PromocoesCarrossel from '../components/PromocoesCarrossel';
 import { MenuContext } from '../context/MenuContext';
-import './Cardapio.css';
 
-// Importando apenas os componentes do MUI que ainda são necessários
-import { Container, Typography, Button, Box, TextField } from '@mui/material';
+import { Container, Typography, Grid, ButtonGroup, Button, Box, TextField, CircularProgress } from '@mui/material';
 
 const Cardapio = () => {
-  const { itensCardapio } = useContext(MenuContext);
+  const { itensCardapio, loading } = useContext(MenuContext);
   
   const [filtroTipo, setFiltroTipo] = useState('pizzas');
   const [termoBusca, setTermoBusca] = useState('');
   const [categoriaSelecionada, setCategoriaSelecionada] = useState('Todas');
 
+  const handleFiltroTipoChange = (novoTipo) => {
+    if (novoTipo) {
+      setFiltroTipo(novoTipo);
+      setTermoBusca('');
+      setCategoriaSelecionada('Todas');
+    }
+  };
+
+  const categoriasAtuais = useMemo(() => {
+    if (!itensCardapio) return [];
+    const itensDoTipo = itensCardapio.filter(i => i.tipo === filtroTipo);
+    const categoriasUnicas = [...new Set(itensDoTipo.map(i => i.categoria))];
+    if (categoriasUnicas.length > 1) {
+      return ['Todas', ...categoriasUnicas];
+    }
+    return [];
+  }, [itensCardapio, filtroTipo]);
+
+  // --- LÓGICA DE FILTRAGEM CORRIGIDA ---
   const itensFiltrados = useMemo(() => {
-    let itens = itensCardapio.filter(item => {
-      if (filtroTipo === 'pizzas') return item.tipo === 'pizza';
-      if (filtroTipo === 'bebidas') return item.tipo === 'bebida';
-      if (filtroTipo === 'combos') return item.tipo === 'combo';
+    if (!itensCardapio) return [];
+    
+    return itensCardapio.filter(item => {
+      // Filtro 1: O item DEVE ser do tipo selecionado (pizza, bebida, etc.)
+      if (item.tipo !== filtroTipo) {
+        return false;
+      }
+
+      // Filtro 2: O item DEVE pertencer à categoria selecionada
+      if (categoriaSelecionada !== 'Todas' && item.categoria !== categoriaSelecionada) {
+        return false;
+      }
+
+      // Filtro 3: O item DEVE conter o termo de busca (se houver)
+      if (termoBusca) {
+        const termo = termoBusca.toLowerCase();
+        const noNome = item.nome.toLowerCase().includes(termo);
+        let nosDetalhes = false;
+        if (item.ingredientes) {
+          nosDetalhes = item.ingredientes.some(ing => ing.toLowerCase().includes(termo));
+        } else if (item.descricao) {
+          nosDetalhes = item.descricao.toLowerCase().includes(termo);
+        } else if (item.itens) {
+          nosDetalhes = item.itens.some(i => i.toLowerCase().includes(termo));
+        }
+        if (!noNome && !nosDetalhes) {
+          return false;
+        }
+      }
+
+      // Se passou por todos os filtros, o item é exibido
       return true;
     });
-
-    if (filtroTipo === 'pizzas') {
-      itens = itens.filter(pizza => {
-        const filtroCategoria = categoriaSelecionada === 'Todas' || pizza.categoria === categoriaSelecionada;
-        const filtroBusca = termoBusca === '' ||
-          pizza.nome.toLowerCase().includes(termoBusca.toLowerCase()) ||
-          (pizza.ingredientes && pizza.ingredientes.some(ing => ing.toLowerCase().includes(termoBusca.toLowerCase())));
-        return filtroCategoria && filtroBusca;
-      });
-    }
-    return itens;
   }, [itensCardapio, filtroTipo, termoBusca, categoriaSelecionada]);
-  
-  const categoriasPizza = ['Todas', ...new Set(itensCardapio.filter(i => i.tipo === 'pizza').map(p => p.categoria))];
+
+  if (loading) {
+    return (
+      <Container sx={{ display: 'flex', justifyContent: 'center', my: 8 }}>
+        <CircularProgress color="secondary" />
+      </Container>
+    );
+  }
 
   return (
-    <Container maxWidth="lg" sx={{ my: 4 }}>
-      <Typography 
-        variant="h2" 
-        component="h1" 
-        align="center" 
-        gutterBottom
-        sx={{ 
-          fontWeight: 'bold', 
-          color: 'secondary.main', 
-          textTransform: 'uppercase',
-          fontSize: { xs: '2.5rem', md: '3.75rem' }
-        }}
-      >
-        Nosso Cardápio
-      </Typography>
-      
-      {/* Filtros com CSS Customizado */}
-      <div className="tipo-filtro">
-        <button 
-          className={filtroTipo === 'pizzas' ? 'ativo' : ''}
-          onClick={() => setFiltroTipo('pizzas')}
+    <>
+      <PromocoesCarrossel />
+      <Container maxWidth="lg" sx={{ my: 4 }}>
+        <Typography 
+          variant="h2" 
+          component="h1" 
+          align="center" 
+          gutterBottom
+          sx={{ fontWeight: 'bold', color: 'secondary.main', textTransform: 'uppercase', fontSize: { xs: '2.5rem', md: '3.75rem' } }}
         >
-          Pizzas
-        </button>
-        <button 
-          className={filtroTipo === 'bebidas' ? 'ativo' : ''}
-          onClick={() => setFiltroTipo('bebidas')}
-        >
-          Bebidas
-        </button>
-        <button 
-          className={filtroTipo === 'combos' ? 'ativo' : ''}
-          onClick={() => setFiltroTipo('combos')}
-        >
-          Combos
-        </button>
-      </div>
+          Nosso Cardápio
+        </Typography>
+        
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+          <ButtonGroup variant="outlined">
+            <Button onClick={() => handleFiltroTipoChange('pizza')} variant={filtroTipo === 'pizza' ? 'contained' : 'outlined'}>Pizzas</Button>
+            <Button onClick={() => handleFiltroTipoChange('bebida')} variant={filtroTipo === 'bebida' ? 'contained' : 'outlined'}>Bebidas</Button>
+            <Button onClick={() => handleFiltroTipoChange('combo')} variant={filtroTipo === 'combo' ? 'contained' : 'outlined'}>Combos</Button>
+          </ButtonGroup>
+        </Box>
 
-      {filtroTipo === 'pizzas' && (
-        <div className="filtros-container">
-          <input 
-            type="text"
-            placeholder="Buscar por nome ou ingrediente..."
-            className="campo-busca"
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, mb: 4, minHeight: '90px' }}>
+          <TextField 
+            label={`Buscar em ${filtroTipo}...`}
+            variant="outlined"
+            sx={{ width: '100%', maxWidth: '500px' }}
             value={termoBusca}
             onChange={(e) => setTermoBusca(e.target.value)}
           />
-          <div className="botoes-categoria">
-            {categoriasPizza.map(categoria => (
-              <button
-                key={categoria}
-                className={categoriaSelecionada === categoria ? 'ativo' : ''}
-                onClick={() => setCategoriaSelecionada(categoria)}
-              >
-                {categoria}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-      
-      {/* Usando nossa própria classe de grid para o layout */}
-      <div className="cardapio-grid">
-        {itensFiltrados.length > 0 ? (
-          itensFiltrados.map(item => {
-            if (item.tipo === 'pizza') {
-              return <PizzaCard key={item.id} pizza={item} />;
-            }
-            if (item.tipo === 'bebida') {
-              return <BebidaCard key={item.id} bebida={item} />;
-            }
-            if (item.tipo === 'combo') {
-              return <ComboCard key={item.id} combo={item} />;
-            }
-            return null;
-          })
-        ) : (
-          <p className="nenhuma-pizza-encontrada">Nenhum item encontrado.</p>
-        )}
-      </div>
-    </Container>
+          {categoriasAtuais.length > 0 && (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1 }}>
+              {categoriasAtuais.map(categoria => (
+                <Button
+                  key={categoria}
+                  variant={categoriaSelecionada === categoria ? 'contained' : 'outlined'}
+                  onClick={() => setCategoriaSelecionada(categoria)}
+                  size="small"
+                >
+                  {categoria}
+                </Button>
+              ))}
+            </Box>
+          )}
+        </Box>
+        
+        <Grid container spacing={4}>
+          {itensFiltrados.length > 0 ? (
+            itensFiltrados.map(item => (
+              <Grid key={item.id} xs={12} sm={6} md={4}>
+                {item.tipo === 'pizza' && <PizzaCard pizza={item} />}
+                {item.tipo === 'bebida' && <BebidaCard bebida={item} />}
+                {item.tipo === 'combo' && <ComboCard combo={item} />}
+              </Grid>
+            ))
+          ) : (
+            <Grid xs={12}>
+              <Typography color="text.secondary" align="center" sx={{ mt: 4 }}>Nenhum item encontrado.</Typography>
+            </Grid>
+          )}
+        </Grid>
+      </Container>
+    </>
   );
 };
 

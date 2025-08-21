@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { OrderContext } from '../context/OrderContext';
 import { WaiterContext } from '../context/WaiterContext';
 
+// Importando componentes e ícones do MUI
 import { Container, Typography, Grid, Card, CardContent, CardActions, Button, List, ListItem, ListItemText, Divider, Box, Menu, MenuItem } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
@@ -37,6 +38,7 @@ const Entregas = () => {
   };
 
   const renderPedidoCard = (pedido) => (
+    // --- CORREÇÃO 1: A propriedade 'item' foi removida ---
     <Grid key={pedido.id} xs={12} sm={6} md={4}>
       <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flexGrow: 1 }}>
@@ -56,7 +58,11 @@ const Entregas = () => {
           <List dense>
             {pedido.itens.map(item => (
               <ListItem key={item.idUnicoCarrinho} disableGutters>
-                <ListItemText primary={`${item.quantidade}x ${item.nome}`} secondary={item.tamanho ? `Tamanho: ${item.tamanho.toUpperCase()}` : null} />
+                <ListItemText 
+                  primary={`${item.quantidade}x ${item.nome}`}
+                  // --- CORREÇÃO 2: Verificação de segurança para o tamanho ---
+                  secondary={item.tamanho ? `Tamanho: ${item.tamanho.toUpperCase()}` : null} 
+                />
               </ListItem>
             ))}
           </List>
@@ -84,11 +90,10 @@ const Entregas = () => {
 
   return (
     <Container maxWidth="lg" sx={{ my: 4 }}>
-      {/* --- TÍTULO RESPONSIVO --- */}
       <Typography 
         variant="h4" 
         component="h1" 
-        gutterBottom 
+        gutterBottom
         sx={{ fontSize: { xs: '1.8rem', sm: '2.2rem' } }}
       >
         Painel de Entregas e Mesas
@@ -99,6 +104,7 @@ const Entregas = () => {
         <Grid container spacing={3}>
           {pedidosDisponiveis.length > 0 ? 
             pedidosDisponiveis.map(pedido => renderPedidoCard(pedido)) : 
+            // --- CORREÇÃO 3: A propriedade 'item' foi removida ---
             <Grid xs={12}><Typography color="text.secondary">Nenhum pedido aguardando atendimento.</Typography></Grid>
           }
         </Grid>
@@ -111,6 +117,7 @@ const Entregas = () => {
         <Grid container spacing={3}>
           {pedidosEmAndamento.length > 0 ? 
             pedidosEmAndamento.map(pedido => renderPedidoCard(pedido)) :
+            // --- CORREÇÃO 4: A propriedade 'item' foi removida ---
             <Grid xs={12}><Typography color="text.secondary">Nenhum pedido em andamento.</Typography></Grid>
           }
         </Grid>

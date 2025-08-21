@@ -5,6 +5,7 @@ import { Card, CardMedia, CardContent, Typography, CardActions, Button, List, Li
 import CheckIcon from '@mui/icons-material/Check';
 
 const formatarPreco = (preco) => {
+  if (typeof preco !== 'number') return '';
   return preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 };
 
@@ -24,11 +25,10 @@ const ComboCard = ({ combo }) => {
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardMedia
         component="img"
-        // REMOVENDO height como prop e definindo via sx
         image={combo.imagem}
         alt={combo.nome}
         sx={{
-          height: 200, // DEFININDO ALTURA FIXA AQUI
+          height: '200px',
           objectFit: 'cover'
         }}
       />
@@ -37,7 +37,7 @@ const ComboCard = ({ combo }) => {
           {combo.nome}
         </Typography>
         <List dense>
-          {combo.itens?.map((item, index) => (
+          {combo.itens.map((item, index) => (
             <ListItem key={index} disableGutters>
               <ListItemIcon sx={{ minWidth: '32px' }}>
                 <CheckIcon fontSize="small" color="primary" />

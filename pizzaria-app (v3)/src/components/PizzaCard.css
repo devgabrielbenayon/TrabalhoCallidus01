@@ -7,7 +7,7 @@
   transition: transform 0.3s, box-shadow 0.3s;
   display: flex;
   flex-direction: column;
-  height: 100%; /* Isso fará com que todos os cards na mesma linha de grid tenham a mesma altura */
+  height: 100%; /* Força o card a ocupar a altura total da célula do grid */
 }
 
 .card:hover {
@@ -23,7 +23,7 @@
 
 .content {
   padding: 1.5rem;
-  flex-grow: 1;
+  flex-grow: 1; /* Faz esta área crescer, empurrando o rodapé para baixo */
   display: flex;
   flex-direction: column;
 }
@@ -38,14 +38,14 @@
 .ingredients {
   margin: 0 0 1rem 0;
   color: var(--texto-secundario);
-  flex-grow: 1; /* Faz os ingredientes ocuparem o espaço, alinhando os rodapés */
+  flex-grow: 1; /* Garante que os ingredientes preencham o espaço extra */
 }
 
 .footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto; /* Empurra o rodapé para o fundo do card */
+  margin-top: auto; /* Garante que o rodapé fique sempre no fundo */
 }
 
 .price {
@@ -63,6 +63,10 @@
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  transition: filter 0.2s;
+}
+.addButton:hover {
+    filter: brightness(1.1);
 }
 
 .tamanho-seletor {

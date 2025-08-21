@@ -62,7 +62,7 @@ const Admin = () => {
     const pizzaFormatada = {
       id: formData.id,
       nome: formData.nome,
-      ingredientes: formData.ingredientes.split(',').map(ing => ing.trim()),
+      ingredientes: formData.ingredientes,
       imagem: formData.imagem,
       categoria: formData.categoria || 'Clássica', 
       preco: {
@@ -109,14 +109,13 @@ const Admin = () => {
 
   return (
     <Container maxWidth="xl" sx={{ my: 4 }}>
-      {/* --- AJUSTE RESPONSIVO NO TÍTULO --- */}
       <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: '1.8rem', sm: '2.2rem' } }}>
         Painel de Administração
       </Typography>
       
       <Grid container spacing={3}>
         
-        <Grid item xs={12} md={7}>
+        <Grid xs={12} md={7}>
           <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 } }}>
             <Typography variant="h5" gutterBottom>Gerenciar Cardápio</Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate>
@@ -124,9 +123,9 @@ const Admin = () => {
               <TextField name="nome" label="Nome da Pizza" value={formData.nome} onChange={handleChange} fullWidth margin="normal" required size="small" />
               <TextField name="ingredientes" label="Ingredientes (separados por vírgula)" value={formData.ingredientes} onChange={handleChange} fullWidth margin="normal" required size="small" />
               <Grid container spacing={2}>
-                <Grid item xs={4}><TextField name="preco_p" label="Preço P" value={formData.preco_p} onChange={handleChange} fullWidth required size="small" /></Grid>
-                <Grid item xs={4}><TextField name="preco_m" label="Preço M" value={formData.preco_m} onChange={handleChange} fullWidth required size="small" /></Grid>
-                <Grid item xs={4}><TextField name="preco_g" label="Preço G" value={formData.preco_g} onChange={handleChange} fullWidth required size="small" /></Grid>
+                <Grid xs={4}><TextField name="preco_p" label="Preço P" value={formData.preco_p} onChange={handleChange} fullWidth required size="small" /></Grid>
+                <Grid xs={4}><TextField name="preco_m" label="Preço M" value={formData.preco_m} onChange={handleChange} fullWidth required size="small" /></Grid>
+                <Grid xs={4}><TextField name="preco_g" label="Preço G" value={formData.preco_g} onChange={handleChange} fullWidth required size="small" /></Grid>
               </Grid>
               <TextField name="imagem" label="URL da Imagem" value={formData.imagem} onChange={handleChange} fullWidth margin="normal" required size="small" />
               <TextField name="categoria" label="Categoria" value={formData.categoria} onChange={handleChange} fullWidth margin="normal" required size="small" />
@@ -135,7 +134,7 @@ const Admin = () => {
                   {modoEdicao ? 'Salvar Alterações' : 'Adicionar Pizza'}
                 </Button>
                 {modoEdicao && (
-                  <Button onClick={handleCancelarEdicao} variant="outlined" size="large">
+                  <Button onClick={handleCancelarEdicao} variant="outlined" size="large" className="form-button form-button-cancelar">
                     Cancelar
                   </Button>
                 )}
@@ -144,7 +143,7 @@ const Admin = () => {
             <Divider sx={{ my: 3 }} />
             <Typography variant="h6">Pizzas Atuais</Typography>
             <List>
-              {pizzas.map(pizza => (
+              {pizzas && pizzas.map(pizza => (
                 <ListItem key={pizza.id} secondaryAction={
                   <>
                     <IconButton edge="end" aria-label="edit" onClick={() => handleEditar(pizza)}><EditIcon /></IconButton>
@@ -158,10 +157,10 @@ const Admin = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} md={5}>
+        <Grid xs={12} md={5}>
           <Grid container spacing={3} direction="column">
             
-            <Grid item>
+            <Grid>
               <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 }, height: '100%' }}>
                 <Typography variant="h5" gutterBottom>Gerenciar Garçons</Typography>
                 <Box component="form" onSubmit={handleAdicionarGarcom} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
@@ -193,7 +192,7 @@ const Admin = () => {
               </Paper>
             </Grid>
 
-            <Grid item>
+            <Grid>
               <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 }, height: '100%' }}>
                 <Typography variant="h5" gutterBottom>Histórico de Pedidos</Typography>
                 <List>
